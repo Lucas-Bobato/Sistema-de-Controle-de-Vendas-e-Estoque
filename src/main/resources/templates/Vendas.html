@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Usuários - Sistema de Vendas</title>
+    <title>Gerenciar Pedidos - Sistema de Vendas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="../static/styles/style.css">
 </head>
 <body>
     <div class="dashboard-layout">
@@ -13,40 +13,46 @@
             <div class="logo">LOGO</div>
             <nav class="sidebar-nav">
                 <a href="Dashboard.html" class="sidebar-item">
-                    <div class="icon">📈</div><span>Dashboard</span>
+                    <div class="icon">📈</div>
+                    <span>Dashboard</span>
                 </a>
-                <a href="Vendas.html" class="sidebar-item">
-                    <div class="icon">🛒</div><span>Vendas</span>
+                <a href="Vendas.html" class="sidebar-item"> <div class="icon">🛒</div> <span>Vendas</span>
                 </a>
                 <a href="Produtos.html" class="sidebar-item">
-                    <div class="icon">📦</div><span>Produtos</span>
+                    <div class="icon">📦</div>
+                    <span>Produtos</span>
                 </a>
                 <a href="Clientes.html" class="sidebar-item">
-                    <div class="icon">👥</div><span>Clientes</span>
+                    <div class="icon">👥</div>
+                    <span>Clientes</span>
                 </a>
                 <a href="Estoque.html" class="sidebar-item">
-                    <div class="icon">🏢</div><span>Estoque</span>
+                    <div class="icon">🏢</div>
+                    <span>Estoque</span>
                 </a>
                 <a href="Relatorios.html" class="sidebar-item">
-                    <div class="icon">📄</div><span>Relatório</span>
+                    <div class="icon">📄</div>
+                    <span>Relatório</span>
                 </a>
                 <a href="Usuarios.html" class="sidebar-item">
-                    <div class="icon">⚙️</div><span>Usuários</span>
+                    <div class="icon">⚙️</div> <span>Usuários</span>
                 </a>
             </nav>
             <div class="sidebar-bottom">
                 <a href="#" class="sidebar-item">
-                    <div class="icon">🔧</div><span>Configurações</span>
+                    <div class="icon">🔧</div>
+                    <span>Configurações</span>
                 </a>
                 <a href="login.html" class="sidebar-item">
-                    <div class="icon">🚪</div><span>Sair</span>
+                    <div class="icon">🚪</div>
+                    <span>Sair</span>
                 </a>
             </div>
         </aside>
 
         <main class="main-content">
             <header class="main-header">
-                <h1>Gerenciar Usuários</h1>
+                <h1>Gerenciar Pedidos</h1>
                 <div class="user-profile">
                     <div class="notification-icon">🔔</div>
                     <div class="user-avatar"></div>
@@ -56,11 +62,11 @@
             <section class="tools-section">
                 <div class="search-input-container">
                     <div class="search-icon">🔍</div>
-                    <input type="text" class="search-input" placeholder="Buscar usuário...">
+                    <input type="text" class="search-input" placeholder="Buscar pedido...">
                 </div>
                 <div>
                     <button class="filter-button">Filtrar</button>
-                    <a href="#" class="action-button">Cadastrar Usuário</a>
+                    <a href="#" class="new-order-button">+ Novo Pedido</a>
                 </div>
             </section>
 
@@ -68,21 +74,35 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>NOME</th>
-                            <th>EMAIL</th>
-                            <th>TIPO DE USUÁRIO</th>
+                            <th>Nº PEDIDO</th>
+                            <th>CLIENTE</th>
+                            <th>DATA DO PEDIDO</th>
                             <th>STATUS</th>
+                            <th>VALOR TOTAL</th>
+                            <th>VENDEDOR</th>
                             <th>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>#USR001</td>
-                            <td>Ana Carolina</td>
-                            <td>ana.carolina@empresa.com</td>
-                            <td>Administrador</td>
-                            <td>Ativo</td>
+                            <td>#00105</td>
+                            <td>Luiza Costa</td>
+                            <td>05/06/2025</td>
+                            <td>Concluído</td>
+                            <td>R$ 350,00</td>
+                            <td>Ana C.</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon delete">❌</div> </td>
+                        </tr>
+                        <tr>
+                            <td>#00104</td>
+                            <td>João Silva</td>
+                            <td>04/06/2025</td>
+                            <td>Pendente</td>
+                            <td>R$ 120,00</td>
+                            <td>Pedro A.</td>
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
@@ -90,35 +110,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>#USR002</td>
-                            <td>João Pedro</td>
-                            <td>joao.pedro@empresa.com</td>
-                            <td>Vendedor</td>
-                            <td>Ativo</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#USR003</td>
-                            <td>Maria Clara</td>
-                            <td>maria.clara@empresa.com</td>
-                            <td>Estoquista</td>
-                            <td>Inativo</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#USR004</td>
-                            <td>Pedro Henrique</td>
-                            <td>pedro.h@empresa.com</td>
-                            <td>Vendedor</td>
-                            <td>Ativo</td>
+                            <td>#00103</td>
+                            <td>Mariana Souza</td>
+                            <td>03/06/2025</td>
+                            <td>Concluído</td>
+                            <td>R$ 500,00</td>
+                            <td>Ana C.</td>
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
@@ -136,6 +133,6 @@
             </section>
         </main>
     </div>
-    <script src="/js/main.js"></script>
+    <script src="../static/js/main.js"></script>
 </body>
 </html>

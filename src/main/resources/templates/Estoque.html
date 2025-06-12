@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Produtos - Sistema de Vendas</title>
+    <title>Gerenciar Estoque - Sistema de Vendas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="../static/styles/style.css">
 </head>
 <body>
     <div class="dashboard-layout">
@@ -46,22 +46,64 @@
 
         <main class="main-content">
             <header class="main-header">
-                <h1>Gerenciador de Produtos</h1>
+                <h1>Gerenciador de Estoque</h1>
                 <div class="user-profile">
                     <div class="notification-icon">🔔</div>
                     <div class="user-avatar"></div>
                 </div>
             </header>
 
+            <section class="cards-grid">
+                <div class="card">
+                    <h2 class="card-title">Itens em Estoque</h2>
+                    <p class="card-value">1234</p>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">Estoque Crítico</h2>
+                    <p class="card-value warning">5</p>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">Sem Estoque</h2>
+                    <p class="card-value danger">2</p>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">Em Reposição</h2>
+                    <p class="card-value">8</p>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2>Itens em Estoque Crítico</h2>
+                <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="card">
+                        <h3 class="card-title">Cód: PROD02</h3>
+                        <p><strong>Camisa Algodão M - Azul</strong></p>
+                        <p>Estoque Atual: 01 / Mínimo: 02</p>
+                        <p class="card-value danger" style="font-size: 20px;">Diferença: -1</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Cód: PROD05</h3>
+                        <p><strong>Caneca Mágica</strong></p>
+                        <p>Estoque Atual: 00 / Mínimo: 05</p>
+                        <p class="card-value danger" style="font-size: 20px;">Diferença: -5</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Cód: PROD10</h3>
+                        <p><strong>Mouse Gamer RGB</strong></p>
+                        <p>Estoque Atual: 03 / Mínimo: 07</p>
+                        <p class="card-value danger" style="font-size: 20px;">Diferença: -4</p>
+                    </div>
+                </div>
+            </section>
+
             <section class="tools-section">
                 <div class="search-input-container">
                     <div class="search-icon">🔍</div>
-                    <input type="text" class="search-input" placeholder="Buscar produto...">
+                    <input type="text" class="search-input" placeholder="Buscar produto no estoque...">
                 </div>
                 <div>
                     <button class="filter-button">Filtrar</button>
-                    <a href="#" class="action-button">+ Novo Produto</a>
-                    <a href="#" class="action-button">Extrair Relatório</a>
+                    <a href="#" class="action-button">+ Novo Lançamento</a>
                 </div>
             </section>
 
@@ -71,7 +113,6 @@
                         <tr>
                             <th>CÓDIGO</th>
                             <th>NOME DO PRODUTO</th>
-                            <th>CATEGORIA</th>
                             <th>PREÇO</th>
                             <th>EST. ATUAL</th>
                             <th>EST. MÍNIMO</th>
@@ -83,10 +124,9 @@
                         <tr>
                             <td>#PROD01</td>
                             <td>Tênis Esportivo</td>
-                            <td>Calçados</td>
                             <td>R$ 111,10</td>
-                            <td>06</td>
-                            <td>07</td>
+                            <td>15</td>
+                            <td>05</td>
                             <td>Disponível</td>
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
@@ -96,25 +136,10 @@
                         </tr>
                         <tr>
                             <td>#PROD02</td>
-                            <td>Camiseta Algodão</td>
-                            <td>Vestuário</td>
+                            <td>Camisa Algodão</td>
                             <td>R$ 45,99</td>
-                            <td>20</td>
-                            <td>10</td>
-                            <td>Disponível</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#PROD03</td>
-                            <td>Fone Bluetooth</td>
-                            <td>Eletrônicos</td>
-                            <td>R$ 99,90</td>
+                            <td>01</td>
                             <td>02</td>
-                            <td>05</td>
                             <td class="status-critical">Crítico</td>
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
@@ -122,7 +147,20 @@
                                 <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
-                    </tbody>
+                        <tr>
+                            <td>#PROD04</td>
+                            <td>Mochila Escolar</td>
+                            <td>R$ 89,90</td>
+                            <td>00</td>
+                            <td>03</td>
+                            <td class="status-out">Sem Estoque</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon delete">❌</div>
+                            </td>
+                        </tr>
+                        </tbody>
                 </table>
             </section>
 
@@ -133,6 +171,6 @@
             </section>
         </main>
     </div>
-    <script src="/js/main.js"></script>
+    <script src="../static/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">LOGO</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-item active">
+                    <div class="icon">📈</div> <span>Dashboard</span>
+                </a>
+                <a href="Vendas.html" class="sidebar-item">
+                    <div class="icon">🛒</div> <span>Vendas</span>
+                </a>
+                <a href="Produtos.html" class="sidebar-item">
+                    <div class="icon">📦</div> <span>Produtos</span>
+                </a>
+                <a href="Clientes.html" class="sidebar-item">
+                    <div class="icon">👥</div> <span>Clientes</span>
+                </a>
+                <a href="Estoque.html" class="sidebar-item">
+                    <div class="icon">🏢</div> <span>Estoque</span>
+                </a>
+                <a href="Relatorios.html" class="sidebar-item">
+                    <div class="icon">📄</div> <span>Relatório</span>
+                </a>
+                <a href="Usuarios.html" class="sidebar-item">
+                    <div class="icon">⚙️</div> <span>Usuários</span>
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a href="#" class="sidebar-item">
+                    <div class="icon">🔧</div> <span>Configurações</span>
+                </a>
+                <a href="login.html" class="sidebar-item"> <div class="icon">🚪</div> <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Dashboard</h1>
+                <div class="user-profile">
+                    <div class="notification-icon">🔔</div> <div class="user-avatar"></div> </div>
+            </header>
+
+            <section class="main-cards">
+                <div class="card">
+                    <h2 class="card-title">Vendas Hoje</h2>
+                    <p class="card-value">R$ 1.250,00</p>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">Novos Clientes</h2>
+                    <p class="card-value">15</p>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">Produtos Vendidos</h2>
+                    <p class="card-value">85</p>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">Estoque Crítico</h2>
+                    <p class="card-value">3</p>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <div class="chart-box">
+                    <h3>Vendas nos Últimos 7 Dias</h3>
+                    <div class="chart-placeholder">Gráfico de Vendas</div>
+                </div>
+                <div class="chart-box">
+                    <h3>Produtos Mais Vendidos</h3>
+                    <div class="chart-placeholder">Gráfico de Produtos</div>
+                </div>
+            </section>
+
+            <section class="recent-sales-section">
+                <div class="recent-sales-header">
+                    <h3>Últimas Vendas</h3>
+                    <a href="#" class="view-all-link">Ver todas</a>
+                </div>
+                <div class="recent-sales-table-placeholder">Tabela de Últimas Vendas</div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

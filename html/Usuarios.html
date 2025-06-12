@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Usuários - Sistema de Vendas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">LOGO</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-item">
+                    <div class="icon">📈</div>
+                    <span>Dashboard</span>
+                </a>
+                <a href="vendas.html" class="sidebar-item">
+                    <div class="icon">🛒</div>
+                    <span>Vendas</span>
+                </a>
+                <a href="produtos.html" class="sidebar-item">
+                    <div class="icon">📦</div>
+                    <span>Produtos</span>
+                </a>
+                <a href="clientes.html" class="sidebar-item">
+                    <div class="icon">👥</div>
+                    <span>Clientes</span>
+                </a>
+                <a href="estoque.html" class="sidebar-item">
+                    <div class="icon">🏢</div>
+                    <span>Estoque</span>
+                </a>
+                <a href="relatorios.html" class="sidebar-item">
+                    <div class="icon">📄</div>
+                    <span>Relatório</span>
+                </a>
+                <a href="#" class="sidebar-item active"> <div class="icon">⚙️</div>
+                    <span>Usuários</span>
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a href="#" class="sidebar-item">
+                    <div class="icon">🔧</div>
+                    <span>Configurações</span>
+                </a>
+                <a href="login.html" class="sidebar-item">
+                    <div class="icon">🚪</div>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Gerenciar Usuários</h1>
+                <div class="user-profile">
+                    <div class="notification-icon">🔔</div>
+                    <div class="user-avatar"></div>
+                </div>
+            </header>
+
+            <section class="tools-section">
+                <div class="search-filter-group">
+                    <div class="search-input-container">
+                        <input type="text" class="search-input" placeholder="Buscar usuário...">
+                        <div class="search-icon">🔍</div>
+                    </div>
+                    <button class="filter-button">Filtrar</button>
+                </div>
+                <a href="#" class="action-button">Cadastrar Usuário</a>
+            </section>
+
+            <section class="users-table-container">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOME</th>
+                            <th>EMAIL</th>
+                            <th>TIPO DE USUÁRIO</th>
+                            <th>STATUS</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#USR001</td>
+                            <td>Ana Carolina</td>
+                            <td>ana.carolina@empresa.com</td>
+                            <td>Administrador</td>
+                            <td>Ativo</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#USR002</td>
+                            <td>João Pedro</td>
+                            <td>joao.pedro@empresa.com</td>
+                            <td>Vendedor</td>
+                            <td>Ativo</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#USR003</td>
+                            <td>Maria Clara</td>
+                            <td>maria.clara@empresa.com</td>
+                            <td>Estoquista</td>
+                            <td>Inativo</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#USR004</td>
+                            <td>Pedro Henrique</td>
+                            <td>pedro.h@empresa.com</td>
+                            <td>Vendedor</td>
+                            <td>Ativo</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </section>
+
+            <section class="pagination">
+                <button class="pagination-button">Anterior</button>
+                <span class="pagination-info">Página 1 de 10</span>
+                <button class="pagination-button">Próxima</button>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

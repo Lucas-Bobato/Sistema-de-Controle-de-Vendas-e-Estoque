@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Produtos - Sistema de Vendas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">LOGO</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-item">
+                    <div class="icon">📈</div>
+                    <span>Dashboard</span>
+                </a>
+                <a href="vendas.html" class="sidebar-item">
+                    <div class="icon">🛒</div>
+                    <span>Vendas</span>
+                </a>
+                <a href="#" class="sidebar-item active">
+                    <div class="icon">📦</div> <span>Produtos</span>
+                </a>
+                <a href="clientes.html" class="sidebar-item">
+                    <div class="icon">👥</div>
+                    <span>Clientes</span>
+                </a>
+                <a href="estoque.html" class="sidebar-item">
+                    <div class="icon">🏢</div>
+                    <span>Estoque</span>
+                </a>
+                <a href="relatorios.html" class="sidebar-item">
+                    <div class="icon">📄</div>
+                    <span>Relatório</span>
+                </a>
+                <a href="Usuarios.html" class="sidebar-item">
+                    <div class="icon">⚙️</div> <span>Usuários</span>
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a href="#" class="sidebar-item">
+                    <div class="icon">🔧</div>
+                    <span>Configurações</span>
+                </a>
+                <a href="login.html" class="sidebar-item">
+                    <div class="icon">🚪</div>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Gerenciador de Produtos</h1>
+                <div class="user-profile">
+                    <div class="notification-icon">🔔</div>
+                    <div class="user-avatar"></div>
+                </div>
+            </header>
+
+            <section class="tools-section">
+                <div class="search-filter-group">
+                    <div class="search-input-container">
+                        <input type="text" class="search-input" placeholder="Buscar produto...">
+                        <div class="search-icon">🔍</div>
+                    </div>
+                    <button class="filter-button">Filtrar</button>
+                </div>
+                <div class="action-buttons-group">
+                    <a href="#" class="action-button">+ Novo Produto</a>
+                    <a href="#" class="action-button">Extrair Relatório</a>
+                </div>
+            </section>
+
+            <section class="products-table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>NOME DO PRODUTO</th>
+                            <th>CATEGORIA</th>
+                            <th>PREÇO</th>
+                            <th>EST. ATUAL</th>
+                            <th>EST. MÍNIMO</th>
+                            <th>STATUS</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#PROD01</td>
+                            <td>Tênis Esportivo</td>
+                            <td>Calçados</td>
+                            <td>R$ 111,10</td>
+                            <td>06</td>
+                            <td>07</td>
+                            <td>Disponível</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#PROD02</td>
+                            <td>Camiseta Algodão</td>
+                            <td>Vestuário</td>
+                            <td>R$ 45,99</td>
+                            <td>20</td>
+                            <td>10</td>
+                            <td>Disponível</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#PROD03</td>
+                            <td>Fone Bluetooth</td>
+                            <td>Eletrônicos</td>
+                            <td>R$ 99,90</td>
+                            <td>02</td>
+                            <td>05</td>
+                            <td>Crítico</td>
+                            <td class="actions-cell">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-icon">✏️</div>
+                                <div class="action-icon">❌</div>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </section>
+
+            <section class="pagination">
+                <button class="pagination-button">Anterior</button>
+                <span class="pagination-info">Página 1 de 10</span>
+                <button class="pagination-button">Próxima</button>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

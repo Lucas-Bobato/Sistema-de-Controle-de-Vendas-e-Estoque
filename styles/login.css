@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.login-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.logo {
+    width: 180px;
+    height: 100px;
+    background-color: #d9d9d9; /* Placeholder para a logo */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 24px; /* Para o texto "LOGO" */
+}
+
+.bemvindo {
+    color: #000000;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.form-group label {
+    color: #000000;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    background-color: #d9d9d9;
+    height: 40px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* --- Estilo para o link que parece um botão --- */
+.btn-entrar-link {
+    background-color: #d9d9d9;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    height: 45px;
+    width: 100%;
+    border: none; /* Remover bordas do link */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    /* Para centralizar o texto dentro do link, como um botão */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; /* Remover sublinhado padrão do link */
+    margin-top: 5px; /* Ajustar espaçamento se necessário */
+    box-sizing: border-box;
+}
+
+.btn-entrar-link:hover {
+    background-color: #c0c0c0;
+}
+
+.esqueceu-senha {
+    color: #65a1f1;
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.esqueceu-senha:hover {
+    text-decoration: underline;
+}

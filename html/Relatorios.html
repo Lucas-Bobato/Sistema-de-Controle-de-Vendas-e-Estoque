@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios - Sistema de Vendas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
@@ -12,41 +12,34 @@
         <aside class="sidebar">
             <div class="logo">LOGO</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="sidebar-item">
-                    <div class="icon">📈</div>
-                    <span>Dashboard</span>
+                <a href="Dashboard.html" class="sidebar-item">
+                    <div class="icon">📈</div><span>Dashboard</span>
                 </a>
-                <a href="vendas.html" class="sidebar-item">
-                    <div class="icon">🛒</div>
-                    <span>Vendas</span>
+                <a href="Vendas.html" class="sidebar-item">
+                    <div class="icon">🛒</div><span>Vendas</span>
                 </a>
-                <a href="produtos.html" class="sidebar-item">
-                    <div class="icon">📦</div>
-                    <span>Produtos</span>
+                <a href="Produtos.html" class="sidebar-item">
+                    <div class="icon">📦</div><span>Produtos</span>
                 </a>
-                <a href="clientes.html" class="sidebar-item">
-                    <div class="icon">👥</div>
-                    <span>Clientes</span>
+                <a href="Clientes.html" class="sidebar-item">
+                    <div class="icon">👥</div><span>Clientes</span>
                 </a>
-                <a href="estoque.html" class="sidebar-item">
-                    <div class="icon">🏢</div>
-                    <span>Estoque</span>
+                <a href="Estoque.html" class="sidebar-item">
+                    <div class="icon">🏢</div><span>Estoque</span>
                 </a>
-                <a href="#" class="sidebar-item active">
-                    <div class="icon">📄</div> <span>Relatórios</span>
+                <a href="Relatorios.html" class="sidebar-item">
+                    <div class="icon">📄</div><span>Relatórios</span>
                 </a>
                 <a href="Usuarios.html" class="sidebar-item">
-                    <div class="icon">⚙️</div> <span>Usuários</span>
+                    <div class="icon">⚙️</div><span>Usuários</span>
                 </a>
             </nav>
             <div class="sidebar-bottom">
                 <a href="#" class="sidebar-item">
-                    <div class="icon">🔧</div>
-                    <span>Configurações</span>
+                    <div class="icon">🔧</div><span>Configurações</span>
                 </a>
                 <a href="login.html" class="sidebar-item">
-                    <div class="icon">🚪</div>
-                    <span>Sair</span>
+                    <div class="icon">🚪</div><span>Sair</span>
                 </a>
             </div>
         </aside>
@@ -60,8 +53,8 @@
                 </div>
             </header>
 
-            <section class="report-selection-section">
-                <h2 class="report-selection-header">Selecionar Tipo de Relatório</h2>
+            <section class="content-section">
+                <h2>Selecionar Tipo de Relatório</h2>
                 <div class="report-cards-grid">
                     <a href="#vendas-periodo-content" class="report-card">
                         <div class="icon-placeholder">📅</div>
@@ -85,22 +78,21 @@
                     </a>
                     <a href="#rentabilidade-produto-content" class="report-card">
                         <div class="icon-placeholder">💰</div>
-                        <h3>Rentabilidade por Produto/Categoria</h3>
+                        <h3>Rentabilidade</h3>
                     </a>
                 </div>
             </section>
 
-            <section class="report-results-section">
-                <div class="report-results-header">
+            <section class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 id="relatorio-atual">Resultados do Relatório</h2>
-                    <a href="#" class="export-button">Exportar</a>
+                    <a href="#" class="action-button" style="height: 36px; padding: 0 20px;">Exportar</a>
                 </div>
                 
-                <div id="vendas-periodo-content" class="report-content report-detail">
+                <div id="vendas-periodo-content" class="report-content">
                     <h4>Relatório: Vendas por Período (Últimos 30 Dias)</h4>
-                    <p><strong>Total de Vendas:</strong> R$ 15.200,00</p>
-                    <p><strong>Média Diária:</strong> R$ 506,67</p>
-                    <table class="table-example">
+                    <p><strong>Total de Vendas:</strong> R$ 15.200,00 | <strong>Média Diária:</strong> R$ 506,67</p>
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Data</th>
@@ -112,20 +104,18 @@
                             <tr><td>01/06/2025</td><td>5</td><td>R$ 850,00</td></tr>
                             <tr><td>02/06/2025</td><td>3</td><td>R$ 420,00</td></tr>
                             <tr><td>03/06/2025</td><td>7</td><td>R$ 980,00</td></tr>
-                            <tr><td>...</td><td>...</td><td>...</td></tr>
                         </tbody>
                     </table>
-                    <p>Este relatório detalha as vendas ao longo de um período específico. Clique nos cards de seleção para navegar entre os relatórios.</p>
                 </div>
 
-                <div id="produtos-mais-vendidos-content" class="report-content report-detail">
+                <div id="produtos-mais-vendidos-content" class="report-content">
                     <h4>Relatório: Produtos Mais Vendidos (Top 5)</h4>
-                    <table class="table-example">
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Posição</th>
                                 <th>Produto</th>
-                                <th>Quantidade Vendida</th>
+                                <th>Qtd. Vendida</th>
                                 <th>Faturamento</th>
                             </tr>
                         </thead>
@@ -133,17 +123,13 @@
                             <tr><td>1º</td><td>Tênis Esportivo #PROD01</td><td>120</td><td>R$ 13.332,00</td></tr>
                             <tr><td>2º</td><td>Fone Bluetooth #PROD03</td><td>85</td><td>R$ 8.491,50</td></tr>
                             <tr><td>3º</td><td>Camisa Algodão #PROD02</td><td>70</td><td>R$ 3.219,30</td></tr>
-                            <tr><td>4º</td><td>Mochila Escolar #PROD04</td><td>50</td><td>R$ 4.495,00</td></tr>
-                            <tr><td>5º</td><td>Caneca Mágica #PROD05</td><td>40</td><td>R$ 800,00</td></tr>
                         </tbody>
                     </table>
-                    <p>Lista dos produtos que mais geraram vendas em quantidade ou faturamento.</p>
                 </div>
 
-                <div id="estoque-critico-content" class="report-content report-detail">
+                <div id="estoque-critico-content" class="report-content">
                     <h4>Relatório: Itens em Estoque Crítico</h4>
-                    <p>Itens que estão abaixo do seu nível de estoque mínimo definido.</p>
-                    <table class="table-example">
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -154,17 +140,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>#PROD02</td><td>Camisa Algodão</td><td>1</td><td>2</td><td>-1</td></tr>
-                            <tr><td>#PROD03</td><td>Fone Bluetooth</td><td>2</td><td>5</td><td>-3</td></tr>
-                            <tr><td>#PROD05</td><td>Caneca Mágica</td><td>0</td><td>5</td><td>-5</td></tr>
+                            <tr><td>#PROD02</td><td>Camisa Algodão</td><td>1</td><td>2</td><td class="status-critical">-1</td></tr>
+                            <tr><td>#PROD03</td><td>Fone Bluetooth</td><td>2</td><td>5</td><td class="status-critical">-3</td></tr>
+                            <tr><td>#PROD05</td><td>Caneca Mágica</td><td>0</td><td>5</td><td class="status-out">-5</td></tr>
                         </tbody>
                     </table>
-                    <p style="color: #b85555; font-weight: bold;">Atenção: Faça a reposição desses itens o mais breve possível!</p>
                 </div>
 
-                <div id="faturamento-mensal-content" class="report-content report-detail">
+                <div id="faturamento-mensal-content" class="report-content">
                     <h4>Relatório: Faturamento Mensal (Últimos 6 Meses)</h4>
-                    <table class="table-example">
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Mês/Ano</th>
@@ -177,17 +162,13 @@
                             <tr><td>Jan/2025</td><td>R$ 25.000,00</td><td>R$ 500,00</td><td>R$ 24.500,00</td></tr>
                             <tr><td>Fev/2025</td><td>R$ 28.500,00</td><td>R$ 700,00</td><td>R$ 27.800,00</td></tr>
                             <tr><td>Mar/2025</td><td>R$ 32.000,00</td><td>R$ 800,00</td><td>R$ 31.200,00</td></tr>
-                            <tr><td>Abr/2025</td><td>R$ 29.000,00</td><td>R$ 600,00</td><td>R$ 28.400,00</td></tr>
-                            <tr><td>Mai/2025</td><td>R$ 35.000,00</td><td>R$ 900,00</td><td>R$ 34.100,00</td></tr>
-                            <tr><td>Jun/2025</td><td>R$ 15.200,00</td><td>R$ 100,00</td><td>R$ 15.100,00</td></tr>
                         </tbody>
                     </table>
-                    <p>Visão geral do faturamento total por mês, incluindo devoluções.</p>
                 </div>
 
-                <div id="vendas-por-cliente-content" class="report-content report-detail">
+                <div id="vendas-por-cliente-content" class="report-content">
                     <h4>Relatório: Vendas por Cliente (Top 3 Clientes)</h4>
-                    <table class="table-example">
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Posição</th>
@@ -202,12 +183,11 @@
                             <tr><td>3º</td><td>Digital Solutions</td><td>R$ 4.100,00</td><td>7</td></tr>
                         </tbody>
                     </table>
-                    <p>Identifica os clientes que mais contribuem para suas vendas.</p>
                 </div>
 
-                <div id="rentabilidade-produto-content" class="report-content report-detail">
-                    <h4>Relatório: Rentabilidade por Produto/Categoria (Top 3)</h4>
-                    <table class="table-example">
+                <div id="rentabilidade-produto-content" class="report-content">
+                    <h4>Relatório: Rentabilidade por Produto</h4>
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Item</th>
@@ -220,18 +200,17 @@
                         <tbody>
                             <tr><td>Tênis Esportivo</td><td>R$ 8.000,00</td><td>R$ 13.332,00</td><td>R$ 5.332,00</td><td>40%</td></tr>
                             <tr><td>Fone Bluetooth</td><td>R$ 5.000,00</td><td>R$ 8.491,50</td><td>R$ 3.491,50</td><td>41%</td></tr>
-                            <tr><td>Categoria Calçados</td><td>R$ 10.000,00</td><td>R$ 16.000,00</td><td>R$ 6.000,00</td><td>37.5%</td></tr>
                         </tbody>
                     </table>
-                    <p>Análise da lucratividade de produtos ou categorias. Dados fictícios.</p>
                 </div>
 
-                <div id="default-report-content" class="report-content">
-                    <p>Selecione um relatório acima para ver os resultados detalhados.</p>
+                <div id="default-report-content" class="report-content active">
+                    <p>Selecione um tipo de relatório acima para visualizar os dados.</p>
                 </div>
 
             </section>
         </main>
     </div>
+    <script src="/js/main.js"></script>
 </body>
 </html>

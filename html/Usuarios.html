@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Usuários - Sistema de Vendas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
@@ -12,42 +12,34 @@
         <aside class="sidebar">
             <div class="logo">LOGO</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="sidebar-item">
-                    <div class="icon">📈</div>
-                    <span>Dashboard</span>
+                <a href="Dashboard.html" class="sidebar-item">
+                    <div class="icon">📈</div><span>Dashboard</span>
                 </a>
-                <a href="vendas.html" class="sidebar-item">
-                    <div class="icon">🛒</div>
-                    <span>Vendas</span>
+                <a href="Vendas.html" class="sidebar-item">
+                    <div class="icon">🛒</div><span>Vendas</span>
                 </a>
-                <a href="produtos.html" class="sidebar-item">
-                    <div class="icon">📦</div>
-                    <span>Produtos</span>
+                <a href="Produtos.html" class="sidebar-item">
+                    <div class="icon">📦</div><span>Produtos</span>
                 </a>
-                <a href="clientes.html" class="sidebar-item">
-                    <div class="icon">👥</div>
-                    <span>Clientes</span>
+                <a href="Clientes.html" class="sidebar-item">
+                    <div class="icon">👥</div><span>Clientes</span>
                 </a>
-                <a href="estoque.html" class="sidebar-item">
-                    <div class="icon">🏢</div>
-                    <span>Estoque</span>
+                <a href="Estoque.html" class="sidebar-item">
+                    <div class="icon">🏢</div><span>Estoque</span>
                 </a>
-                <a href="relatorios.html" class="sidebar-item">
-                    <div class="icon">📄</div>
-                    <span>Relatório</span>
+                <a href="Relatorios.html" class="sidebar-item">
+                    <div class="icon">📄</div><span>Relatório</span>
                 </a>
-                <a href="#" class="sidebar-item active"> <div class="icon">⚙️</div>
-                    <span>Usuários</span>
+                <a href="Usuarios.html" class="sidebar-item">
+                    <div class="icon">⚙️</div><span>Usuários</span>
                 </a>
             </nav>
             <div class="sidebar-bottom">
                 <a href="#" class="sidebar-item">
-                    <div class="icon">🔧</div>
-                    <span>Configurações</span>
+                    <div class="icon">🔧</div><span>Configurações</span>
                 </a>
                 <a href="login.html" class="sidebar-item">
-                    <div class="icon">🚪</div>
-                    <span>Sair</span>
+                    <div class="icon">🚪</div><span>Sair</span>
                 </a>
             </div>
         </aside>
@@ -62,18 +54,18 @@
             </header>
 
             <section class="tools-section">
-                <div class="search-filter-group">
-                    <div class="search-input-container">
-                        <input type="text" class="search-input" placeholder="Buscar usuário...">
-                        <div class="search-icon">🔍</div>
-                    </div>
-                    <button class="filter-button">Filtrar</button>
+                <div class="search-input-container">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" class="search-input" placeholder="Buscar usuário...">
                 </div>
-                <a href="#" class="action-button">Cadastrar Usuário</a>
+                <div>
+                    <button class="filter-button">Filtrar</button>
+                    <a href="#" class="action-button">Cadastrar Usuário</a>
+                </div>
             </section>
 
-            <section class="users-table-container">
-                <table class="users-table">
+            <section class="table-container">
+                <table class="data-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -94,7 +86,7 @@
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         <tr>
@@ -106,7 +98,7 @@
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         <tr>
@@ -118,7 +110,7 @@
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         <tr>
@@ -130,7 +122,7 @@
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         </tbody>
@@ -144,5 +136,6 @@
             </section>
         </main>
     </div>
+    <script src="/js/main.js"></script>
 </body>
 </html>

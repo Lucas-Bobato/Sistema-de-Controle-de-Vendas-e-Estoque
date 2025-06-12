@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard do Sistema</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
         <aside class="sidebar">
             <div class="logo">LOGO</div>
             <nav class="sidebar-nav">
-                <a href="#" class="sidebar-item active">
+                <a href="Dashboard.html" class="sidebar-item">
                     <div class="icon">📈</div> <span>Dashboard</span>
                 </a>
                 <a href="Vendas.html" class="sidebar-item">
@@ -50,7 +50,7 @@
                     <div class="notification-icon">🔔</div> <div class="user-avatar"></div> </div>
             </header>
 
-            <section class="main-cards">
+            <section class="cards-grid">
                 <div class="card">
                     <h2 class="card-title">Vendas Hoje</h2>
                     <p class="card-value">R$ 1.250,00</p>
@@ -65,29 +65,27 @@
                 </div>
                 <div class="card">
                     <h2 class="card-title">Estoque Crítico</h2>
-                    <p class="card-value">3</p>
+                    <p class="card-value warning">3</p>
                 </div>
             </section>
 
-            <section class="chart-section">
-                <div class="chart-box">
+            <section class="cards-grid">
+                <div class="content-section">
                     <h3>Vendas nos Últimos 7 Dias</h3>
                     <div class="chart-placeholder">Gráfico de Vendas</div>
                 </div>
-                <div class="chart-box">
+                <div class="content-section">
                     <h3>Produtos Mais Vendidos</h3>
                     <div class="chart-placeholder">Gráfico de Produtos</div>
                 </div>
             </section>
 
-            <section class="recent-sales-section">
-                <div class="recent-sales-header">
-                    <h3>Últimas Vendas</h3>
-                    <a href="#" class="view-all-link">Ver todas</a>
-                </div>
-                <div class="recent-sales-table-placeholder">Tabela de Últimas Vendas</div>
+            <section class="table-container">
+                <h3>Últimas Vendas</h3>
+                <div class="chart-placeholder" style="height: 150px;">Tabela de Últimas Vendas</div>
             </section>
         </main>
     </div>
+    <script src="/js/main.js"></script>
 </body>
 </html>

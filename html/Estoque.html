@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Estoque - Sistema de Vendas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
@@ -12,41 +12,34 @@
         <aside class="sidebar">
             <div class="logo">LOGO</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="sidebar-item">
-                    <div class="icon">📈</div>
-                    <span>Dashboard</span>
+                <a href="Dashboard.html" class="sidebar-item">
+                    <div class="icon">📈</div><span>Dashboard</span>
                 </a>
-                <a href="vendas.html" class="sidebar-item">
-                    <div class="icon">🛒</div>
-                    <span>Vendas</span>
+                <a href="Vendas.html" class="sidebar-item">
+                    <div class="icon">🛒</div><span>Vendas</span>
                 </a>
-                <a href="produtos.html" class="sidebar-item">
-                    <div class="icon">📦</div>
-                    <span>Produtos</span>
+                <a href="Produtos.html" class="sidebar-item">
+                    <div class="icon">📦</div><span>Produtos</span>
                 </a>
-                <a href="clientes.html" class="sidebar-item">
-                    <div class="icon">👥</div>
-                    <span>Clientes</span>
+                <a href="Clientes.html" class="sidebar-item">
+                    <div class="icon">👥</div><span>Clientes</span>
                 </a>
-                <a href="#" class="sidebar-item active">
-                    <div class="icon">🏢</div> <span>Estoque</span>
+                <a href="Estoque.html" class="sidebar-item">
+                    <div class="icon">🏢</div><span>Estoque</span>
                 </a>
-                <a href="relatorios.html" class="sidebar-item">
-                    <div class="icon">📄</div>
-                    <span>Relatório</span>
+                <a href="Relatorios.html" class="sidebar-item">
+                    <div class="icon">📄</div><span>Relatório</span>
                 </a>
                 <a href="Usuarios.html" class="sidebar-item">
-                    <div class="icon">⚙️</div> <span>Usuários</span>
+                    <div class="icon">⚙️</div><span>Usuários</span>
                 </a>
             </nav>
             <div class="sidebar-bottom">
                 <a href="#" class="sidebar-item">
-                    <div class="icon">🔧</div>
-                    <span>Configurações</span>
+                    <div class="icon">🔧</div><span>Configurações</span>
                 </a>
                 <a href="login.html" class="sidebar-item">
-                    <div class="icon">🚪</div>
-                    <span>Sair</span>
+                    <div class="icon">🚪</div><span>Sair</span>
                 </a>
             </div>
         </aside>
@@ -60,79 +53,66 @@
                 </div>
             </header>
 
-            <section class="stock-cards">
+            <section class="cards-grid">
                 <div class="card">
                     <h2 class="card-title">Itens em Estoque</h2>
-                    <p class="card-value">1234</p> </div>
+                    <p class="card-value">1234</p>
+                </div>
                 <div class="card">
                     <h2 class="card-title">Estoque Crítico</h2>
-                    <p class="card-value">5</p> </div>
+                    <p class="card-value warning">5</p>
+                </div>
                 <div class="card">
                     <h2 class="card-title">Sem Estoque</h2>
-                    <p class="card-value">2</p> </div>
+                    <p class="card-value danger">2</p>
+                </div>
                 <div class="card">
                     <h2 class="card-title">Em Reposição</h2>
-                    <p class="card-value">8</p> </div>
-            </section>
-
-            <section class="critical-stock-section">
-                <div class="critical-stock-header">
-                    <h2>Itens em Estoque Crítico</h2>
+                    <p class="card-value">8</p>
                 </div>
-                <div class="critical-stock-cards">
-                    <div class="critical-item-card">
-                        <p class="item-code">Cód: PROD02</p>
-                        <p class="item-name">Camisa Algodão M - Azul</p>
-                        <p>Estoque Atual: <span>01</span></p>
-                        <p>Estoque Mínimo: <span>02</span></p>
-                        <p class="difference">Diferença: <span>-1</span></p>
-                        <div class="critical-item-actions">
-                            <div class="critical-item-action-icon">👁️</div> <div class="critical-item-action-icon">✏️</div> </div>
+            </section>
+            
+            <section class="content-section">
+                <h2>Itens em Estoque Crítico</h2>
+                <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="card">
+                         <h3 class="card-title">Cód: PROD02</h3>
+                         <p><strong>Camisa Algodão M - Azul</strong></p>
+                         <p>Estoque Atual: 01 / Mínimo: 02</p>
+                         <p class="card-value danger" style="font-size: 20px;">Diferença: -1</p>
                     </div>
-                    <div class="critical-item-card">
-                        <p class="item-code">Cód: PROD05</p>
-                        <p class="item-name">Caneca Mágica</p>
-                        <p>Estoque Atual: <span>00</span></p>
-                        <p>Estoque Mínimo: <span>05</span></p>
-                        <p class="difference">Diferença: <span>-5</span></p>
-                        <div class="critical-item-actions">
-                            <div class="critical-item-action-icon">👁️</div>
-                            <div class="critical-item-action-icon">✏️</div>
-                        </div>
+                     <div class="card">
+                         <h3 class="card-title">Cód: PROD05</h3>
+                         <p><strong>Caneca Mágica</strong></p>
+                         <p>Estoque Atual: 00 / Mínimo: 05</p>
+                         <p class="card-value danger" style="font-size: 20px;">Diferença: -5</p>
                     </div>
-                    <div class="critical-item-card">
-                        <p class="item-code">Cód: PROD10</p>
-                        <p class="item-name">Mouse Gamer RGB</p>
-                        <p>Estoque Atual: <span>03</span></p>
-                        <p>Estoque Mínimo: <span>07</span></p>
-                        <p class="difference">Diferença: <span>-4</span></p>
-                        <div class="critical-item-actions">
-                            <div class="critical-item-action-icon">👁️</div>
-                            <div class="critical-item-action-icon">✏️</div>
-                        </div>
+                     <div class="card">
+                         <h3 class="card-title">Cód: PROD10</h3>
+                         <p><strong>Mouse Gamer RGB</strong></p>
+                         <p>Estoque Atual: 03 / Mínimo: 07</p>
+                         <p class="card-value danger" style="font-size: 20px;">Diferença: -4</p>
                     </div>
                 </div>
             </section>
 
             <section class="tools-section">
-                <div class="search-filter-group">
-                    <div class="search-input-container">
-                        <input type="text" class="search-input" placeholder="Buscar produto no estoque...">
-                        <div class="search-icon">🔍</div>
-                    </div>
-                    <button class="filter-button">Filtrar</button>
+                <div class="search-input-container">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" class="search-input" placeholder="Buscar produto no estoque...">
                 </div>
-                <div class="action-buttons-group">
+                <div>
+                     <button class="filter-button">Filtrar</button>
                     <a href="#" class="action-button">+ Novo Lançamento</a>
-                    <a href="#" class="action-button">Extrair Relatório</a>
                 </div>
             </section>
 
-            <section class="products-table-container"> <table class="products-table"> <thead>
+            <section class="table-container">
+                <table class="data-table">
+                    <thead>
                         <tr>
                             <th>CÓDIGO</th>
                             <th>NOME DO PRODUTO</th>
-                            <th>CATEGORIA</th>
                             <th>PREÇO</th>
                             <th>EST. ATUAL</th>
                             <th>EST. MÍNIMO</th>
@@ -144,7 +124,6 @@
                         <tr>
                             <td>#PROD01</td>
                             <td>Tênis Esportivo</td>
-                            <td>Calçados</td>
                             <td>R$ 111,10</td>
                             <td>15</td>
                             <td>05</td>
@@ -152,49 +131,33 @@
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         <tr>
                             <td>#PROD02</td>
                             <td>Camisa Algodão</td>
-                            <td>Vestuário</td>
                             <td>R$ 45,99</td>
                             <td>01</td>
                             <td>02</td>
-                            <td>Crítico</td>
+                            <td class="status-critical">Crítico</td>
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#PROD03</td>
-                            <td>Fone Bluetooth</td>
-                            <td>Eletrônicos</td>
-                            <td>R$ 99,90</td>
-                            <td>02</td>
-                            <td>05</td>
-                            <td>Crítico</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         <tr>
                             <td>#PROD04</td>
                             <td>Mochila Escolar</td>
-                            <td>Acessórios</td>
                             <td>R$ 89,90</td>
                             <td>00</td>
                             <td>03</td>
-                            <td>Sem Estoque</td>
+                            <td class="status-out">Sem Estoque</td>
                             <td class="actions-cell">
                                 <div class="action-icon">👁️</div>
                                 <div class="action-icon">✏️</div>
-                                <div class="action-icon">❌</div>
+                                <div class="action-icon delete">❌</div>
                             </td>
                         </tr>
                         </tbody>
@@ -208,5 +171,6 @@
             </section>
         </main>
     </div>
+    <script src="/js/main.js"></script>
 </body>
 </html>

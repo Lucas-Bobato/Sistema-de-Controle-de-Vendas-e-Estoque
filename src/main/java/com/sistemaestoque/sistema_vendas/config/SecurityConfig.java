@@ -16,9 +16,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/static/**", "/error").permitAll() // Permite acesso à tela de login e recursos estáticos
-                .requestMatchers("/usuarios/**").hasRole("ADMIN") // Apenas ADMIN acessa a gestão de usuários
-                .anyRequest().authenticated() // Todas as outras requisições exigem autenticação
+                .requestMatchers("/login", "/styles/**", "/js/**", "/error").permitAll()
+                .requestMatchers("/usuarios/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login") // Define a página de login customizada

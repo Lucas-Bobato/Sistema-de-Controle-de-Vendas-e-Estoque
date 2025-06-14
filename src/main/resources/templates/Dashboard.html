@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
-<body>
+<body xmlns:th="http://www.thymeleaf.org">
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">LOGO</div>
@@ -53,30 +53,34 @@
             <section class="cards-grid">
                 <div class="card">
                     <h2 class="card-title">Vendas Hoje</h2>
-                    <p class="card-value">R$ 1.250,00</p>
+                    <p class="card-value" th:text="${vendasHoje}">R$ 0,00</p>
                 </div>
                 <div class="card">
                     <h2 class="card-title">Novos Clientes</h2>
-                    <p class="card-value">15</p>
+                    <p class="card-value" th:text="${novosClientesHoje}">0</p>
                 </div>
                 <div class="card">
                     <h2 class="card-title">Produtos Vendidos</h2>
-                    <p class="card-value">85</p>
+                    <p class="card-value" th:text="${produtosVendidosHoje}">0</p>
                 </div>
                 <div class="card">
                     <h2 class="card-title">Estoque Crítico</h2>
-                    <p class="card-value warning">3</p>
+                    <p class="card-value warning" th:text="${estoqueCritico}">0</p>
                 </div>
             </section>
 
             <section class="cards-grid">
                 <div class="content-section">
                     <h3>Vendas nos Últimos 7 Dias</h3>
-                    <div class="chart-placeholder">Gráfico de Vendas</div>
+                    <div class="chart-placeholder">
+                        <canvas id="vendasChart"></canvas>
+                    </div>
                 </div>
                 <div class="content-section">
                     <h3>Produtos Mais Vendidos</h3>
-                    <div class="chart-placeholder">Gráfico de Produtos</div>
+                     <div class="chart-placeholder">
+                        <canvas id="produtosChart"></canvas>
+                    </div>
                 </div>
             </section>
 
@@ -86,6 +90,9 @@
             </section>
         </main>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

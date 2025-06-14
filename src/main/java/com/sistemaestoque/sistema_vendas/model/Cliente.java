@@ -1,5 +1,6 @@
 package com.sistemaestoque.sistema_vendas.model;
 
+import java.time.LocalDate;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class Cliente {
     private String email;
     private String telefone;
     private String endereco;
+    private LocalDate dataCadastro;
 }

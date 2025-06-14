@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+    <aside class="sidebar" th:fragment="sidebar-layout">
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="Logo da Empresa">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="Dashboard.html" class="sidebar-item">
+                <span>Dashboard</span>
+            </a>
+            <a href="Vendas.html" class="sidebar-item">
+                <span>Vendas</span>
+            </a>
+            <a href="Produtos.html" class="sidebar-item">
+                <span>Produtos</span>
+            </a>
+            <a href="Clientes.html" class="sidebar-item">
+                <span>Clientes</span>
+            </a>
+            <a href="Estoque.html" class="sidebar-item">
+                <span>Estoque</span>
+            </a>
+            <a href="Relatorios.html" class="sidebar-item">
+                <span>Relatório</span>
+            </a>
+            <a href="Usuarios.html" class="sidebar-item">
+                <span>Usuários</span>
+            </a>
+        </nav>
+        <div class="sidebar-bottom">
+            <a href="#" class="sidebar-item">
+                <span>Configurações</span>
+            </a>
+            <a href="login.html" class="sidebar-item">
+                <span>Sair</span>
+            </a>
+        </div>
+    </aside>
+
+</body>
+</html>

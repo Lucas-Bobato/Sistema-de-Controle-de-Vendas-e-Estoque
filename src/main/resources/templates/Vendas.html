@@ -9,46 +9,7 @@
 </head>
 <body>
     <div class="dashboard-layout">
-        <aside class="sidebar">
-            <div class="logo">LOGO</div>
-            <nav class="sidebar-nav">
-                <a href="Dashboard.html" class="sidebar-item">
-                    <div class="icon">📈</div>
-                    <span>Dashboard</span>
-                </a>
-                <a href="Vendas.html" class="sidebar-item"> <div class="icon">🛒</div> <span>Vendas</span>
-                </a>
-                <a href="Produtos.html" class="sidebar-item">
-                    <div class="icon">📦</div>
-                    <span>Produtos</span>
-                </a>
-                <a href="Clientes.html" class="sidebar-item">
-                    <div class="icon">👥</div>
-                    <span>Clientes</span>
-                </a>
-                <a href="Estoque.html" class="sidebar-item">
-                    <div class="icon">🏢</div>
-                    <span>Estoque</span>
-                </a>
-                <a href="Relatorios.html" class="sidebar-item">
-                    <div class="icon">📄</div>
-                    <span>Relatório</span>
-                </a>
-                <a href="Usuarios.html" class="sidebar-item">
-                    <div class="icon">⚙️</div> <span>Usuários</span>
-                </a>
-            </nav>
-            <div class="sidebar-bottom">
-                <a href="#" class="sidebar-item">
-                    <div class="icon">🔧</div>
-                    <span>Configurações</span>
-                </a>
-                <a href="login.html" class="sidebar-item">
-                    <div class="icon">🚪</div>
-                    <span>Sair</span>
-                </a>
-            </div>
-        </aside>
+        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
         <main class="main-content">
             <header class="main-header">

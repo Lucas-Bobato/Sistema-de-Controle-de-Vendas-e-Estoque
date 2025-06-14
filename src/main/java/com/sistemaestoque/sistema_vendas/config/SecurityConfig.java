@@ -16,20 +16,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/styles/**", "/js/**", "/images/**", "/fragments/**").permitAll()
+                // PERMITE ACESSO PÚBLICO ÀS PASTAS DE RECURSOS ESTÁTICOS
+                .requestMatchers("/styles/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/usuarios/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login") // Define a página de login customizada
-                .defaultSuccessUrl("/Dashboard.html", true) // Redireciona para o dashboard após o login
+                .loginPage("/login")
+                .defaultSuccessUrl("/Dashboard.html", true)
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout") // Redireciona para o login após o logout
+                .logoutSuccessUrl("/login?logout")
                 .permitAll()
             )
-            .csrf(csrf -> csrf.disable()); // Desabilitar CSRF para simplificar (em produção, configure corretamente)
+            .csrf(csrf -> csrf.disable());
         return http.build();
     }
 

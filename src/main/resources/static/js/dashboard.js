@@ -1,53 +1,74 @@
-        document.addEventListener('DOMContentLoaded', function() {
-            // Dados de exemplo - o ideal é carregar isso do controller
-            const vendasData = {
-                labels: ['D-6', 'D-5', 'D-4', 'D-3', 'D-2', 'Ontem', 'Hoje'],
-                datasets: [{
-                    label: 'Vendas (R$)',
-                    data: [800, 1200, 950, 1500, 1300, 1800, 2050],
-                    backgroundColor: 'rgba(74, 144, 226, 0.2)',
-                    borderColor: 'rgba(74, 144, 226, 1)',
-                    borderWidth: 1,
-                    tension: 0.1
-                }]
-            };
+document.addEventListener('DOMContentLoaded', async function() {
+    
+    // Função para gerar cores aleatórias para os gráficos de barra
+    const generateRandomColors = (numColors) => {
+        const colors = [];
+        for (let i = 0; i < numColors; i++) {
+            const r = Math.floor(Math.random() * 255);
+            const g = Math.floor(Math.random() * 255);
+            const b = Math.floor(Math.random() * 255);
+            colors.push(`rgba(${r}, ${g}, ${b}, 0.5)`);
+        }
+        return colors;
+    };
 
-            const produtosData = {
-                labels: ['Produto A', 'Produto B', 'Produto C', 'Produto D', 'Produto E'],
-                datasets: [{
-                    label: 'Unidades Vendidas',
-                    data: [300, 250, 180, 120, 90],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
-            
-            // Gráfico de Vendas
-            const vendasCtx = document.getElementById('vendasChart').getContext('2d');
-            new Chart(vendasCtx, {
-                type: 'line',
-                data: vendasData,
-                options: { responsive: true, maintainAspectRatio: false }
-            });
+    try {
+        // Fetch data para o Gráfico de Vendas
+        const vendasResponse = await fetch('/api/vendas/ultimos7dias');
+        const vendasDataRaw = await vendasResponse.json();
+        
+        const vendasData = {
+            labels: vendasDataRaw.labels,
+            datasets: [{
+                label: 'Vendas (R$)',
+                data: vendasDataRaw.values,
+                backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                borderColor: 'rgba(74, 144, 226, 1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true
+            }]
+        };
 
-            // Gráfico de Produtos
-            const produtosCtx = document.getElementById('produtosChart').getContext('2d');
-            new Chart(produtosCtx, {
-                type: 'bar',
-                data: produtosData,
-                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
-            });
+        const vendasCtx = document.getElementById('vendasChart').getContext('2d');
+        new Chart(vendasCtx, {
+            type: 'line',
+            data: vendasData,
+            options: { responsive: true, maintainAspectRatio: false }
         });
+
+    } catch (error) {
+        console.error('Erro ao carregar dados de vendas:', error);
+        document.getElementById('vendasChart').parentElement.innerHTML = '<p>Não foi possível carregar o gráfico de vendas.</p>';
+    }
+
+    try {
+        // Fetch data para o Gráfico de Produtos
+        const produtosResponse = await fetch('/api/produtos/mais-vendidos');
+        const produtosDataRaw = await produtosResponse.json();
+
+        const backgroundColors = generateRandomColors(produtosDataRaw.labels.length);
+        
+        const produtosData = {
+            labels: produtosDataRaw.labels,
+            datasets: [{
+                label: 'Unidades Vendidas',
+                data: produtosDataRaw.values,
+                backgroundColor: backgroundColors,
+                borderColor: backgroundColors.map(color => color.replace('0.5', '1')),
+                borderWidth: 1
+            }]
+        };
+        
+        const produtosCtx = document.getElementById('produtosChart').getContext('2d');
+        new Chart(produtosCtx, {
+            type: 'bar',
+            data: produtosData,
+            options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
+        });
+
+    } catch (error) {
+        console.error('Erro ao carregar dados de produtos:', error);
+        document.getElementById('produtosChart').parentElement.innerHTML = '<p>Não foi possível carregar o gráfico de produtos.</p>';
+    }
+});

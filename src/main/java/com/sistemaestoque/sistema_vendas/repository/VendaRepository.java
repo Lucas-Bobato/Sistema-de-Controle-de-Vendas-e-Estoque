@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface VendaRepository extends JpaRepository<Venda, Long> {
@@ -18,4 +19,7 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
     // Soma a quantidade de todos os itens vendidos em uma data específica
     @Query("SELECT SUM(iv.quantidade) FROM Venda v JOIN v.itens iv WHERE v.dataVenda = :data")
     Optional<Long> findTotalProdutosVendidosByData(@Param("data") LocalDate data);
+
+    // Retorna as últimas 5 vendas
+    List<Venda> findTop5ByOrderByDataVendaDesc();
 }

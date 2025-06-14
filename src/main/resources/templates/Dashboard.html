@@ -1,66 +1,92 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard do Sistema</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-</head>
-<body xmlns:th="http://www.thymeleaf.org">
-    <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard do Sistema</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/style.css">
+    </head>
+    <body>
+        <div class="dashboard-layout">
+            <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Dashboard</h1>
-                <div class="user-profile">
-                    <div class="notification-icon">🔔</div> <div class="user-avatar"></div> </div>
-            </header>
-
-            <section class="cards-grid">
-                <div class="card">
-                    <h2 class="card-title">Vendas Hoje</h2>
-                    <p class="card-value" th:text="${vendasHoje}">R$ 0,00</p>
-                </div>
-                <div class="card">
-                    <h2 class="card-title">Novos Clientes</h2>
-                    <p class="card-value" th:text="${novosClientesHoje}">0</p>
-                </div>
-                <div class="card">
-                    <h2 class="card-title">Produtos Vendidos</h2>
-                    <p class="card-value" th:text="${produtosVendidosHoje}">0</p>
-                </div>
-                <div class="card">
-                    <h2 class="card-title">Estoque Crítico</h2>
-                    <p class="card-value warning" th:text="${estoqueCritico}">0</p>
-                </div>
-            </section>
-
-            <section class="cards-grid">
-                <div class="content-section">
-                    <h3>Vendas nos Últimos 7 Dias</h3>
-                    <div class="chart-placeholder">
-                        <canvas id="vendasChart"></canvas>
+            <main class="main-content">
+                <header class="main-header">
+                    <h1>Dashboard</h1>
+                    <div class="user-profile">
+                        <div class="notification-icon">🔔</div>
+                        <div class="user-avatar"></div>
                     </div>
-                </div>
-                <div class="content-section">
-                    <h3>Produtos Mais Vendidos</h3>
-                     <div class="chart-placeholder">
-                        <canvas id="produtosChart"></canvas>
-                    </div>
-                </div>
-            </section>
+                </header>
 
-            <section class="table-container">
-                <h3>Últimas Vendas</h3>
-                <div class="chart-placeholder" style="height: 150px;">Tabela de Últimas Vendas</div>
-            </section>
-        </main>
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/dashboard.js"></script>
-</body>
+                <section class="cards-grid">
+                    <div class="card">
+                        <h2 class="card-title">Vendas Hoje</h2>
+                        <p class="card-value" th:text="${vendasHoje}">R$ 0,00</p>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title">Novos Clientes</h2>
+                        <p class="card-value" th:text="${novosClientesHoje}">0</p>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title">Produtos Vendidos</h2>
+                        <p class="card-value" th:text="${produtosVendidosHoje}">0</p>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title">Estoque Crítico</h2>
+                        <p class="card-value warning" th:text="${estoqueCritico}">0</p>
+                    </div>
+                </section>
+
+                <section class="cards-grid">
+                    <div class="content-section">
+                        <h3>Vendas nos Últimos 7 Dias</h3>
+                        <div class="chart-placeholder">
+                            <canvas id="vendasChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <h3>Produtos Mais Vendidos</h3>
+                        <div class="chart-placeholder">
+                            <canvas id="produtosChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="table-container">
+                    <h3>Últimas Vendas</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nº PEDIDO</th>
+                                <th>CLIENTE</th>
+                                <th>DATA</th>
+                                <th>VALOR TOTAL</th>
+                                <th>VENDEDOR</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="venda : ${ultimasVendas}">
+                                <td th:text="'#' + ${venda.id}">#00000</td>
+                                <td th:text="${venda.cliente != null ? venda.cliente.razaoSocial : 'N/A'}">Nome Cliente</td>
+                                <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy')}">dd/MM/yyyy</td>
+                                <td th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorTotal, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                                <td th:text="${venda.vendedor != null ? venda.vendedor.nome : 'N/A'}">Nome Vendedor</td>
+                                <td th:text="${venda.status}">Status</td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(ultimasVendas)}">
+                                <td colspan="6" style="text-align: center;">Nenhuma venda registrada recentemente.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/dashboard.js"></script>
+    </body>
 </html>

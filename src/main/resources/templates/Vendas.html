@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Pedidos - Sistema de Vendas</title>
+    <title>Gerenciar Vendas - Sistema de Vendas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
@@ -18,13 +18,13 @@
             </header>
 
             <section class="tools-section">
-                <div class="search-input-container">
+                <form th:action="@{/vendas}" method="get" class="search-input-container">
                     <div class="search-icon">🔍</div>
-                    <input type="text" class="search-input" placeholder="Buscar pedido...">
-                </div>
+                    <input type="text" name="termo" class="search-input" placeholder="Buscar por cliente ou vendedor..." th:value="${termo}">
+                </form>
                 <div>
-                    <button class="filter-button">Filtrar</button>
-                    <a href="#" class="new-order-button">+ Novo Pedido</a>
+                    <a th:href="@{/vendas}" class="filter-button">Limpar Busca</a>
+                    <a href="/vendas/novo" class="new-order-button">+ Nova Venda</a>
                 </div>
             </section>
 
@@ -32,62 +32,63 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Nº PEDIDO</th>
-                            <th>CLIENTE</th>
-                            <th>DATA DO PEDIDO</th>
-                            <th>STATUS</th>
-                            <th>VALOR TOTAL</th>
-                            <th>VENDEDOR</th>
+                            <th>
+                                <a th:href="@{/vendas(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}">
+                                    Nº PEDIDO
+                                    <span th:if="${sortField == 'id'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/vendas(sortField='cliente.razaoSocial', sortDir=${reverseSortDir}, termo=${termo})}">
+                                    CLIENTE
+                                    <span th:if="${sortField == 'cliente.razaoSocial'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/vendas(sortField='dataVenda', sortDir=${reverseSortDir}, termo=${termo})}">
+                                    DATA DO PEDIDO
+                                    <span th:if="${sortField == 'dataVenda'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/vendas(sortField='status', sortDir=${reverseSortDir}, termo=${termo})}">
+                                    STATUS
+                                    <span th:if="${sortField == 'status'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/vendas(sortField='valorTotal', sortDir=${reverseSortDir}, termo=${termo})}">
+                                    VALOR TOTAL
+                                    <span th:if="${sortField == 'valorTotal'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/vendas(sortField='vendedor.nome', sortDir=${reverseSortDir}, termo=${termo})}">
+                                    VENDEDOR
+                                    <span th:if="${sortField == 'vendedor.nome'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                                </a>
+                            </th>
                             <th>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#00105</td>
-                            <td>Luiza Costa</td>
-                            <td>05/06/2025</td>
-                            <td>Concluído</td>
-                            <td>R$ 350,00</td>
-                            <td>Ana C.</td>
+                        <tr th:each="venda : ${vendas}">
+                            <td th:text="'#' + ${venda.id}">#00105</td>
+                            <td th:text="${venda.cliente?.razaoSocial}">Cliente</td>
+                            <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy')}">dd/MM/yyyy</td>
+                            <td th:text="${venda.status}">Concluído</td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorTotal, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                            <td th:text="${venda.vendedor?.nome}">Vendedor</td>
                             <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div> </td>
-                        </tr>
-                        <tr>
-                            <td>#00104</td>
-                            <td>João Silva</td>
-                            <td>04/06/2025</td>
-                            <td>Pendente</td>
-                            <td>R$ 120,00</td>
-                            <td>Pedro A.</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
+                                <a th:href="@{/vendas/editar/{id}(id=${venda.id})}" class="action-icon">✏️</a>
+                                <a th:href="@{/vendas/deletar/{id}(id=${venda.id})}" class="action-icon delete" title="Excluir">❌</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>#00103</td>
-                            <td>Mariana Souza</td>
-                            <td>03/06/2025</td>
-                            <td>Concluído</td>
-                            <td>R$ 500,00</td>
-                            <td>Ana C.</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
+                        <tr th:if="${#lists.isEmpty(vendas)}">
+                            <td colspan="7" style="text-align: center;">Nenhuma venda encontrada.</td>
                         </tr>
-                        </tbody>
+                    </tbody>
                 </table>
-            </section>
-
-            <section class="pagination">
-                <button class="pagination-button">Anterior</button>
-                <span class="pagination-info">Página 1 de 10</span>
-                <button class="pagination-button">Próxima</button>
             </section>
         </main>
     </div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Exclusão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/form.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Confirmar Exclusão de Venda</h1>
+            </header>
+            <section class="content-section">
+                <p>Você tem certeza que deseja excluir permanentemente a seguinte venda?</p>
+                <div class="confirmation-box">
+                    <strong>Nº Pedido:</strong> <span th:text="'#' + ${venda.id}"></span><br/>
+                    <strong>Cliente:</strong> <span th:text="${venda.cliente?.razaoSocial}"></span><br/>
+                    <strong>Data:</strong> <span th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy')}"></span><br/>
+                    <strong>Valor Total:</strong> <span th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorTotal, 1, 'POINT', 2, 'COMMA')}"></span><br/>
+                </div>
+                <form th:action="@{/vendas/deletar/{id}(id=${venda.id})}" method="post" class="form-actions">
+                    <button type="submit" class="action-button" style="background-color: var(--danger-color);">Confirmar Exclusão</button>
+                    <a th:href="@{/vendas}" class="action-button" style="background-color: #777;">Cancelar</a>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

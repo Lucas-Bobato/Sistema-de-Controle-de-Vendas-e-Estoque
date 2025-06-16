@@ -12,13 +12,11 @@
         <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
         <main class="main-content">
-            <header class="main-header">
-                <h1>Relatórios</h1>
-                <div class="user-profile">
-                    <div class="notification-icon">🔔</div>
-                    <div class="user-avatar"></div>
-                </div>
-            </header>
+            <main class="main-content">
+                <header class="main-header">
+                    <h1>Relatórios</h1>
+                    <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+                </header>
 
             <section class="content-section">
                 <h2>Selecionar Tipo de Relatório</h2>

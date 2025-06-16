@@ -14,10 +14,7 @@
         <main class="main-content">
             <header class="main-header">
                 <h1>Gerenciar Clientes</h1>
-                <div class="user-profile">
-                    <div class="notification-icon">🔔</div>
-                    <div class="user-avatar"></div>
-                </div>
+                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
             </header>
 
             <section class="tools-section">

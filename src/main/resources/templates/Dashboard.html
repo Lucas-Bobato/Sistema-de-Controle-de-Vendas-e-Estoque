@@ -12,14 +12,11 @@
             <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
             <main class="main-content">
+                
                 <header class="main-header">
                     <h1>Dashboard</h1>
-                    <div class="user-profile">
-                        <div class="notification-icon">🔔</div>
-                        <div class="user-avatar"></div>
-                    </div>
+                    <div th:replace="~{fragments/user-profile :: header-profile}"></div>
                 </header>
-
                 <section class="cards-grid">
                     <div class="card">
                         <h2 class="card-title">Vendas Hoje</h2>

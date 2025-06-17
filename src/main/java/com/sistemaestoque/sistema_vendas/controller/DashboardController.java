@@ -81,21 +81,7 @@ public class DashboardController {
         data.put("values", topProdutos.stream().map(ProdutoMaisVendidoDTO::getQuantidadeVendida).collect(Collectors.toList()));
         return data;
     }
-    
-    @GetMapping("/Clientes.html")
-    public String clientes() {
-        return "Clientes"; // Retorna Clientes.html
-    }
 
-    @GetMapping("/Produtos.html")
-    public String produtos() {
-        return "Produtos"; // Retorna Produtos.html
-    }
-    
-    @GetMapping("/Vendas.html")
-    public String vendas() {
-        return "Vendas"; // Retorna Vendas.html
-    }
     
     @GetMapping("/Estoque.html")
     public String estoque() {

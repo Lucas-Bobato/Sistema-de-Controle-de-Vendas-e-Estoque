@@ -99,7 +99,8 @@ public class DataInitializer implements CommandLineRunner {
         Cliente cliente = new Cliente();
         cliente.setRazaoSocial(razaoSocial);
         cliente.setCnpj(cnpj);
-        cliente.setEmail("contato@" + razaoSocial.replaceAll("\\s+", "").toLowerCase() + ".com");
+        String emailDomain = razaoSocial.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        cliente.setEmail("contato@" + emailDomain + ".com");
         cliente.setTelefone("(11) 98888-7777");
         cliente.setEndereco("Endereço Padrão");
         cliente.setDataCadastro(LocalDate.now());

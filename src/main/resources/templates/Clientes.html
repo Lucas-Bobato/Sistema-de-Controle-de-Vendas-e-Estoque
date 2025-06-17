@@ -1,97 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Clientes - Sistema de Vendas</title>
+    <title>Gerenciar Clientes</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
-
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Gerenciar Clientes</h1>
-                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-            </header>
-
-            <section class="tools-section">
-                <div class="search-input-container">
-                    <div class="search-icon">🔍</div>
-                    <input type="text" class="search-input" placeholder="Buscar cliente...">
-                </div>
-                <div>
-                    <button class="filter-button">Filtrar</button>
-                    <a href="#" class="action-button">Cadastrar Cliente</a>
-                </div>
-            </section>
-
-            <section class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>CÓDIGO</th>
-                            <th>RAZÃO SOCIAL</th>
-                            <th>CNPJ</th>
-                            <th>E-MAIL</th>
-                            <th>TELEFONE</th>
-                            <th>ENDEREÇO</th>
-                            <th>AÇÕES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#ID001</td>
-                            <td>TechSoft Ltda.</td>
-                            <td>11.111.111/1111-11</td>
-                            <td>contato@techsoft.com</td>
-                            <td>(11) 91111-1111</td>
-                            <td>R. ABC, 123</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#ID002</td>
-                            <td>Inovação S.A.</td>
-                            <td>22.222.222/2222-22</td>
-                            <td>info@inovacao.net</td>
-                            <td>(22) 92222-2222</td>
-                            <td>Av. XYZ, 456</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#ID003</td>
-                            <td>Digital Solutions</td>
-                            <td>33.333.333/3333-33</td>
-                            <td>suporte@digital.com</td>
-                            <td>(33) 93333-3333</td>
-                            <td>Praça Alfa, 789</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        </tbody>
-                </table>
-            </section>
-
-            <section class="pagination">
-                <button class="pagination-button">Anterior</button>
-                <span class="pagination-info">Página 1 de 10</span>
-                <button class="pagination-button">Próxima</button>
-            </section>
-        </main>
-    </div>
-    <script src="/js/main.js"></script>
+<div class="dashboard-layout">
+    <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+    <main class="main-content">
+        <header class="main-header">
+            <h1>Gerenciar Clientes</h1>
+            <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
+        <section class="tools-section">
+            <form th:action="@{/clientes}" method="get" class="search-input-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" name="termo" class="search-input" placeholder="Buscar por razão social ou CNPJ..." th:value="${termo}">
+            </form>
+            <div>
+                <a th:href="@{/clientes/novo}" class="action-button">Cadastrar Cliente</a>
+            </div>
+        </section>
+        <section class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th><a th:href="@{/clientes(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}">CÓDIGO <span th:if="${sortField=='id'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                        <th><a th:href="@{/clientes(sortField='razaoSocial', sortDir=${reverseSortDir}, termo=${termo})}">RAZÃO SOCIAL <span th:if="${sortField=='razaoSocial'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                        <th>CNPJ</th>
+                        <th>E-MAIL</th>
+                        <th>TELEFONE</th>
+                        <th>ENDEREÇO</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <td th:text="'#ID' + ${cliente.id}">#ID001</td>
+                        <td th:text="${cliente.razaoSocial}">TechSoft Ltda.</td>
+                        <td th:text="${cliente.cnpj}">11.111.111/1111-11</td>
+                        <td th:text="${cliente.email}">contato@techsoft.com</td>
+                        <td th:text="${cliente.telefone}">(11) 91111-1111</td>
+                        <td th:text="${cliente.endereco}">R. ABC, 123</td>
+                        <td class="actions-cell">
+                            <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="action-icon" title="Editar">✏️</a>
+                            <a th:href="@{/clientes/deletar/{id}(id=${cliente.id})}" class="action-icon delete" title="Excluir">❌</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
 </body>
 </html>

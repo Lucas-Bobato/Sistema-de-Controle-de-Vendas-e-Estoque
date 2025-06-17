@@ -1,42 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Produtos - Sistema de Vendas</title>
+    <title>Gerenciar Produtos</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
-
         <main class="main-content">
             <header class="main-header">
                 <h1>Gerenciador de Produtos</h1>
                 <div th:replace="~{fragments/user-profile :: header-profile}"></div>
             </header>
-
             <section class="tools-section">
-                <div class="search-input-container">
+                <form th:action="@{/produtos}" method="get" class="search-input-container">
                     <div class="search-icon">🔍</div>
-                    <input type="text" class="search-input" placeholder="Buscar produto...">
-                </div>
+                    <input type="text" name="termo" class="search-input" placeholder="Buscar produto..." th:value="${termo}">
+                </form>
                 <div>
-                    <button class="filter-button">Filtrar</button>
-                    <a href="#" class="action-button">+ Novo Produto</a>
-                    <a href="#" class="action-button">Extrair Relatório</a>
+                    <a th:href="@{/produtos/novo}" class="action-button">+ Novo Produto</a>
+                    <a th:href="@{/produtos/exportar/csv}" class="action-button">Extrair Relatório</a>
                 </div>
             </section>
-
             <section class="table-container">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>CÓDIGO</th>
-                            <th>NOME DO PRODUTO</th>
-                            <th>CATEGORIA</th>
-                            <th>PREÇO</th>
+                            <th><a th:href="@{/produtos(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}">CÓDIGO <span th:if="${sortField=='id'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/produtos(sortField='nome', sortDir=${reverseSortDir}, termo=${termo})}">NOME DO PRODUTO <span th:if="${sortField=='nome'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/produtos(sortField='categoria', sortDir=${reverseSortDir}, termo=${termo})}">CATEGORIA <span th:if="${sortField=='categoria'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/produtos(sortField='preco', sortDir=${reverseSortDir}, termo=${termo})}">PREÇO <span th:if="${sortField=='preco'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
                             <th>EST. ATUAL</th>
                             <th>EST. MÍNIMO</th>
                             <th>STATUS</th>
@@ -44,59 +39,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#PROD01</td>
-                            <td>Tênis Esportivo</td>
-                            <td>Calçados</td>
-                            <td>R$ 111,10</td>
-                            <td>06</td>
-                            <td>07</td>
-                            <td>Disponível</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
+                        <tr th:each="produto : ${produtos}">
+                            <td th:text="'#PROD' + ${produto.id}">#PROD01</td>
+                            <td th:text="${produto.nome}">Tênis Esportivo</td>
+                            <td th:text="${produto.categoria}">Calçados</td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2, 'COMMA')}">R$ 111,10</td>
+                            <td th:text="${produto.quantidadeEstoque}">06</td>
+                            <td th:text="${produto.estoqueMinimo}">07</td>
+                            <td>
+                                <span th:if="${produto.quantidadeEstoque > produto.estoqueMinimo}" th:text="Disponível">Disponível</span>
+                                <span th:if="${produto.quantidadeEstoque <= produto.estoqueMinimo and produto.quantidadeEstoque > 0}" class="status-critical" th:text="Crítico">Crítico</span>
+                                <span th:if="${produto.quantidadeEstoque <= 0}" class="status-out" th:text="'Sem Estoque'">Sem Estoque</span>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>#PROD02</td>
-                            <td>Camiseta Algodão</td>
-                            <td>Vestuário</td>
-                            <td>R$ 45,99</td>
-                            <td>20</td>
-                            <td>10</td>
-                            <td>Disponível</td>
                             <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#PROD03</td>
-                            <td>Fone Bluetooth</td>
-                            <td>Eletrônicos</td>
-                            <td>R$ 99,90</td>
-                            <td>02</td>
-                            <td>05</td>
-                            <td class="status-critical">Crítico</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
+                                <a th:href="@{/produtos/editar/{id}(id=${produto.id})}" class="action-icon" title="Editar">✏️</a>
+                                <a th:href="@{/produtos/deletar/{id}(id=${produto.id})}" class="action-icon delete" title="Excluir">❌</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-
-            <section class="pagination">
-                <button class="pagination-button">Anterior</button>
-                <span class="pagination-info">Página 1 de 10</span>
-                <button class="pagination-button">Próxima</button>
-            </section>
         </main>
     </div>
-    <script src="/js/main.js"></script>
 </body>
 </html>

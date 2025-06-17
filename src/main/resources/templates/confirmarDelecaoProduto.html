@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Exclusão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/form.css">
+</head>
+<body>
+<div class="dashboard-layout">
+    <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+    <main class="main-content">
+        <header class="main-header">
+            <h1>Confirmar Exclusão de Produto</h1>
+        </header>
+        <section class="content-section">
+            <p>Você tem certeza que deseja excluir permanentemente o seguinte produto?</p>
+            <div class="confirmation-box">
+                <strong>ID:</strong> <span th:text="${produto.id}"></span><br/>
+                <strong>Nome:</strong> <span th:text="${produto.nome}"></span><br/>
+                <strong>Categoria:</strong> <span th:text="${produto.categoria}"></span><br/>
+            </div>
+            <form th:action="@{/produtos/deletar/{id}(id=${produto.id})}" method="post" class="form-actions">
+                <button type="submit" class="action-button" style="background-color: var(--danger-color);">Confirmar Exclusão</button>
+                <a th:href="@{/produtos}" class="action-button" style="background-color: #777;">Cancelar</a>
+            </form>
+        </section>
+    </main>
+</div>
+</body>
+</html>

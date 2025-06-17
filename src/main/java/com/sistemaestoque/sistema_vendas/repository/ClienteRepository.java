@@ -4,6 +4,8 @@ import com.sistemaestoque.sistema_vendas.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
+import java.util.List;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
@@ -11,4 +13,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     long countByDataCadastro(LocalDate dataCadastro);
 
     Optional<Cliente> findByCnpj(String cnpj);
+
+    List<Cliente> findByRazaoSocialContainingIgnoreCaseOrCnpjContainingIgnoreCase(String razaoSocial, String cnpj, Sort sort);
 }

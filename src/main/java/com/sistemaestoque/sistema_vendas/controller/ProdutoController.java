@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -20,19 +21,41 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    // MÉTODO ADICIONADO PARA CORRIGIR O ERRO 404
+    @GetMapping("/estoque")
+    public String paginaEstoque(Model model) {
+        model.addAttribute("totalItens", produtoService.getTotalItensEmEstoque());
+        model.addAttribute("estoqueCritico", produtoService.getContagemEstoqueCritico());
+        model.addAttribute("semEstoque", produtoService.getContagemSemEstoque());
+        model.addAttribute("produtosCriticos", produtoService.listarProdutosComEstoqueCritico());
+        model.addAttribute("todosProdutos", produtoService.listarTodos(Sort.by("id")));
+        return "Estoque";
+    }
+
     @GetMapping
     public String listarProdutos(@RequestParam(required = false) String termo,
                                 @RequestParam(defaultValue = "id") String sortField,
                                 @RequestParam(defaultValue = "asc") String sortDir,
                                 Model model) {
 
-        Sort sort = Sort.by(sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortField);
         List<Produto> produtos;
+        Sort.Direction direction = sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
 
-        if (termo != null && !termo.isEmpty()) {
-            produtos = produtoService.buscar(termo, sort);
+        if (sortField.equals("lucro") || sortField.equals("margem")) {
+            produtos = produtoService.buscar(termo, Sort.unsorted()); 
+            
+            Comparator<Produto> comparator = sortField.equals("lucro")
+                ? Comparator.comparing(Produto::getLucro)
+                : Comparator.comparing(Produto::getMargem);
+
+            if (direction == Sort.Direction.DESC) {
+                comparator = comparator.reversed();
+            }
+            produtos.sort(comparator);
+
         } else {
-            produtos = produtoService.listarTodos(sort);
+            Sort sort = Sort.by(direction, sortField);
+            produtos = produtoService.buscar(termo, sort);
         }
 
         model.addAttribute("produtos", produtos);
@@ -43,7 +66,8 @@ public class ProdutoController {
 
         return "Produtos";
     }
-
+    
+    // ...outros métodos (novo, editar, salvar, etc. permanecem os mesmos)...
     @GetMapping("/novo")
     public String novoProdutoForm(Model model) {
         model.addAttribute("produto", new Produto());
@@ -82,17 +106,18 @@ public class ProdutoController {
         response.setHeader("Content-Disposition", "attachment; file=relatorio-produtos.csv");
 
         try (PrintWriter writer = response.getWriter()) {
-            writer.println("ID,NOME,CATEGORIA,PRECO,ESTOQUE_ATUAL,ESTOQUE_MINIMO");
+            writer.println("ID,NOME,CATEGORIA,PRECO,CUSTO,ESTOQUE_ATUAL,ESTOQUE_MINIMO");
 
             Sort sort = Sort.by(Sort.Direction.ASC, "id");
             List<Produto> produtos = produtoService.listarTodos(sort);
 
             for (Produto produto : produtos) {
-                writer.println(String.format("%d,%s,%s,%.2f,%d,%d",
+                writer.println(String.format("%d,%s,%s,%.2f,%.2f,%d,%d",
                         produto.getId(),
                         produto.getNome(),
                         produto.getCategoria(),
                         produto.getPreco(),
+                        produto.getCusto(),
                         produto.getQuantidadeEstoque(),
                         produto.getEstoqueMinimo()));
             }

@@ -82,12 +82,6 @@ public class DashboardController {
         return data;
     }
 
-    
-    @GetMapping("/Estoque.html")
-    public String estoque() {
-        return "Estoque"; // Retorna Estoque.html
-    }
-
     @GetMapping("/Relatorios.html")
     public String relatorios() {
         return "Relatorios"; // Retorna Relatorios.html

@@ -30,10 +30,11 @@
                         <tr>
                             <th><a th:href="@{/produtos(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}">CÓDIGO <span th:if="${sortField=='id'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
                             <th><a th:href="@{/produtos(sortField='nome', sortDir=${reverseSortDir}, termo=${termo})}">NOME DO PRODUTO <span th:if="${sortField=='nome'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/produtos(sortField='categoria', sortDir=${reverseSortDir}, termo=${termo})}">CATEGORIA <span th:if="${sortField=='categoria'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
                             <th><a th:href="@{/produtos(sortField='preco', sortDir=${reverseSortDir}, termo=${termo})}">PREÇO <span th:if="${sortField=='preco'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/produtos(sortField='custo', sortDir=${reverseSortDir}, termo=${termo})}">CUSTO <span th:if="${sortField=='custo'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/produtos(sortField='lucro', sortDir=${reverseSortDir}, termo=${termo})}">LUCRO <span th:if="${sortField=='lucro'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/produtos(sortField='margem', sortDir=${reverseSortDir}, termo=${termo})}">MARGEM (%) <span th:if="${sortField=='margem'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
                             <th>EST. ATUAL</th>
-                            <th>EST. MÍNIMO</th>
                             <th>STATUS</th>
                             <th>AÇÕES</th>
                         </tr>
@@ -42,10 +43,11 @@
                         <tr th:each="produto : ${produtos}">
                             <td th:text="'#PROD' + ${produto.id}">#PROD01</td>
                             <td th:text="${produto.nome}">Tênis Esportivo</td>
-                            <td th:text="${produto.categoria}">Calçados</td>
-                            <td th:text="'R$ ' + ${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2, 'COMMA')}">R$ 111,10</td>
+                            <td th:text="${#numbers.formatCurrency(produto.preco)}">R$ 111,10</td>
+                            <td th:text="${produto.custo != null ? #numbers.formatCurrency(produto.custo) : 'N/A'}">R$ 70,00</td>
+                            <td th:text="${#numbers.formatCurrency(produto.getLucro())}">R$ 41,10</td>
+                            <td th:text="${#numbers.formatDecimal(produto.getMargem(), 1, 2)} + '%'">36.50%</td>
                             <td th:text="${produto.quantidadeEstoque}">06</td>
-                            <td th:text="${produto.estoqueMinimo}">07</td>
                             <td>
                                 <span th:if="${produto.quantidadeEstoque > produto.estoqueMinimo}" th:text="Disponível">Disponível</span>
                                 <span th:if="${produto.quantidadeEstoque <= produto.estoqueMinimo and produto.quantidadeEstoque > 0}" class="status-critical" th:text="Crítico">Crítico</span>

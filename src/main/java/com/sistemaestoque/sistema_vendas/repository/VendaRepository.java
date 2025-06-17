@@ -21,6 +21,8 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
 
     List<Venda> findTop5ByOrderByDataVendaDesc();
 
+    List<Venda> findByDataVendaBetween(LocalDate dataInicio, LocalDate dataFim, Sort sort);
+
     List<Venda> findByClienteRazaoSocialContainingIgnoreCaseOrVendedorNomeContainingIgnoreCase(String razaoSocial, String nomeVendedor);
 
     List<Venda> findByClienteRazaoSocialContainingIgnoreCaseOrVendedorNomeContainingIgnoreCase(String razaoSocial, String nomeVendedor, Sort sort);

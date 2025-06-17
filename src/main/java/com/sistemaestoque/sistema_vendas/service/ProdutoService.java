@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -20,6 +21,9 @@ public class ProdutoService {
     }
 
     public List<Produto> buscar(String termo, Sort sort) {
+        if (termo == null || termo.trim().isEmpty()) {
+            return listarTodos(sort);
+        }
         return produtoRepository.findByNomeContainingIgnoreCaseOrCategoriaContainingIgnoreCase(termo, termo, sort);
     }
 
@@ -34,5 +38,25 @@ public class ProdutoService {
 
     public void deletar(Long id) {
         produtoRepository.deleteById(id);
+    }
+
+    // MÉTODOS PARA A PÁGINA DE ESTOQUE
+    public Long getTotalItensEmEstoque() {
+        Long total = produtoRepository.sumQuantidadeEstoque();
+        return total != null ? total : 0L;
+    }
+
+    public long getContagemEstoqueCritico() {
+        return produtoRepository.countEstoqueCritico();
+    }
+
+    public long getContagemSemEstoque() {
+        return produtoRepository.countSemEstoque();
+    }
+
+    public List<Produto> listarProdutosComEstoqueCritico() {
+        return produtoRepository.findAll().stream()
+            .filter(p -> p.getQuantidadeEstoque() <= p.getEstoqueMinimo())
+            .collect(Collectors.toList());
     }
 }

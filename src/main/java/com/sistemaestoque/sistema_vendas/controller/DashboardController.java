@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.time.format.DateTimeFormatter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -51,18 +52,18 @@ public class DashboardController {
         return "Dashboard";
     }
     
-    // Endpoint para o gráfico de Vendas dos Últimos 7 Dias
     @GetMapping("/api/vendas/ultimos7dias")
     @ResponseBody
     public Map<String, Object> getVendasUltimos7Dias() {
         Map<String, Object> data = new LinkedHashMap<>();
         Map<String, BigDecimal> vendasPorDia = new LinkedHashMap<>();
         LocalDate hoje = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
 
         for (int i = 6; i >= 0; i--) {
             LocalDate dataBusca = hoje.minusDays(i);
             BigDecimal total = vendaRepository.findTotalVendasByData(dataBusca).orElse(BigDecimal.ZERO);
-            vendasPorDia.put(dataBusca.toString(), total);
+            vendasPorDia.put(dataBusca.format(formatter), total);
         }
 
         data.put("labels", vendasPorDia.keySet());
@@ -70,7 +71,6 @@ public class DashboardController {
         return data;
     }
 
-    // Endpoint para o gráfico de Produtos Mais Vendidos
     @GetMapping("/api/produtos/mais-vendidos")
     @ResponseBody
     public Map<String, Object> getProdutosMaisVendidos() {
@@ -80,15 +80,5 @@ public class DashboardController {
         data.put("labels", topProdutos.stream().map(ProdutoMaisVendidoDTO::getNomeProduto).collect(Collectors.toList()));
         data.put("values", topProdutos.stream().map(ProdutoMaisVendidoDTO::getQuantidadeVendida).collect(Collectors.toList()));
         return data;
-    }
-
-    @GetMapping("/Relatorios.html")
-    public String relatorios() {
-        return "Relatorios"; // Retorna Relatorios.html
-    }
-
-    @GetMapping("/Usuarios.html")
-    public String usuarios() {
-        return "Usuarios"; // Retorna Usuarios.html
     }
 }

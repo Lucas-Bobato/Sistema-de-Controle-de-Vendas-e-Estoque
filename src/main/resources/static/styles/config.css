@@ -1,0 +1,18 @@
+.setting-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    margin-bottom: 30px;
+}
+.setting-card h3 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.theme-options {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}

@@ -1,71 +1,94 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    
-    const generateRandomColors = (numColors) => {
-        const colors = [];
-        for (let i = 0; i < numColors; i++) {
-            const r = Math.floor(Math.random() * 255);
-            const g = Math.floor(Math.random() * 255);
-            const b = Math.floor(Math.random() * 255);
-            colors.push(`rgba(${r}, ${g}, ${b}, 0.5)`);
-        }
-        return colors;
-    };
+document.addEventListener("DOMContentLoaded", async function () {
+const chartColors = getChartColorsForTheme();
 
-    try {
-        const vendasResponse = await fetch('/api/vendas/ultimos7dias');
-        const vendasDataRaw = await vendasResponse.json();
-        
-        const vendasData = {
-            labels: vendasDataRaw.labels,
-            datasets: [{
-                label: 'Vendas (R$)',
-                data: vendasDataRaw.values,
-                backgroundColor: 'rgba(74, 144, 226, 0.2)',
-                borderColor: 'rgba(74, 144, 226, 1)',
-                borderWidth: 2,
-                tension: 0.4,
-                fill: true
-            }]
-        };
+try {
+const vendasCtx = document.getElementById("vendasChart").getContext("2d");
+const vendasResponse = await fetch("/api/vendas/ultimos7dias");
+const vendasDataRaw = await vendasResponse.json();
 
-        const vendasCtx = document.getElementById('vendasChart').getContext('2d');
-        new Chart(vendasCtx, {
-            type: 'line',
-            data: vendasData,
-            options: { responsive: true, maintainAspectRatio: false }
-        });
+const gradient = vendasCtx.createLinearGradient(
+    0,
+    0,
+    0,
+    vendasCtx.canvas.clientHeight
+);
+gradient.addColorStop(0, chartColors.vendas.fillStart);
+gradient.addColorStop(1, chartColors.vendas.fillEnd);
 
-    } catch (error) {
-        console.error('Erro ao carregar dados de vendas:', error);
-        document.getElementById('vendasChart').parentElement.innerHTML = '<p>Não foi possível carregar o gráfico de vendas.</p>';
-    }
+const vendasData = {
+    labels: vendasDataRaw.labels,
+    datasets: [
+    {
+        label: "Vendas (R$)",
+        data: vendasDataRaw.values,
+        fill: true,
+        backgroundColor: gradient,
+        borderColor: chartColors.vendas.line,
+        pointBackgroundColor: chartColors.vendas.line,
+        pointBorderColor: "#fff",
+        pointHoverRadius: 6,
+        borderWidth: 2.5,
+        tension: 0.4,
+    },
+    ],
+};
 
-    try {
-        const produtosResponse = await fetch('/api/produtos/mais-vendidos');
-        const produtosDataRaw = await produtosResponse.json();
+new Chart(vendasCtx, {
+    type: "line",
+    data: vendasData,
+    options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        y: { grid: { color: "rgba(128, 128, 128, 0.2)" } },
+        x: { grid: { display: false } },
+    },
+    plugins: { legend: { display: false } },
+    },
+});
+} catch (error) {
+console.error("Erro ao carregar dados de vendas:", error);
+document.getElementById("vendasChart").parentElement.innerHTML =
+    "<p>Não foi possível carregar o gráfico de vendas.</p>";
+}
 
-        const backgroundColors = generateRandomColors(produtosDataRaw.labels.length);
-        
-        const produtosData = {
-            labels: produtosDataRaw.labels,
-            datasets: [{
-                label: 'Unidades Vendidas',
-                data: produtosDataRaw.values,
-                backgroundColor: backgroundColors,
-                borderColor: backgroundColors.map(color => color.replace('0.5', '1')),
-                borderWidth: 1
-            }]
-        };
-        
-        const produtosCtx = document.getElementById('produtosChart').getContext('2d');
-        new Chart(produtosCtx, {
-            type: 'bar',
-            data: produtosData,
-            options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
-        });
+try {
+const produtosResponse = await fetch("/api/produtos/mais-vendidos");
+const produtosDataRaw = await produtosResponse.json();
 
-    } catch (error) {
-        console.error('Erro ao carregar dados de produtos:', error);
-        document.getElementById('produtosChart').parentElement.innerHTML = '<p>Não foi possível carregar o gráfico de produtos.</p>';
-    }
+const produtosData = {
+    labels: produtosDataRaw.labels,
+    datasets: [
+    {
+        label: "Unidades Vendidas",
+        data: produtosDataRaw.values,
+        backgroundColor: chartColors.produtos,
+        borderRadius: 4,
+        borderWidth: 0,
+    },
+    ],
+};
+
+const produtosCtx = document
+    .getElementById("produtosChart")
+    .getContext("2d");
+new Chart(produtosCtx, {
+    type: "bar",
+    data: produtosData,
+    options: {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        x: { grid: { color: "rgba(128, 128, 128, 0.2)" } },
+        y: { grid: { display: false } },
+    },
+    plugins: { legend: { display: false } },
+    },
+});
+} catch (error) {
+console.error("Erro ao carregar dados de produtos:", error);
+document.getElementById("produtosChart").parentElement.innerHTML =
+    "<p>Não foi possível carregar o gráfico de produtos.</p>";
+}
 });

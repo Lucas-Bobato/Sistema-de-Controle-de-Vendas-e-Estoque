@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Usuários - Sistema de Vendas</title>
+    <title>Gerenciar Usuários</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/form.css">
 </head>
 <body>
     <div class="dashboard-layout">
@@ -13,18 +14,17 @@
 
         <main class="main-content">
             <header class="main-header">
-                <h1>Usuários</h1>
+                <h1>Gerenciar Usuários</h1>
                 <div th:replace="~{fragments/user-profile :: header-profile}"></div>
             </header>
 
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
             <section class="tools-section">
-                <div class="search-input-container">
-                    <div class="search-icon">🔍</div>
-                    <input type="text" class="search-input" placeholder="Buscar usuário...">
-                </div>
+                <div class="search-input-container"></div>
                 <div>
-                    <button class="filter-button">Filtrar</button>
-                    <a href="#" class="action-button">Cadastrar Usuário</a>
+                    <a th:href="@{/usuarios/novo}" class="action-button">Cadastrar Usuário</a>
                 </div>
             </section>
 
@@ -32,74 +32,34 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>NOME</th>
-                            <th>EMAIL</th>
-                            <th>TIPO DE USUÁRIO</th>
-                            <th>STATUS</th>
+                            <th><a th:href="@{/usuarios(sortField='id', sortDir=${reverseSortDir})}">ID <span th:if="${sortField=='id'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/usuarios(sortField='nome', sortDir=${reverseSortDir})}">NOME <span th:if="${sortField=='nome'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/usuarios(sortField='email', sortDir=${reverseSortDir})}">EMAIL <span th:if="${sortField=='email'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/usuarios(sortField='role', sortDir=${reverseSortDir})}">TIPO <span th:if="${sortField=='role'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
+                            <th><a th:href="@{/usuarios(sortField='ativo', sortDir=${reverseSortDir})}">STATUS <span th:if="${sortField=='ativo'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
                             <th>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#USR001</td>
-                            <td>Ana Carolina</td>
-                            <td>ana.carolina@empresa.com</td>
-                            <td>Administrador</td>
-                            <td>Ativo</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="'#USR' + ${usuario.id}">#USR001</td>
+                            <td th:text="${usuario.nome}">Nome do Usuário</td>
+                            <td th:text="${usuario.email}">email@empresa.com</td>
+                            <td th:text="${usuario.role}">Administrador</td>
+                            <td>
+                                <span th:if="${usuario.ativo}" style="color: var(--success-color);">Ativo</span>
+                                <span th:unless="${usuario.ativo}" style="color: var(--danger-color);">Inativo</span>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>#USR002</td>
-                            <td>João Pedro</td>
-                            <td>joao.pedro@empresa.com</td>
-                            <td>Vendedor</td>
-                            <td>Ativo</td>
                             <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
+                                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="action-icon" title="Editar">✏️</a>
+                                </td>
                         </tr>
-                        <tr>
-                            <td>#USR003</td>
-                            <td>Maria Clara</td>
-                            <td>maria.clara@empresa.com</td>
-                            <td>Estoquista</td>
-                            <td>Inativo</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#USR004</td>
-                            <td>Pedro Henrique</td>
-                            <td>pedro.h@empresa.com</td>
-                            <td>Vendedor</td>
-                            <td>Ativo</td>
-                            <td class="actions-cell">
-                                <div class="action-icon">👁️</div>
-                                <div class="action-icon">✏️</div>
-                                <div class="action-icon delete">❌</div>
-                            </td>
-                        </tr>
-                        </tbody>
+                    </tbody>
                 </table>
-            </section>
-
-            <section class="pagination">
-                <button class="pagination-button">Anterior</button>
-                <span class="pagination-info">Página 1 de 10</span>
-                <button class="pagination-button">Próxima</button>
             </section>
         </main>
     </div>
+    <script src="/js/config.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>

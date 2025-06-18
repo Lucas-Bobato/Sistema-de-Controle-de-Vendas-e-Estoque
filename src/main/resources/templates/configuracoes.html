@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações do Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/form.css">
+    <link rel="stylesheet" href="/styles/config.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Configurações do Sistema</h1>
+                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+            </header>
+
+            <section class="setting-card">
+                <h3>Tema do Sistema</h3>
+                <p>Escolha a aparência visual que mais lhe agrada. A alteração é aplicada em tempo real.</p>
+                <div id="theme-selector" class="theme-options">
+                    <label>
+                        <input type="radio" name="theme" value="light"> Claro
+                    </label>
+                    <label>
+                        <input type="radio" name="theme" value="dark"> Escuro
+                    </label>
+                </div>
+            </section>
+            
+            </main>
+    </div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,68 +1,180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Gerenciar Produtos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/config.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Gerenciador de Produtos</h1>
-                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-            </header>
-            <section class="tools-section">
-                <form th:action="@{/produtos}" method="get" class="search-input-container">
-                    <div class="search-icon">🔍</div>
-                    <input type="text" name="termo" class="search-input" placeholder="Buscar produto..." th:value="${termo}">
-                </form>
-                <div>
-                    <a th:href="@{/produtos/novo}" class="action-button">+ Novo Produto</a>
-                    <a th:href="@{/produtos/exportar/csv}" class="action-button">Extrair Relatório</a>
-                </div>
-            </section>
-            <section class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><a th:href="@{/produtos(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}">CÓDIGO <span th:if="${sortField=='id'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/produtos(sortField='nome', sortDir=${reverseSortDir}, termo=${termo})}">NOME DO PRODUTO <span th:if="${sortField=='nome'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/produtos(sortField='preco', sortDir=${reverseSortDir}, termo=${termo})}">PREÇO <span th:if="${sortField=='preco'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/produtos(sortField='custo', sortDir=${reverseSortDir}, termo=${termo})}">CUSTO <span th:if="${sortField=='custo'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/produtos(sortField='lucro', sortDir=${reverseSortDir}, termo=${termo})}">LUCRO <span th:if="${sortField=='lucro'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/produtos(sortField='margem', sortDir=${reverseSortDir}, termo=${termo})}">MARGEM (%) <span th:if="${sortField=='margem'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th>EST. ATUAL</th>
-                            <th>STATUS</th>
-                            <th>AÇÕES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="produto : ${produtos}">
-                            <td th:text="'#PROD' + ${produto.id}">#PROD01</td>
-                            <td th:text="${produto.nome}">Tênis Esportivo</td>
-                            <td th:text="${#numbers.formatCurrency(produto.preco)}">R$ 111,10</td>
-                            <td th:text="${produto.custo != null ? #numbers.formatCurrency(produto.custo) : 'N/A'}">R$ 70,00</td>
-                            <td th:text="${#numbers.formatCurrency(produto.getLucro())}">R$ 41,10</td>
-                            <td th:text="${#numbers.formatDecimal(produto.getMargem(), 1, 2)} + '%'">36.50%</td>
-                            <td th:text="${produto.quantidadeEstoque}">06</td>
-                            <td>
-                                <span th:if="${produto.quantidadeEstoque > produto.estoqueMinimo}" th:text="Disponível">Disponível</span>
-                                <span th:if="${produto.quantidadeEstoque <= produto.estoqueMinimo and produto.quantidadeEstoque > 0}" class="status-critical" th:text="Crítico">Crítico</span>
-                                <span th:if="${produto.quantidadeEstoque <= 0}" class="status-out" th:text="'Sem Estoque'">Sem Estoque</span>
-                            </td>
-                            <td class="actions-cell">
-                                <a th:href="@{/produtos/editar/{id}(id=${produto.id})}" class="action-icon" title="Editar">✏️</a>
-                                <a th:href="@{/produtos/deletar/{id}(id=${produto.id})}" class="action-icon delete" title="Excluir">❌</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <main class="main-content">
+        <header class="main-header">
+          <h1>Gerenciador de Produtos</h1>
+          <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
+        <section class="tools-section">
+          <form
+            th:action="@{/produtos}"
+            method="get"
+            class="search-input-container"
+          >
+            <div class="search-icon"><i class="bi bi-search"></i></div>
+            <input
+              type="text"
+              name="termo"
+              class="search-input"
+              placeholder="Buscar produto..."
+              th:value="${termo}"
+            />
+          </form>
+          <div>
+            <a th:href="@{/produtos/novo}" class="action-button"
+              >+ Novo Produto</a
+            >
+            <a th:href="@{/produtos/exportar/csv}" class="action-button"
+              >Extrair Relatório</a
+            >
+          </div>
+        </section>
+        <section class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>
+                  <a
+                    th:href="@{/produtos(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}"
+                    >CÓDIGO
+                    <span
+                      th:if="${sortField=='id'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/produtos(sortField='nome', sortDir=${reverseSortDir}, termo=${termo})}"
+                    >NOME DO PRODUTO
+                    <span
+                      th:if="${sortField=='nome'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/produtos(sortField='preco', sortDir=${reverseSortDir}, termo=${termo})}"
+                    >PREÇO
+                    <span
+                      th:if="${sortField=='preco'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/produtos(sortField='custo', sortDir=${reverseSortDir}, termo=${termo})}"
+                    >CUSTO
+                    <span
+                      th:if="${sortField=='custo'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/produtos(sortField='lucro', sortDir=${reverseSortDir}, termo=${termo})}"
+                    >LUCRO
+                    <span
+                      th:if="${sortField=='lucro'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/produtos(sortField='margem', sortDir=${reverseSortDir}, termo=${termo})}"
+                    >MARGEM (%)
+                    <span
+                      th:if="${sortField=='margem'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>EST. ATUAL</th>
+                <th>STATUS</th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="produto : ${produtos}">
+                <td th:text="'#PROD' + ${produto.id}">#PROD01</td>
+                <td th:text="${produto.nome}">Tênis Esportivo</td>
+                <td th:text="${#numbers.formatCurrency(produto.preco)}">
+                  R$ 111,10
+                </td>
+                <td
+                  th:text="${produto.custo != null ? #numbers.formatCurrency(produto.custo) : 'N/A'}"
+                >
+                  R$ 70,00
+                </td>
+                <td th:text="${#numbers.formatCurrency(produto.getLucro())}">
+                  R$ 41,10
+                </td>
+                <td
+                  th:text="${#numbers.formatDecimal(produto.getMargem(), 1, 2)} + '%'"
+                >
+                  36.50%
+                </td>
+                <td th:text="${produto.quantidadeEstoque}">06</td>
+                <td>
+                  <span
+                    th:if="${produto.quantidadeEstoque > produto.estoqueMinimo}"
+                    th:text="Disponível"
+                    >Disponível</span
+                  >
+                  <span
+                    th:if="${produto.quantidadeEstoque <= produto.estoqueMinimo and produto.quantidadeEstoque > 0}"
+                    class="status-critical"
+                    th:text="Crítico"
+                    >Crítico</span
+                  >
+                  <span
+                    th:if="${produto.quantidadeEstoque <= 0}"
+                    class="status-out"
+                    th:text="'Sem Estoque'"
+                    >Sem Estoque</span
+                  >
+                </td>
+                <td class="actions-cell">
+                  <a
+                    th:href="@{/produtos/editar/{id}(id=${produto.id})}"
+                    class="action-icon"
+                    title="Editar"
+                    ><i class="bi bi-pencil"></i></a
+                  >
+                  <a
+                    th:href="@{/produtos/deletar/{id}(id=${produto.id})}"
+                    class="action-icon delete"
+                    title="Excluir"
+                    ><i class="bi bi-trash"></i></a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
     </div>
     <script src="/js/config.js"></script>
-</body>
+  </body>
 </html>

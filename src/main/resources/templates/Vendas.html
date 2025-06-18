@@ -1,98 +1,165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciar Vendas - Sistema de Vendas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/config.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Gerenciar Vendas</h1>
-                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-            </header>
+      <main class="main-content">
+        <header class="main-header">
+          <h1>Gerenciar Vendas</h1>
+          <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
 
-            <section class="tools-section">
-                <form th:action="@{/vendas}" method="get" class="search-input-container">
-                    <div class="search-icon">🔍</div>
-                    <input type="text" name="termo" class="search-input" placeholder="Buscar por cliente ou vendedor..." th:value="${termo}">
-                </form>
-                <div>
-                    <a th:href="@{/vendas}" class="filter-button">Limpar Busca</a>
-                    <a href="/vendas/novo" class="new-order-button">+ Nova Venda</a>
-                </div>
-            </section>
+        <section class="tools-section">
+          <form
+            th:action="@{/vendas}"
+            method="get"
+            class="search-input-container"
+          >
+            <div class="search-icon"><i class="bi bi-search"></i></div>
+            <input
+              type="text"
+              name="termo"
+              class="search-input"
+              placeholder="Buscar por cliente ou vendedor..."
+              th:value="${termo}"
+            />
+          </form>
+          <div>
+            <a th:href="@{/vendas}" class="filter-button">Limpar Busca</a>
+            <a href="/vendas/novo" class="new-order-button">+ Nova Venda</a>
+          </div>
+        </section>
 
-            <section class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <a th:href="@{/vendas(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}">
-                                    Nº PEDIDO
-                                    <span th:if="${sortField == 'id'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{/vendas(sortField='cliente.razaoSocial', sortDir=${reverseSortDir}, termo=${termo})}">
-                                    CLIENTE
-                                    <span th:if="${sortField == 'cliente.razaoSocial'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{/vendas(sortField='dataVenda', sortDir=${reverseSortDir}, termo=${termo})}">
-                                    DATA DO PEDIDO
-                                    <span th:if="${sortField == 'dataVenda'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{/vendas(sortField='status', sortDir=${reverseSortDir}, termo=${termo})}">
-                                    STATUS
-                                    <span th:if="${sortField == 'status'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{/vendas(sortField='valorTotal', sortDir=${reverseSortDir}, termo=${termo})}">
-                                    VALOR TOTAL
-                                    <span th:if="${sortField == 'valorTotal'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{/vendas(sortField='vendedor.nome', sortDir=${reverseSortDir}, termo=${termo})}">
-                                    VENDEDOR
-                                    <span th:if="${sortField == 'vendedor.nome'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                                </a>
-                            </th>
-                            <th>AÇÕES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="venda : ${vendas}">
-                            <td th:text="'#' + ${venda.id}">#00105</td>
-                            <td th:text="${venda.cliente?.razaoSocial}">Cliente</td>
-                            <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy')}">dd/MM/yyyy</td>
-                            <td th:text="${venda.status}">Concluído</td>
-                            <td th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorTotal, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
-                            <td th:text="${venda.vendedor?.nome}">Vendedor</td>
-                            <td class="actions-cell">
-                                <a th:href="@{/vendas/editar/{id}(id=${venda.id})}" class="action-icon">✏️</a>
-                                <a th:href="@{/vendas/deletar/{id}(id=${venda.id})}" class="action-icon delete" title="Excluir">❌</a>
-                            </td>
-                        </tr>
-                        <tr th:if="${#lists.isEmpty(vendas)}">
-                            <td colspan="7" style="text-align: center;">Nenhuma venda encontrada.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
+        <section class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>
+                  <a
+                    th:href="@{/vendas(sortField='id', sortDir=${reverseSortDir}, termo=${termo})}"
+                  >
+                    Nº PEDIDO
+                    <span
+                      th:if="${sortField == 'id'}"
+                      th:text="${sortDir == 'asc' ? '▲' : '▼'}"
+                    ></span>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/vendas(sortField='cliente.razaoSocial', sortDir=${reverseSortDir}, termo=${termo})}"
+                  >
+                    CLIENTE
+                    <span
+                      th:if="${sortField == 'cliente.razaoSocial'}"
+                      th:text="${sortDir == 'asc' ? '▲' : '▼'}"
+                    ></span>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/vendas(sortField='dataVenda', sortDir=${reverseSortDir}, termo=${termo})}"
+                  >
+                    DATA DO PEDIDO
+                    <span
+                      th:if="${sortField == 'dataVenda'}"
+                      th:text="${sortDir == 'asc' ? '▲' : '▼'}"
+                    ></span>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/vendas(sortField='status', sortDir=${reverseSortDir}, termo=${termo})}"
+                  >
+                    STATUS
+                    <span
+                      th:if="${sortField == 'status'}"
+                      th:text="${sortDir == 'asc' ? '▲' : '▼'}"
+                    ></span>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/vendas(sortField='valorTotal', sortDir=${reverseSortDir}, termo=${termo})}"
+                  >
+                    VALOR TOTAL
+                    <span
+                      th:if="${sortField == 'valorTotal'}"
+                      th:text="${sortDir == 'asc' ? '▲' : '▼'}"
+                    ></span>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/vendas(sortField='vendedor.nome', sortDir=${reverseSortDir}, termo=${termo})}"
+                  >
+                    VENDEDOR
+                    <span
+                      th:if="${sortField == 'vendedor.nome'}"
+                      th:text="${sortDir == 'asc' ? '▲' : '▼'}"
+                    ></span>
+                  </a>
+                </th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="venda : ${vendas}">
+                <td th:text="'#' + ${venda.id}">#00105</td>
+                <td th:text="${venda.cliente?.razaoSocial}">Cliente</td>
+                <td
+                  th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy')}"
+                >
+                  dd/MM/yyyy
+                </td>
+                <td th:text="${venda.status}">Concluído</td>
+                <td
+                  th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorTotal, 1, 'POINT', 2, 'COMMA')}"
+                >
+                  R$ 0,00
+                </td>
+                <td th:text="${venda.vendedor?.nome}">Vendedor</td>
+                <td class="actions-cell">
+                  <a
+                    th:href="@{/vendas/editar/{id}(id=${venda.id})}"
+                    class="action-icon"
+                    ><i class="bi bi-pencil"></i></a
+                  >
+                  <a
+                    th:href="@{/vendas/deletar/{id}(id=${venda.id})}"
+                    class="action-icon delete"
+                    title="Excluir"
+                    ><i class="bi bi-trash"></i></a
+                  >
+                </td>
+              </tr>
+              <tr th:if="${#lists.isEmpty(vendas)}">
+                <td colspan="7" style="text-align: center">
+                  Nenhuma venda encontrada.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
     </div>
     <script src="/js/config.js"></script>
     <script src="/js/main.js"></script>
-</body>
+  </body>
 </html>

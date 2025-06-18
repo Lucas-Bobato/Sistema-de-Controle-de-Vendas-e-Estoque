@@ -1,97 +1,194 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${venda.id == null} ? 'Nova Venda' : 'Editar Venda'">Formulário de Venda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/form.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${venda.id == null} ? 'Nova Venda' : 'Editar Venda'">
+      Formulário de Venda
+    </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/form.css" />
+    <link rel="stylesheet" href="/styles/config.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
-        <main class="main-content">
-            <header class="main-header">
-                <h1 th:text="${venda.id == null} ? 'Nova Venda' : 'Editar Venda'">Formulário de Venda</h1>
-            </header>
-            <section class="content-section">
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <main class="main-content">
+        <header class="main-header">
+          <h1 th:text="${venda.id == null} ? 'Nova Venda' : 'Editar Venda'">
+            Formulário de Venda
+          </h1>
+        </header>
+        <section class="content-section">
+          <div
+            th:if="${successMessage}"
+            class="alert alert-success"
+            th:text="${successMessage}"
+          ></div>
+          <div
+            th:if="${errorMessage}"
+            class="alert alert-danger"
+            th:text="${errorMessage}"
+          ></div>
 
-                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+          <form
+            th:action="@{/vendas/salvar}"
+            th:object="${venda}"
+            method="post"
+            id="vendaForm"
+          >
+            <input type="hidden" th:field="*{id}" />
 
-                <form th:action="@{/vendas/salvar}" th:object="${venda}" method="post" id="vendaForm">
-                    <input type="hidden" th:field="*{id}" />
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="cliente">Cliente:</label>
-                            <select id="cliente" th:field="*{cliente}" class="search-input" required>
-                                <option value="">Selecione um Cliente</option>
-                                <option th:each="cli : ${clientes}" th:value="${cli.id}" th:text="${cli.razaoSocial}"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="vendedor">Vendedor:</label>
-                            <select id="vendedor" th:field="*{vendedor}" class="search-input" required>
-                                <option value="">Selecione um Vendedor</option>
-                                <option th:each="user : ${usuarios}" th:value="${user.id}" th:text="${user.nome}"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status:</label>
-                            <select id="status" th:field="*{status}" class="search-input" required>
-                                <option value="Pendente">Pendente</option>
-                                <option value="Concluido">Concluído</option>
-                                <option value="Cancelado">Cancelado</option>
-                            </select>
-                        </div>
-                    </div>
-                    <hr style="margin: 25px 0;">
-                    <h3>Itens da Venda</h3>
-                    <div class="product-adder">
-                        <select id="produto-select" class="search-input">
-                            <option value="">Selecione um produto</option>
-                            <option th:each="prod : ${produtos}" th:value="${prod.id}" th:text="${prod.nome}" th:attr="data-preco=${prod.preco}"></option>
-                        </select>
-                        <input type="number" id="produto-qtd" min="1" value="1" class="search-input">
-                        <button type="button" id="add-produto-btn" class="action-button">Adicionar</button>
-                    </div>
-                    <table class="data-table" id="itens-venda-table">
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Qtd.</th>
-                                <th>Preço Unit.</th>
-                                <th>Subtotal</th>
-                                <th style="width: 50px;">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="itens-venda-tbody">
-                            <tr th:each="item, iterStat : *{itens}">
-                                <input type="hidden" th:name="|itens[${iterStat.index}].produto.id|" th:value="*{itens[__${iterStat.index}__].produto.id}" />
-                                <input type="hidden" th:name="|itens[${iterStat.index}].quantidade|" th:value="*{itens[__${iterStat.index}__].quantidade}" />
-                                <input type="hidden" th:name="|itens[${iterStat.index}].precoUnitario|" th:value="*{itens[__${iterStat.index}__].precoUnitario}" />
-                                <td th:text="*{itens[__${iterStat.index}__].produto.nome}">Nome do Produto</td>
-                                <td th:text="*{itens[__${iterStat.index}__].quantidade}">Qtd</td>
-                                <td th:text="'R$ ' + ${#numbers.formatDecimal(item.precoUnitario, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
-                                <td th:text="'R$ ' + ${#numbers.formatDecimal(item.precoUnitario * item.quantidade, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
-                                <td><button type="button" class="action-icon delete" onclick="removerLinha(this)">❌</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="total-container">
-                        Valor Total: R$ <span id="valor-total-display">0.00</span>
-                        <input type="hidden" id="valorTotal" th:field="*{valorTotal}"/>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="action-button">Salvar</button>
-                        <a th:href="@{/vendas}" class="action-button" style="background-color: #777;">Cancelar</a>
-                    </div>
-                </form>
-            </section>
-        </main>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="cliente">Cliente:</label>
+                <select
+                  id="cliente"
+                  th:field="*{cliente}"
+                  class="search-input"
+                  required
+                >
+                  <option value="">Selecione um Cliente</option>
+                  <option
+                    th:each="cli : ${clientes}"
+                    th:value="${cli.id}"
+                    th:text="${cli.razaoSocial}"
+                  ></option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="vendedor">Vendedor:</label>
+                <select
+                  id="vendedor"
+                  th:field="*{vendedor}"
+                  class="search-input"
+                  required
+                >
+                  <option value="">Selecione um Vendedor</option>
+                  <option
+                    th:each="user : ${usuarios}"
+                    th:value="${user.id}"
+                    th:text="${user.nome}"
+                  ></option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select
+                  id="status"
+                  th:field="*{status}"
+                  class="search-input"
+                  required
+                >
+                  <option value="Pendente">Pendente</option>
+                  <option value="Concluido">Concluído</option>
+                  <option value="Cancelado">Cancelado</option>
+                </select>
+              </div>
+            </div>
+            <hr style="margin: 25px 0" />
+            <h3>Itens da Venda</h3>
+            <div class="product-adder">
+              <select id="produto-select" class="search-input">
+                <option value="">Selecione um produto</option>
+                <option
+                  th:each="prod : ${produtos}"
+                  th:value="${prod.id}"
+                  th:text="${prod.nome}"
+                  th:attr="data-preco=${prod.preco}"
+                ></option>
+              </select>
+              <input
+                type="number"
+                id="produto-qtd"
+                min="1"
+                value="1"
+                class="search-input"
+              />
+              <button type="button" id="add-produto-btn" class="action-button">
+                Adicionar
+              </button>
+            </div>
+            <table class="data-table" id="itens-venda-table">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Qtd.</th>
+                  <th>Preço Unit.</th>
+                  <th>Subtotal</th>
+                  <th style="width: 50px">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="itens-venda-tbody">
+                <tr th:each="item, iterStat : *{itens}">
+                  <input
+                    type="hidden"
+                    th:name="|itens[${iterStat.index}].produto.id|"
+                    th:value="*{itens[__${iterStat.index}__].produto.id}"
+                  />
+                  <input
+                    type="hidden"
+                    th:name="|itens[${iterStat.index}].quantidade|"
+                    th:value="*{itens[__${iterStat.index}__].quantidade}"
+                  />
+                  <input
+                    type="hidden"
+                    th:name="|itens[${iterStat.index}].precoUnitario|"
+                    th:value="*{itens[__${iterStat.index}__].precoUnitario}"
+                  />
+                  <td th:text="*{itens[__${iterStat.index}__].produto.nome}">
+                    Nome do Produto
+                  </td>
+                  <td th:text="*{itens[__${iterStat.index}__].quantidade}">
+                    Qtd
+                  </td>
+                  <td
+                    th:text="'R$ ' + ${#numbers.formatDecimal(item.precoUnitario, 1, 'POINT', 2, 'COMMA')}"
+                  >
+                    R$ 0,00
+                  </td>
+                  <td
+                    th:text="'R$ ' + ${#numbers.formatDecimal(item.precoUnitario * item.quantidade, 1, 'POINT', 2, 'COMMA')}"
+                  >
+                    R$ 0,00
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="action-icon delete"
+                      onclick="removerLinha(this)"
+                    >
+                      ❌
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="total-container">
+              Valor Total: R$ <span id="valor-total-display">0.00</span>
+              <input type="hidden" id="valorTotal" th:field="*{valorTotal}" />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="action-button">Salvar</button>
+              <a
+                th:href="@{/vendas}"
+                class="action-button"
+                style="background-color: #777"
+                >Cancelar</a
+              >
+            </div>
+          </form>
+        </section>
+      </main>
     </div>
     <script src="/js/config.js"></script>
     <script src="/js/formVenda.js"></script>
-</body>
+  </body>
 </html>

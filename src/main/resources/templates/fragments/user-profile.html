@@ -1,11 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<body>
-
-<div th:fragment="header-profile" class="user-profile">
-    <div class="notification-icon">🔔</div>
-    <div class="user-avatar"></div>
-</div>
-<script src="/js/config.js"></script>
-</body>
+  <head>
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
+    <div th:fragment="header-profile" class="user-profile">
+      <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <div class="slider round"></div>
+      </label>
+  
+      <div class="notification-icon">
+          <i class="bi bi-bell"></i>
+      </div>
+  
+      <a th:href="@{/perfil}" class="user-avatar-link">
+          <div class="user-avatar">
+              </div>
+      </a>
+  </div>
+    <script src="/js/config.js"></script>
+  </body>
 </html>

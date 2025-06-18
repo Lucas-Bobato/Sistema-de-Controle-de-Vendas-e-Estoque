@@ -1,65 +1,145 @@
-<!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html
+  lang="pt-BR"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciar Usuários</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/form.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/form.css" />
+    <link rel="stylesheet" href="/styles/config.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Gerenciar Usuários</h1>
-                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-            </header>
+      <main class="main-content">
+        <header class="main-header">
+          <h1>Gerenciar Usuários</h1>
+          <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
 
-            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+        <div
+          th:if="${successMessage}"
+          class="alert alert-success"
+          th:text="${successMessage}"
+        ></div>
+        <div
+          th:if="${errorMessage}"
+          class="alert alert-danger"
+          th:text="${errorMessage}"
+        ></div>
 
-            <section class="tools-section">
-                <div class="search-input-container"></div>
-                <div>
-                    <a th:href="@{/usuarios/novo}" class="action-button">Cadastrar Usuário</a>
-                </div>
-            </section>
+        <section class="tools-section">
+          <div class="search-input-container"></div>
+          <div>
+            <a th:href="@{/usuarios/novo}" class="action-button"
+              >Cadastrar Usuário</a
+            >
+          </div>
+        </section>
 
-            <section class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><a th:href="@{/usuarios(sortField='id', sortDir=${reverseSortDir})}">ID <span th:if="${sortField=='id'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/usuarios(sortField='nome', sortDir=${reverseSortDir})}">NOME <span th:if="${sortField=='nome'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/usuarios(sortField='email', sortDir=${reverseSortDir})}">EMAIL <span th:if="${sortField=='email'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/usuarios(sortField='role', sortDir=${reverseSortDir})}">TIPO <span th:if="${sortField=='role'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th><a th:href="@{/usuarios(sortField='ativo', sortDir=${reverseSortDir})}">STATUS <span th:if="${sortField=='ativo'}" th:text="${sortDir=='asc'?'▲':'▼'}"></span></a></th>
-                            <th>AÇÕES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="usuario : ${usuarios}">
-                            <td th:text="'#USR' + ${usuario.id}">#USR001</td>
-                            <td th:text="${usuario.nome}">Nome do Usuário</td>
-                            <td th:text="${usuario.email}">email@empresa.com</td>
-                            <td th:text="${usuario.role}">Administrador</td>
-                            <td>
-                                <span th:if="${usuario.ativo}" style="color: var(--success-color);">Ativo</span>
-                                <span th:unless="${usuario.ativo}" style="color: var(--danger-color);">Inativo</span>
-                            </td>
-                            <td class="actions-cell">
-                                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="action-icon" title="Editar">✏️</a>
-                                </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
+        <section class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>
+                  <a
+                    th:href="@{/usuarios(sortField='id', sortDir=${reverseSortDir})}"
+                    >ID
+                    <span
+                      th:if="${sortField=='id'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/usuarios(sortField='nome', sortDir=${reverseSortDir})}"
+                    >NOME
+                    <span
+                      th:if="${sortField=='nome'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/usuarios(sortField='email', sortDir=${reverseSortDir})}"
+                    >EMAIL
+                    <span
+                      th:if="${sortField=='email'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/usuarios(sortField='role', sortDir=${reverseSortDir})}"
+                    >TIPO
+                    <span
+                      th:if="${sortField=='role'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>
+                  <a
+                    th:href="@{/usuarios(sortField='ativo', sortDir=${reverseSortDir})}"
+                    >STATUS
+                    <span
+                      th:if="${sortField=='ativo'}"
+                      th:text="${sortDir=='asc'?'▲':'▼'}"
+                    ></span
+                  ></a>
+                </th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="usuario : ${usuarios}">
+                <td th:text="'#USR' + ${usuario.id}">#USR001</td>
+                <td th:text="${usuario.nome}">Nome do Usuário</td>
+                <td th:text="${usuario.email}">email@empresa.com</td>
+                <td th:text="${usuario.role}">Administrador</td>
+                <td>
+                  <span
+                    th:if="${usuario.ativo}"
+                    style="color: var(--success-color)"
+                    >Ativo</span
+                  >
+                  <span
+                    th:unless="${usuario.ativo}"
+                    style="color: var(--danger-color)"
+                    >Inativo</span
+                  >
+                </td>
+                <td class="actions-cell">
+                  <a
+                    th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"
+                    class="action-icon"
+                    title="Editar"
+                    ><i class="bi bi-pencil"></i></a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
     </div>
     <script src="/js/config.js"></script>
     <script src="/js/main.js"></script>
-</body>
+  </body>
 </html>

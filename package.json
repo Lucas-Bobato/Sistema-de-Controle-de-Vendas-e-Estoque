@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "prettier": "3.5.3"
+  },
+  "scripts": {
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write ."
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.13.1"
+  }
+}

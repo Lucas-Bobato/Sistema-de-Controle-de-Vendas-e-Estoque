@@ -51,4 +51,20 @@ public class UsuarioService {
         }
         usuarioRepository.deleteById(id);
     }
+
+    public Usuario buscarPorEmail(String email) {
+      return usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+  }
+  
+  public void atualizarPerfil(Long id, String nome, String email, String novaSenha) {
+      Usuario usuario = buscarPorId(id);
+      usuario.setNome(nome);
+      usuario.setEmail(email);
+  
+      if (novaSenha != null && !novaSenha.isEmpty()) {
+          usuario.setSenha(passwordEncoder.encode(novaSenha));
+      }
+      
+      usuarioRepository.save(usuario);
+  }
 }

@@ -1,49 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<body>
-
-<aside class="sidebar" th:fragment="sidebar-layout">
-    <div class="logo">
-        <img th:src="@{/images/logo.png}"
-                id="sidebar-logo"
-                th:attr="data-logo-light=@{/images/logo.png}, data-logo-dark=@{/images/logo-white.png}"
-                alt="Logo da Empresa">
-    </div>
-    <nav class="sidebar-nav">
+  <head>
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
+    <aside class="sidebar" th:fragment="sidebar-layout">
+      <div class="logo">
+        <img
+          th:src="@{/images/logo.png}"
+          id="sidebar-logo"
+          th:attr="data-logo-light=@{/images/logo.png}, data-logo-dark=@{/images/logo-white.png}"
+          alt="Logo da Empresa"
+        />
+      </div>
+      <nav class="sidebar-nav">
         <a th:href="@{/Dashboard.html}" class="sidebar-item">
-            <span>Dashboard</span>
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
         </a>
         <a th:href="@{/vendas}" class="sidebar-item">
-            <span>Vendas</span>
+          <i class="bi bi-cart"></i>
+          <span>Vendas</span>
         </a>
         <a th:href="@{/produtos}" class="sidebar-item">
-            <span>Produtos</span>
+          <i class="bi bi-box-seam"></i>
+          <span>Produtos</span>
         </a>
         <a th:href="@{/clientes}" class="sidebar-item">
-            <span>Clientes</span>
+          <i class="bi bi-people"></i>
+          <span>Clientes</span>
         </a>
         <a th:href="@{/produtos/estoque}" class="sidebar-item">
-            <span>Estoque</span>
+          <i class="bi bi-stack"></i>
+          <span>Estoque</span>
         </a>
         <a th:href="@{/relatorios}" class="sidebar-item">
-            <span>Relatório</span>
+          <i class="bi bi-file-earmark-bar-graph"></i>
+          <span>Relatório</span>
         </a>
-        <a th:href="@{/usuarios}" class="sidebar-item" sec:authorize="hasRole('ADMIN')">
-            <span>Usuários</span>
+        <a
+          th:href="@{/usuarios}"
+          class="sidebar-item"
+          sec:authorize="hasRole('ADMIN')"
+        >
+          <i class="bi bi-person-gear"></i>
+          <span>Usuários</span>
         </a>
-    </nav>
-    <div class="sidebar-bottom">
         <a th:href="@{/configuracoes}" class="sidebar-item">
-            <span>Configurações</span>
+          <i class="bi bi-gear"></i>
+          <span>Configurações</span>
         </a>
-        
-        <form th:action="@{/logout}" method="post" id="logoutForm" style="display: none;"></form>
-        
-        <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit();" class="sidebar-item">
-            <span>Sair</span>
+        <a
+          href="javascript:void(0);"
+          onclick="document.getElementById('logoutForm').submit();"
+          class="sidebar-item"
+        >
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Sair</span>
         </a>
-    </div>
-</aside>
-
-</body>
+      </nav>
+    </aside>
+  </body>
 </html>

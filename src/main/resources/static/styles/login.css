@@ -1,111 +1,111 @@
 :root {
-    --primary-color: #4A90E2;
-    --primary-hover-color: #357ABD;
-    --input-bg: #F0F2F5;
-    --text-primary: #333333;
-    --text-secondary: #777777;
+  --primary-color: #4a90e2;
+  --primary-hover-color: #357abd;
+  --input-bg: #f0f2f5;
+  --text-primary: #333333;
+  --text-secondary: #777777;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: #F8F9FA;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .login-container {
-    background-color: #FFFFFF;
-    width: 100%;
-    max-width: 400px;
-    padding: 50px 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    text-align: center;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  padding: 50px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
 
 .logo {
-    margin: 0 auto 30px;
-    text-align: center;
+  margin: 0 auto 30px;
+  text-align: center;
 }
 
 .logo img {
-    max-width: 320px;
-    height: auto;
+  max-width: 320px;
+  height: auto;
 }
 
 .bemvindo {
-    color: var(--text-primary);
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 30px;
+  color: var(--text-primary);
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 30px;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .form-group {
-    text-align: left;
+  text-align: left;
 }
 
 .form-group label {
-    color: var(--text-primary);
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: block;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
 }
 
 .form-group input {
-    background-color: var(--input-bg);
-    height: 45px;
-    width: 100%;
-    border: 1px solid #EAECEF;
-    border-radius: 8px;
-    padding: 0 15px;
-    box-sizing: border-box;
-    font-size: 15px;
+  background-color: var(--input-bg);
+  height: 45px;
+  width: 100%;
+  border: 1px solid #eaecef;
+  border-radius: 8px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  font-size: 15px;
 }
 .form-group input:focus {
-    outline: none;
-    border-color: var(--primary-color);
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 .btn-entrar-link {
-    background-color: var(--primary-color);
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: bold;
-    height: 45px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    margin-top: 10px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  height: 45px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 10px;
 }
 
 .btn-entrar-link:hover {
-    background-color: var(--primary-hover-color);
+  background-color: var(--primary-hover-color);
 }
 
 .esqueceu-senha {
-    color: var(--primary-color);
-    font-size: 14px;
-    text-decoration: none;
-    margin-top: 15px;
-    display: inline-block;
+  color: var(--primary-color);
+  font-size: 14px;
+  text-decoration: none;
+  margin-top: 15px;
+  display: inline-block;
 }
 
 .esqueceu-senha:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

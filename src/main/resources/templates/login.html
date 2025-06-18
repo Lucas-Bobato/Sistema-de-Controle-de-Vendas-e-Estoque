@@ -1,40 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login do Sistema</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/login.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/login.css" />
+    <link rel="stylesheet" href="/styles/config.css">
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="login-container">
-        <div class="logo">
-            <img th:src="@{/images/logo.png}" alt="Logo da Empresa">
+      <div class="logo">
+        <img th:src="@{/images/logo.png}" alt="Logo da Empresa" />
+      </div>
+
+      <h1 class="bemvindo">Bem vindo!</h1>
+
+      <div
+        th:if="${param.error}"
+        style="color: #d9534f; margin-bottom: 20px; text-align: center"
+      >
+        Usuário ou senha inválidos. Por favor, tente novamente.
+      </div>
+      <form class="login-form" method="post" action="/login">
+        <div class="form-group">
+          <label for="username">Insira seu usuário</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Seu usuário"
+            required
+          />
         </div>
 
-        <h1 class="bemvindo">Bem vindo!</h1>
-
-        <div th:if="${param.error}" style="color: #D9534F; margin-bottom: 20px; text-align: center;">
-            Usuário ou senha inválidos. Por favor, tente novamente.
+        <div class="form-group">
+          <label for="password">Insira sua senha</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Sua senha"
+            required
+          />
         </div>
-        <form class="login-form" method="post" action="/login">
-            <div class="form-group">
-                <label for="username">Insira seu usuário</label>
-                <input type="text" id="username" name="username" placeholder="Seu usuário" required>
-            </div>
 
-            <div class="form-group">
-                <label for="password">Insira sua senha</label>
-                <input type="password" id="password" name="password" placeholder="Sua senha" required>
-            </div>
+        <button type="submit" class="btn-entrar-link">Entrar</button>
 
-            <button type="submit" class="btn-entrar-link">Entrar</button>
-
-            <a href="#" class="esqueceu-senha">Esqueceu a senha?</a>
-        </form>
+        <a href="#" class="esqueceu-senha">Esqueceu a senha?</a>
+      </form>
     </div>
     <script src="/js/config.js"></script>
     <script src="/js/main.js"></script>
-</body>
+  </body>
 </html>

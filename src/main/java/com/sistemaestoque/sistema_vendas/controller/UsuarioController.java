@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -60,4 +62,40 @@ public class UsuarioController {
         
         return "redirect:/usuarios";
     }
+
+    @GetMapping("/perfil")
+    public String perfilUsuario(Model model, @AuthenticationPrincipal UserDetails principal) {
+        if (principal == null) {
+
+            return "redirect:/login";
+        }
+
+        String email = principal.getUsername();
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+        model.addAttribute("usuario", usuario);
+        return "perfil";
+    }
+    
+    @PostMapping("/perfil/salvar")
+    public String salvarPerfil(@ModelAttribute Usuario usuarioDoForm,
+                               @RequestParam(name = "senha", required = false) String novaSenha,
+                               RedirectAttributes redirectAttributes,
+                               @AuthenticationPrincipal UserDetails principal) {
+        
+        if (principal == null) {
+            return "redirect:/login";
+        }
+    
+        try {
+            Usuario usuarioLogado = usuarioService.buscarPorEmail(principal.getUsername());
+            
+            usuarioService.atualizarPerfil(usuarioLogado.getId(), usuarioDoForm.getNome(), usuarioDoForm.getEmail(), novaSenha);
+            
+            redirectAttributes.addFlashAttribute("successMessage", "Perfil atualizado com sucesso!");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/perfil";
+    }
 }
+

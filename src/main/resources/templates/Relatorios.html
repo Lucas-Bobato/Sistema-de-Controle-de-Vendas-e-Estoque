@@ -1,86 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Relatórios - Sistema de Vendas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/form.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/form.css" />
+    <link rel="stylesheet" href="/styles/config.css">
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
 
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Central de Relatórios</h1>
-                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-            </header>
+      <main class="main-content">
+        <header class="main-header">
+          <h1>Central de Relatórios</h1>
+          <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
 
-            <section class="content-section" th:if="${tipoRelatorio == null}">
-                <h2>Selecionar Tipo de Relatório</h2>
-                <div class="report-cards-grid">
-                    <a th:href="@{/relatorios/vendas-por-periodo}" class="report-card">
-                        <div class="icon-placeholder">📅</div>
-                        <h3>Vendas por Período</h3>
-                    </a>
-                    <a th:href="@{/relatorios/produtos-mais-vendidos}" class="report-card">
-                        <div class="icon-placeholder">🏆</div>
-                        <h3>Produtos Mais Vendidos</h3>
-                    </a>
-                    <a th:href="@{/relatorios/estoque-critico}" class="report-card">
-                        <div class="icon-placeholder">❗</div>
-                        <h3>Estoque Crítico</h3>
-                    </a>
-                    <a th:href="@{/relatorios/rentabilidade-produtos}" class="report-card">
-                        <div class="icon-placeholder">💰</div>
-                        <h3>Rentabilidade por Produto</h3>
-                    </a>
-                </div>
-            </section>
+        <section class="content-section" th:if="${tipoRelatorio == null}">
+          <h2>Selecionar Tipo de Relatório</h2>
+          <div class="report-cards-grid">
+            <a th:href="@{/relatorios/vendas-por-periodo}" class="report-card">
+              <div class="icon-placeholder"><i class="bi bi-calendar-date"></i></div>
+              <h3>Vendas por Período</h3>
+            </a>
+            <a
+              th:href="@{/relatorios/produtos-mais-vendidos}"
+              class="report-card"
+            >
+              <div class="icon-placeholder"><i class="bi bi-trophy"></i></div>
+              <h3>Produtos Mais Vendidos</h3>
+            </a>
+            <a th:href="@{/relatorios/estoque-critico}" class="report-card">
+              <div class="icon-placeholder"><i class="bi bi-exclamation-triangle"></i></div>
+              <h3>Estoque Crítico</h3>
+            </a>
+            <a
+              th:href="@{/relatorios/rentabilidade-produtos}"
+              class="report-card"
+            >
+              <div class="icon-placeholder"><i class="bi bi-cash-coin"></i></div>
+              <h3>Rentabilidade por Produto</h3>
+            </a>
+          </div>
+        </section>
 
-            <section class="content-section" th:if="${tipoRelatorio != null}">
-                <a th:href="@{/relatorios}" style="text-decoration: none; margin-bottom: 20px; display: inline-block;">&larr; Voltar para seleção</a>
-                <h2 th:text="'Relatório: ' + ${tipoRelatorio}">Título do Relatório</h2>
+        <section class="content-section" th:if="${tipoRelatorio != null}">
+          <a
+            th:href="@{/relatorios}"
+            style="
+              text-decoration: none;
+              margin-bottom: 20px;
+              display: inline-block;
+            "
+            >&larr; Voltar para seleção</a
+          >
+          <h2 th:text="'Relatório: ' + ${tipoRelatorio}">
+            Título do Relatório
+          </h2>
 
-                <form th:if="${tipoRelatorio == 'Vendas por Período'}" th:action="@{/relatorios/vendas-por-periodo}" method="get" class="form-grid" style="grid-template-columns: 1fr 1fr auto; align-items: end;">
-                    <div class="form-group">
-                        <label for="dataInicio">Data de Início:</label>
-                        <input type="date" id="dataInicio" name="dataInicio" class="search-input" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataFim">Data Final:</label>
-                        <input type="date" id="dataFim" name="dataFim" class="search-input" required>
-                    </div>
-                    <button type="submit" class="action-button">Gerar</button>
-                </form>
+          <form
+            th:if="${tipoRelatorio == 'Vendas por Período'}"
+            th:action="@{/relatorios/vendas-por-periodo}"
+            method="get"
+            class="form-grid"
+            style="grid-template-columns: 1fr 1fr auto; align-items: end"
+          >
+            <div class="form-group">
+              <label for="dataInicio">Data de Início:</label>
+              <input
+                type="date"
+                id="dataInicio"
+                name="dataInicio"
+                class="search-input"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="dataFim">Data Final:</label>
+              <input
+                type="date"
+                id="dataFim"
+                name="dataFim"
+                class="search-input"
+                required
+              />
+            </div>
+            <button type="submit" class="action-button">Gerar</button>
+          </form>
 
-                <div class="table-container" th:if="${resultados != null}">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th th:each="coluna : ${colunas}" th:text="${coluna}">Cabeçalho</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="linha : ${resultados}">
-                                <td th:each="dado : ${linha}" th:text="${dado}">Dado</td>
-                            </tr>
-                            <tr th:if="${#lists.isEmpty(resultados)}">
-                                <td th:colspan="${#lists.size(colunas)}" style="text-align: center;">Nenhum resultado encontrado.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div th:if="${resultados == null and tipoRelatorio == 'Vendas por Período'}" style="text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
-                    <p>Por favor, selecione um período para gerar o relatório.</p>
-                </div>
-
-            </section>
-        </main>
+          <div class="table-container" th:if="${resultados != null}">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th th:each="coluna : ${colunas}" th:text="${coluna}">
+                    Cabeçalho
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="linha : ${resultados}">
+                  <td th:each="dado : ${linha}" th:text="${dado}">Dado</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(resultados)}">
+                  <td
+                    th:colspan="${#lists.size(colunas)}"
+                    style="text-align: center"
+                  >
+                    Nenhum resultado encontrado.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            th:if="${resultados == null and tipoRelatorio == 'Vendas por Período'}"
+            style="
+              text-align: center;
+              padding: 20px;
+              background-color: #f8f9fa;
+              border-radius: 8px;
+            "
+          >
+            <p>Por favor, selecione um período para gerar o relatório.</p>
+          </div>
+        </section>
+      </main>
     </div>
     <script src="/js/config.js"></script>
     <script src="/js/main.js"></script>
-</body>
+  </body>
 </html>

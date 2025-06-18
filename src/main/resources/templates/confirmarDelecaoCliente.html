@@ -1,33 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Confirmar Exclusão</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/form.css">
-</head>
-<body>
-<div class="dashboard-layout">
-    <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
-    <main class="main-content">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/form.css" />
+    <link rel="stylesheet" href="/styles/config.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
+    <div class="dashboard-layout">
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <main class="main-content">
         <header class="main-header">
-            <h1>Confirmar Exclusão de Cliente</h1>
+          <h1>Confirmar Exclusão de Cliente</h1>
         </header>
         <section class="content-section">
-            <p>Você tem certeza que deseja excluir permanentemente o seguinte cliente?</p>
-            <div class="confirmation-box">
-                <strong>ID:</strong> <span th:text="${cliente.id}"></span><br/>
-                <strong>Razão Social:</strong> <span th:text="${cliente.razaoSocial}"></span><br/>
-                <strong>CNPJ:</strong> <span th:text="${cliente.cnpj}"></span><br/>
-            </div>
-            <form th:action="@{/clientes/deletar/{id}(id=${cliente.id})}" method="post" class="form-actions">
-                <button type="submit" class="action-button" style="background-color: var(--danger-color);">Confirmar Exclusão</button>
-                <a th:href="@{/clientes}" class="action-button" style="background-color: #777;">Cancelar</a>
-            </form>
+          <p>
+            Você tem certeza que deseja excluir permanentemente o seguinte
+            cliente?
+          </p>
+          <div class="confirmation-box">
+            <strong>ID:</strong> <span th:text="${cliente.id}"></span><br />
+            <strong>Razão Social:</strong>
+            <span th:text="${cliente.razaoSocial}"></span><br />
+            <strong>CNPJ:</strong> <span th:text="${cliente.cnpj}"></span><br />
+          </div>
+          <form
+            th:action="@{/clientes/deletar/{id}(id=${cliente.id})}"
+            method="post"
+            class="form-actions"
+          >
+            <button
+              type="submit"
+              class="action-button"
+              style="background-color: var(--danger-color)"
+            >
+              Confirmar Exclusão
+            </button>
+            <a
+              th:href="@{/clientes}"
+              class="action-button"
+              style="background-color: #777"
+              >Cancelar</a
+            >
+          </form>
         </section>
-    </main>
-</div>
-<script src="/js/config.js"></script>
-</body>
+      </main>
+    </div>
+    <script src="/js/config.js"></script>
+  </body>
 </html>

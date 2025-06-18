@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
+import com.sistemaestoque.sistema_vendas.exception.EstoqueInsuficienteException; // Adicionar import
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/vendas")
@@ -70,11 +72,23 @@ public class VendaController {
     }
 
     @PostMapping("/salvar")
-    public String salvarVenda(@ModelAttribute Venda venda) {
+    public String salvarVenda(@ModelAttribute Venda venda, RedirectAttributes redirectAttributes) {
         if (venda.getDataVenda() == null) {
             venda.setDataVenda(LocalDate.now());
         }
-        vendaService.salvar(venda);
+
+        try {
+            vendaService.salvar(venda);
+            redirectAttributes.addFlashAttribute("successMessage", "Venda salva com sucesso!");
+        } catch (EstoqueInsuficienteException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            if (venda.getId() == null) {
+                return "redirect:/vendas/novo";
+            } else {
+                return "redirect:/vendas/editar/" + venda.getId();
+            }
+        }
+
         return "redirect:/vendas";
     }
 
@@ -84,6 +98,7 @@ public class VendaController {
         if (venda == null) {
             return "redirect:/vendas";
         }
+
         List<Cliente> clientes = clienteRepository.findAll();
         List<Produto> produtos = produtoRepository.findAll();
         List<Usuario> usuarios = usuarioRepository.findAll();

@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.sistemaestoque.sistema_vendas.exception.EstoqueInsuficienteException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VendaService {
@@ -27,7 +29,6 @@ public class VendaService {
 
     @Transactional
     public void salvar(Venda venda) {
-        // Se a venda já existe (é uma atualização), restaura o estoque antigo primeiro.
         if (venda.getId() != null) {
             vendaRepository.findById(venda.getId()).ifPresent(vendaAntiga -> {
                 for (ItemVenda item : vendaAntiga.getItens()) {
@@ -38,14 +39,29 @@ public class VendaService {
             });
         }
 
-        // Debita o estoque para os novos itens da venda.
+        if (venda.getItens() != null) {
+            for (ItemVenda item : venda.getItens()) {
+                item.setVenda(venda);
+            }
+        }
+
         for (ItemVenda item : venda.getItens()) {
-            Produto produto = item.getProduto();
-            int quantidadeVendida = item.getQuantidade();
+            Produto produto = produtoRepository.findById(item.getProduto().getId())
+                    .orElseThrow(() -> new RuntimeException("Produto não encontrado com o ID: " + item.getProduto().getId()));
             
-            // Verifica se há estoque suficiente antes de debitar.
-            if (produto.getQuantidadeEstoque() < quantidadeVendida) {
-                throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getNome());
+            item.setProduto(produto);
+
+            int quantidadeVendida = item.getQuantidade();
+            int estoqueDisponivel = Optional.ofNullable(produto.getQuantidadeEstoque()).orElse(0);
+            
+            if (estoqueDisponivel < quantidadeVendida) {
+                String mensagem = String.format(
+                    "Estoque insuficiente para o produto: '%s'. Disponível: %d, Tentativa de venda: %d",
+                    produto.getNome(),
+                    estoqueDisponivel,
+                    quantidadeVendida
+                );
+                throw new EstoqueInsuficienteException(mensagem);
             }
             
             produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidadeVendida);
@@ -61,11 +77,11 @@ public class VendaService {
 
     @Transactional
     public void deletar(Long id) {
-        // Antes de deletar a venda, restaura a quantidade de itens ao estoque.
         vendaRepository.findById(id).ifPresent(venda -> {
             for (ItemVenda item : venda.getItens()) {
                 Produto produto = item.getProduto();
-                produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + item.getQuantidade());
+                int estoqueAtual = Optional.ofNullable(produto.getQuantidadeEstoque()).orElse(0);
+                produto.setQuantidadeEstoque(estoqueAtual + item.getQuantidade());
                 produtoRepository.save(produto);
             }
         });

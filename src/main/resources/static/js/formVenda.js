@@ -26,7 +26,6 @@ addBtn.addEventListener("click", function () {
     return;
     }
 
-    // Verifica se o item já foi adicionado
     if (
     tbody.querySelector(`input[name$="produto.id"][value="${produtoId}"]`)
     ) {
@@ -36,7 +35,7 @@ addBtn.addEventListener("click", function () {
 
     const subtotal = produtoPreco * quantidade;
     const rowIndex = tbody.rows.length;
-    const newRow = tbody.insertRow(); // Cria uma nova linha na tabela
+    const newRow = tbody.insertRow();
 
     newRow.innerHTML = `
             <input type="hidden" name="itens[${rowIndex}].produto.id" value="${produtoId}">
@@ -85,6 +84,5 @@ function atualizarTotal() {
     document.getElementById("valorTotal").value = total.toFixed(2);
 }
 
-  // Calcula o total inicial ao carregar a página (para o modo de edição)
 atualizarTotal();
 });

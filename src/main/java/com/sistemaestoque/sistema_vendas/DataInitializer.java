@@ -47,7 +47,6 @@ public class DataInitializer implements CommandLineRunner {
         Cliente clienteTech = criarCliente("Tech Solutions Ltda", "12.345.678/0001-99");
         Cliente clienteInova = criarCliente("Inova Corp S.A.", "98.765.432/0001-11");
         
-        // Adicionando o custo aos produtos
         Produto p1 = criarProduto("Camisa de Algodão", "Vestuário", new BigDecimal("44.90"), new BigDecimal("25.00"), 50, 10);
         Produto p2 = criarProduto("Mochila Executiva", "Acessórios", new BigDecimal("149.90"), new BigDecimal("80.00"), 30, 5);
         Produto p3 = criarProduto("Fone Bluetooth Pro", "Eletrônicos", new BigDecimal("249.50"), new BigDecimal("150.00"), 20, 5);
@@ -104,13 +103,12 @@ public class DataInitializer implements CommandLineRunner {
         return clienteRepository.save(cliente);
     }
 
-    // Método atualizado para incluir o custo
     private Produto criarProduto(String nome, String categoria, BigDecimal preco, BigDecimal custo, int estoque, int estoqueMinimo) {
         Produto produto = new Produto();
         produto.setNome(nome);
         produto.setCategoria(categoria);
         produto.setPreco(preco);
-        produto.setCusto(custo); // Define o custo
+        produto.setCusto(custo);
         produto.setQuantidadeEstoque(estoque);
         produto.setEstoqueMinimo(estoqueMinimo);
         return produtoRepository.save(produto);

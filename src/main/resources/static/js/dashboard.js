@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
     
-    // Função para gerar cores aleatórias para os gráficos de barra
     const generateRandomColors = (numColors) => {
         const colors = [];
         for (let i = 0; i < numColors; i++) {
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     };
 
     try {
-        // Fetch data para o Gráfico de Vendas
         const vendasResponse = await fetch('/api/vendas/ultimos7dias');
         const vendasDataRaw = await vendasResponse.json();
         
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     try {
-        // Fetch data para o Gráfico de Produtos
         const produtosResponse = await fetch('/api/produtos/mais-vendidos');
         const produtosDataRaw = await produtosResponse.json();
 

@@ -15,6 +15,10 @@
                 <h1 th:text="${venda.id == null} ? 'Nova Venda' : 'Editar Venda'">Formulário de Venda</h1>
             </header>
             <section class="content-section">
+
+                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
                 <form th:action="@{/vendas/salvar}" th:object="${venda}" method="post" id="vendaForm">
                     <input type="hidden" th:field="*{id}" />
 

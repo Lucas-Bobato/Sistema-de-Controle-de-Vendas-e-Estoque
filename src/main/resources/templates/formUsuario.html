@@ -11,7 +11,7 @@
     />
     <link rel="stylesheet" href="/styles/style.css" />
     <link rel="stylesheet" href="/styles/form.css" />
-    <link rel="stylesheet" href="/styles/config.css">
+    <link rel="stylesheet" href="/styles/config.css" />
     <link
       rel="stylesheet"
       th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
@@ -39,19 +39,41 @@
             <input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{fotoPerfil}" />
 
-            <div class="form-group" style="margin-bottom: 25px;">
+            <div class="form-group" style="margin-bottom: 25px">
               <label>Foto de Perfil (Opcional):</label>
               <div class="profile-upload-container">
                 <div class="avatar-wrapper">
-                  <img id="avatar-preview" th:src="${usuario.fotoPerfil != null ? '/images/perfil/' + usuario.fotoPerfil : '/images/default-avatar.png'}" alt="Foto de Perfil" class="profile-avatar">
+                  <img
+                    id="avatar-preview"
+                    th:src="${usuario.fotoPerfil != null ? '/images/perfil/' + usuario.fotoPerfil : '/images/default-avatar.png'}"
+                    alt="Foto de Perfil"
+                    class="profile-avatar"
+                  />
                   <div class="avatar-edit-overlay">
                     <i class="bi bi-camera"></i>
                   </div>
-                  <input type="file" name="foto" id="foto-input" class="hidden-file-input" accept="image/*">
+                  <input
+                    type="file"
+                    name="foto"
+                    id="foto-input"
+                    class="hidden-file-input"
+                    accept="image/*"
+                  />
                 </div>
                 <div class="upload-info">
-                  <label for="foto-input" class="action-button button-secondary" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-primary);">Escolher Foto</label>
-                  <span id="file-name" class="file-name-display">Nenhum arquivo selecionado.</span>
+                  <label
+                    for="foto-input"
+                    class="action-button button-secondary"
+                    style="
+                      background-color: transparent;
+                      border: 1px solid var(--border-color);
+                      color: var(--text-primary);
+                    "
+                    >Escolher Foto</label
+                  >
+                  <span id="file-name" class="file-name-display"
+                    >Nenhum arquivo selecionado.</span
+                  >
                 </div>
               </div>
             </div>
@@ -118,7 +140,9 @@
 
             <div class="form-actions">
               <button type="submit" class="action-button">Salvar</button>
-              <a th:href="@{/usuarios}" class="action-button button-secondary">Cancelar</a>
+              <a th:href="@{/usuarios}" class="action-button button-secondary"
+                >Cancelar</a
+              >
             </div>
           </form>
         </section>

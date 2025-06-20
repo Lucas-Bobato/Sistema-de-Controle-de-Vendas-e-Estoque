@@ -25,18 +25,18 @@ public class ClienteService {
         return clienteRepository.findByRazaoSocialContainingIgnoreCaseOrCnpjContainingIgnoreCase(termo, termo, sort);
     }
 
-public void salvar(Cliente cliente) {
-    Optional<Cliente> clienteExistente = clienteRepository.findByCnpj(cliente.getCnpj());
+    public void salvar(Cliente cliente) {
+        Optional<Cliente> clienteExistente = clienteRepository.findByCnpj(cliente.getCnpj());
 
-    if (clienteExistente.isPresent() && !clienteExistente.get().getId().equals(cliente.getId())) {
-        throw new CnpjDuplicadoException("Já existe um cliente cadastrado com o CNPJ: " + cliente.getCnpj());
-    }
+        if (clienteExistente.isPresent() && !clienteExistente.get().getId().equals(cliente.getId())) {
+            throw new CnpjDuplicadoException("Já existe um cliente cadastrado com o CNPJ: " + cliente.getCnpj());
+        }
 
-    if (cliente.getId() == null) {
-        cliente.setDataCadastro(LocalDate.now());
+        if (cliente.getId() == null) {
+            cliente.setDataCadastro(LocalDate.now());
+        }
+        clienteRepository.save(cliente);
     }
-    clienteRepository.save(cliente);
-}
 
     public Cliente buscarPorId(Long id) {
         Optional<Cliente> cliente = clienteRepository.findById(id);

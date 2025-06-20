@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/style.css" />
-    <link rel="stylesheet" href="/styles/config.css">
+    <link rel="stylesheet" href="/styles/config.css" />
     <link
       rel="stylesheet"
       th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
@@ -80,7 +80,11 @@
         </section>
 
         <section class="tools-section">
-          <form th:action="@{/produtos/estoque}" method="get" class="search-input-container">
+          <form
+            th:action="@{/produtos/estoque}"
+            method="get"
+            class="search-input-container"
+          >
             <div class="search-icon"><i class="bi bi-search"></i></div>
             <input
               type="text"
@@ -139,8 +143,8 @@
                     th:href="@{/produtos/editar/{id}(id=${produto.id})}"
                     class="action-icon"
                     title="Editar"
-                    ><i class="bi bi-pencil"></i></a
-                  >
+                    ><i class="bi bi-pencil"></i
+                  ></a>
                 </td>
               </tr>
             </tbody>

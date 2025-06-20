@@ -10,7 +10,7 @@
     />
     <link rel="stylesheet" href="/styles/style.css" />
     <link rel="stylesheet" href="/styles/form.css" />
-    <link rel="stylesheet" href="/styles/config.css">
+    <link rel="stylesheet" href="/styles/config.css" />
     <link
       rel="stylesheet"
       th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
@@ -30,7 +30,9 @@
           <h2>Selecionar Tipo de Relatório</h2>
           <div class="report-cards-grid">
             <a th:href="@{/relatorios/vendas-por-periodo}" class="report-card">
-              <div class="icon-placeholder"><i class="bi bi-calendar-date"></i></div>
+              <div class="icon-placeholder">
+                <i class="bi bi-calendar-date"></i>
+              </div>
               <h3>Vendas por Período</h3>
             </a>
             <a
@@ -41,14 +43,18 @@
               <h3>Produtos Mais Vendidos</h3>
             </a>
             <a th:href="@{/relatorios/estoque-critico}" class="report-card">
-              <div class="icon-placeholder"><i class="bi bi-exclamation-triangle"></i></div>
+              <div class="icon-placeholder">
+                <i class="bi bi-exclamation-triangle"></i>
+              </div>
               <h3>Estoque Crítico</h3>
             </a>
             <a
               th:href="@{/relatorios/rentabilidade-produtos}"
               class="report-card"
             >
-              <div class="icon-placeholder"><i class="bi bi-cash-coin"></i></div>
+              <div class="icon-placeholder">
+                <i class="bi bi-cash-coin"></i>
+              </div>
               <h3>Rentabilidade por Produto</h3>
             </a>
           </div>
@@ -57,7 +63,7 @@
         <section class="content-section" th:if="${tipoRelatorio != null}">
           <a th:href="@{/relatorios}" class="link-voltar">
             &larr; Voltar para seleção
-        </a>
+          </a>
           <h2 th:text="'Relatório: ' + ${tipoRelatorio}">
             Título do Relatório
           </h2>
@@ -118,11 +124,7 @@
           </div>
           <div
             th:if="${resultados == null and tipoRelatorio == 'Vendas por Período'}"
-            style="
-              text-align: center;
-              padding: 20px;
-              border-radius: 8px;
-            "
+            style="text-align: center; padding: 20px; border-radius: 8px"
           >
             <p>Por favor, selecione um período para gerar o relatório.</p>
           </div>

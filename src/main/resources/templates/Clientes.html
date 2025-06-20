@@ -83,15 +83,19 @@
                 <td th:text="${cliente.telefone}">(11) 91111-1111</td>
                 <td th:text="${cliente.endereco}">R. ABC, 123</td>
                 <td class="actions-cell">
-                  <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="action-icon" title="Editar">
+                  <a
+                    th:href="@{/clientes/editar/{id}(id=${cliente.id})}"
+                    class="action-icon"
+                    title="Editar"
+                  >
                     <i class="bi bi-pencil"></i>
-                </a>
+                  </a>
                   <a
                     th:href="@{/clientes/deletar/{id}(id=${cliente.id})}"
                     class="action-icon delete"
                     title="Excluir"
-                    ><i class="bi bi-trash"></i></a
-                  >
+                    ><i class="bi bi-trash"></i
+                  ></a>
                 </td>
               </tr>
             </tbody>

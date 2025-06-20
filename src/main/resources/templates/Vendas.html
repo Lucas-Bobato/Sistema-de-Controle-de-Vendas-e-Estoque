@@ -139,14 +139,14 @@
                   <a
                     th:href="@{/vendas/editar/{id}(id=${venda.id})}"
                     class="action-icon"
-                    ><i class="bi bi-pencil"></i></a
-                  >
+                    ><i class="bi bi-pencil"></i
+                  ></a>
                   <a
                     th:href="@{/vendas/deletar/{id}(id=${venda.id})}"
                     class="action-icon delete"
                     title="Excluir"
-                    ><i class="bi bi-trash"></i></a
-                  >
+                    ><i class="bi bi-trash"></i
+                  ></a>
                 </td>
               </tr>
               <tr th:if="${#lists.isEmpty(vendas)}">

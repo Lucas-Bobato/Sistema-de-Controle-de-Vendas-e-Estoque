@@ -30,15 +30,21 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private ItemVendaRepository itemVendaRepository;
 
+    @Autowired
+    private NotificacaoRepository notificacaoRepository;
+
     @Override
     public void run(String... args) throws Exception {
         
         System.out.println(">>> Limpando dados antigos do banco de dados...");
+        
         itemVendaRepository.deleteAllInBatch();
         vendaRepository.deleteAllInBatch();
+        notificacaoRepository.deleteAllInBatch();
         produtoRepository.deleteAllInBatch();
         clienteRepository.deleteAllInBatch();
         usuarioRepository.deleteAllInBatch();
+        
         System.out.println(">>> Dados antigos removidos com sucesso.");
 
         System.out.println(">>> Criando um novo conjunto de dados base...");

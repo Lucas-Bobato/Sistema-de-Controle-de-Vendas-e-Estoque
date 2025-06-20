@@ -1,83 +1,138 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Meu Perfil</title>
     <link rel="stylesheet" href="/styles/style.css" />
     <link rel="stylesheet" href="/styles/form.css" />
-    <link rel="stylesheet" href="/styles/config.css">
+    <link rel="stylesheet" href="/styles/config.css" />
     <link
       rel="stylesheet"
       th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
     />
-</head>
-<body>
-  <div class="dashboard-layout">
+  </head>
+  <body>
+    <div class="dashboard-layout">
       <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
       <main class="main-content">
-          <header class="main-header">
-              <h1>Meu Perfil</h1>
-              <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-          </header>
+        <header class="main-header">
+          <h1>Meu Perfil</h1>
+          <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
 
-          <section class="content-section">
-              <h3>Editar Informações Pessoais</h3>
+        <section class="content-section">
+          <h3>Editar Informações Pessoais</h3>
 
-              <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-              <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+          <div
+            th:if="${successMessage}"
+            class="alert alert-success"
+            th:text="${successMessage}"
+          ></div>
+          <div
+            th:if="${errorMessage}"
+            class="alert alert-danger"
+            th:text="${errorMessage}"
+          ></div>
 
-              <form th:action="@{/perfil/salvar}" th:object="${usuario}" method="post" enctype="multipart/form-data">
-                  <input type="hidden" th:field="*{id}" />
-                  <input type="hidden" th:field="*{role}" />
-                  <input type="hidden" th:field="*{ativo}" />
+          <form
+            th:action="@{/perfil/salvar}"
+            th:object="${usuario}"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{role}" />
+            <input type="hidden" th:field="*{ativo}" />
 
-                  <div class="form-group" style="margin-bottom: 25px;">
-                      <label>Foto de Perfil:</label>
-                      <div class="profile-upload-container">
-                          <div class="avatar-wrapper">
-                            <img id="avatar-preview"
-     th:src="${usuario.fotoPerfil != null && !usuario.fotoPerfil.isEmpty() ?
+            <div class="form-group" style="margin-bottom: 25px">
+              <label>Foto de Perfil:</label>
+              <div class="profile-upload-container">
+                <div class="avatar-wrapper">
+                  <img
+                    id="avatar-preview"
+                    th:src="${usuario.fotoPerfil != null && !usuario.fotoPerfil.isEmpty() ?
              '../../usuarios/' + usuario.id + '/foto?v=' + #dates.createNow().getTime() :
              '../../images/default-avatar.png'}"
-     alt="Foto de Perfil"
-     class="profile-avatar">
-                              <div class="avatar-edit-overlay">
-                                  <i class="bi bi-camera"></i>
-                              </div>
-                              <input type="file" name="foto" id="foto-input" class="hidden-file-input" accept="image/*">
-                          </div>
-                          <div class="upload-info">
-                              <label for="foto-input" class="action-button button-secondary" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer;">Escolher Foto</label>
-                              <span id="file-name" class="file-name-display">Nenhum arquivo selecionado.</span>
-                          </div>
-                      </div>
+                    alt="Foto de Perfil"
+                    class="profile-avatar"
+                  />
+                  <div class="avatar-edit-overlay">
+                    <i class="bi bi-camera"></i>
                   </div>
+                  <input
+                    type="file"
+                    name="foto"
+                    id="foto-input"
+                    class="hidden-file-input"
+                    accept="image/*"
+                  />
+                </div>
+                <div class="upload-info">
+                  <label
+                    for="foto-input"
+                    class="action-button button-secondary"
+                    style="
+                      background-color: transparent;
+                      border: 1px solid var(--border-color);
+                      color: var(--text-primary);
+                      cursor: pointer;
+                    "
+                    >Escolher Foto</label
+                  >
+                  <span id="file-name" class="file-name-display"
+                    >Nenhum arquivo selecionado.</span
+                  >
+                </div>
+              </div>
+            </div>
 
-                  <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
-                      <div class="form-group">
-                          <label for="nome">Nome:</label>
-                          <input type="text" id="nome" name="nome" th:value="*{nome}" class="search-input" required />
-                      </div>
-                      <div class="form-group">
-                          <label for="email">Email:</label>
-                          <input type="email" id="email" name="email" th:value="*{email}" class="search-input" required />
-                      </div>
-                  </div>
+            <div class="form-grid" style="grid-template-columns: 1fr 1fr">
+              <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input
+                  type="text"
+                  id="nome"
+                  name="nome"
+                  th:value="*{nome}"
+                  class="search-input"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  th:value="*{email}"
+                  class="search-input"
+                  required
+                />
+              </div>
+            </div>
 
-                  <div class="form-group">
-                      <label for="senha">Nova Senha:</label>
-                      <input type="password" id="senha" name="senha" class="search-input" placeholder="Deixe em branco para não alterar" />
-                  </div>
+            <div class="form-group">
+              <label for="senha">Nova Senha:</label>
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                class="search-input"
+                placeholder="Deixe em branco para não alterar"
+              />
+            </div>
 
-                  <div class="form-actions">
-                      <button type="submit" class="action-button">Salvar Alterações</button>
-                  </div>
-              </form>
-          </section>
+            <div class="form-actions">
+              <button type="submit" class="action-button">
+                Salvar Alterações
+              </button>
+            </div>
+          </form>
+        </section>
       </main>
-  </div>
-  <script src="/js/config.js"></script>
-  <script src="/js/perfil.js"></script>
-  <script src="/js/main.js"></script>
-</body>
+    </div>
+    <script src="/js/config.js"></script>
+    <script src="/js/perfil.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>

@@ -16,10 +16,25 @@
           <div class="slider round"></div>
       </label>
   
-      <div class="notification-icon">
-          <i class="bi bi-bell"></i>
-      </div>
-  
+      <div class="user-profile">
+        <div class="notification-container">
+            <div class="notification-icon" id="notification-bell">
+                <i class="bi bi-bell"></i>
+                <span class="notification-count" style="display: none;"></span>
+            </div>
+            <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
+                <div class="notification-header">
+                    Notificações
+                </div>
+                <div id="notification-list">
+                    </div>
+                <div class="notification-footer">
+                    <a href="#">Ver todas</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        
     <a th:href="@{/perfil}" class="user-avatar-link">
         <div class="user-avatar">
           <img th:if="${#authentication.principal.fotoPerfil != null && !#authentication.principal.fotoPerfil.isEmpty()}"

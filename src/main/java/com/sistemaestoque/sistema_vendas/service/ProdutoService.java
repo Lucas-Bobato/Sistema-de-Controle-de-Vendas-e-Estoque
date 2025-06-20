@@ -1,6 +1,9 @@
 package com.sistemaestoque.sistema_vendas.service;
 
+import com.sistemaestoque.sistema_vendas.model.Notificacao;
 import com.sistemaestoque.sistema_vendas.model.Produto;
+import com.sistemaestoque.sistema_vendas.model.Usuario;
+import com.sistemaestoque.sistema_vendas.model.UsuarioRole;
 import com.sistemaestoque.sistema_vendas.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,6 +19,12 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private NotificacaoService notificacaoService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
     public List<Produto> listarTodos(Sort sort) {
         return produtoRepository.findAll(sort);
     }
@@ -29,6 +38,18 @@ public class ProdutoService {
 
     public void salvar(Produto produto) {
         produtoRepository.save(produto);
+
+        if (produto.getQuantidadeEstoque() <= produto.getEstoqueMinimo()) {
+            String mensagem = "O produto '" + produto.getNome() + "' atingiu o nível de estoque crítico.";
+            List<Usuario> admins = usuarioService.listarTodos(Sort.by("id"))
+                    .stream()
+                    .filter(u -> u.getRole() == UsuarioRole.ADMIN)
+                    .collect(Collectors.toList());
+
+            for (Usuario admin : admins) {
+                notificacaoService.criarNotificacao(admin, mensagem, Notificacao.TipoNotificacao.ESTOQUE_CRITICO);
+            }
+        }
     }
 
     public Produto buscarPorId(Long id) {
@@ -56,7 +77,7 @@ public class ProdutoService {
 
     public List<Produto> listarProdutosComEstoqueCritico() {
         return produtoRepository.findAll().stream()
-            .filter(p -> p.getQuantidadeEstoque() <= p.getEstoqueMinimo())
-            .collect(Collectors.toList());
+                .filter(p -> p.getQuantidadeEstoque() <= p.getEstoqueMinimo())
+                .collect(Collectors.toList());
     }
 }

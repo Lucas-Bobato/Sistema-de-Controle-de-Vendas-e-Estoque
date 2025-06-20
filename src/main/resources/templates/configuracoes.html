@@ -1,27 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Configurações do Sistema</title>
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/config.css">
-    <link rel="stylesheet" th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}" />
-</head>
-<body>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/config.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
+  </head>
+  <body>
     <div class="dashboard-layout">
-        <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
-        <main class="main-content">
-            <header class="main-header">
-                <h1>Configurações do Sistema</h1>
-                <div th:replace="~{fragments/user-profile :: header-profile}"></div>
-            </header>
-            <section class="content-section">
-                <h3>Configurações Gerais</h3>
-                <p>Esta área é reservada para futuras configurações gerais do sistema.</p>
-            </section>
-        </main>
+      <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
+      <main class="main-content">
+        <header class="main-header">
+          <h1>Configurações do Sistema</h1>
+          <div th:replace="~{fragments/user-profile :: header-profile}"></div>
+        </header>
+        <section class="content-section">
+          <h3>Configurações Gerais</h3>
+          <p>
+            Esta área é reservada para futuras configurações gerais do sistema.
+          </p>
+        </section>
+      </main>
     </div>
     <script src="/js/config.js"></script>
     <script src="/js/main.js"></script>
-</body>
+  </body>
 </html>

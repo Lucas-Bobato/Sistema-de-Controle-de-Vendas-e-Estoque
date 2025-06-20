@@ -1,5 +1,6 @@
 package com.sistemaestoque.sistema_vendas.service;
 
+import com.sistemaestoque.sistema_vendas.exception.EstoqueInsuficienteException;
 import com.sistemaestoque.sistema_vendas.model.ItemVenda;
 import com.sistemaestoque.sistema_vendas.model.Produto;
 import com.sistemaestoque.sistema_vendas.model.Venda;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.sistemaestoque.sistema_vendas.exception.EstoqueInsuficienteException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +22,9 @@ public class VendaService {
     
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ProdutoService produtoService;
 
     public List<Venda> listarTodas(Sort sort) {
         return vendaRepository.findAll(sort);
@@ -65,7 +68,7 @@ public class VendaService {
             }
             
             produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidadeVendida);
-            produtoRepository.save(produto);
+            produtoService.salvar(produto);
         }
 
         vendaRepository.save(venda);
@@ -89,11 +92,7 @@ public class VendaService {
         vendaRepository.deleteById(id);
     }
     
-    public List<Venda> buscar(String termo) {
-        return vendaRepository.findByClienteRazaoSocialContainingIgnoreCaseOrVendedorNomeContainingIgnoreCase(termo, termo);
-    }
-    
     public List<Venda> buscar(String termo, Sort sort) {
         return vendaRepository.findByClienteRazaoSocialContainingIgnoreCaseOrVendedorNomeContainingIgnoreCase(termo, termo, sort);
     }
-}
+  }

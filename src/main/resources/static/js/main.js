@@ -48,4 +48,57 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+  const notificationBell = document.getElementById("notification-bell");
+  const notificationDropdown = document.getElementById("notification-dropdown");
+
+  if (notificationBell && notificationDropdown) {
+    fetchAndDisplayNotifications();
+
+    notificationBell.addEventListener("click", (event) => {
+      event.stopPropagation();
+      notificationDropdown.style.display =
+        notificationDropdown.style.display === "none" ? "block" : "none";
+    });
+
+    document.addEventListener("click", () => {
+      notificationDropdown.style.display = "none";
+    });
+
+    notificationDropdown.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  }
 });
+
+async function fetchAndDisplayNotifications() {
+  try {
+    const response = await fetch("/api/notificacoes");
+    if (!response.ok) {
+      console.error("Falha ao buscar notificações.");
+      return;
+    }
+    const notificacoes = await response.json();
+    const countElement = document.querySelector(".notification-count");
+    const listElement = document.getElementById("notification-list");
+
+    listElement.innerHTML = "";
+
+    if (notificacoes.length > 0) {
+      countElement.textContent = notificacoes.length;
+      countElement.style.display = "block";
+
+      notificacoes.forEach((n) => {
+        const item = document.createElement("div");
+        item.className = "notification-item";
+        item.innerHTML = `<i class="bi bi-exclamation-triangle-fill icon"></i> <div>${n.mensagem}</div>`;
+        listElement.appendChild(item);
+      });
+    } else {
+      countElement.style.display = "none";
+      listElement.innerHTML =
+        '<div class="notification-item">Nenhuma nova notificação.</div>';
+    }
+  } catch (error) {
+    console.error("Erro:", error);
+  }
+}

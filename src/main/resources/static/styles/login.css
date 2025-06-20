@@ -120,7 +120,7 @@ body[data-theme="dark"] .login-container {
 }
 
 body[data-theme="dark"] .logo img {
-  content: url('/images/logo-white.png');
+  content: url("/images/logo-white.png");
 }
 
 body[data-theme="dark"] .bemvindo {

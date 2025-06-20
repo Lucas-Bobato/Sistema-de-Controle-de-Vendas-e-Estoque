@@ -39,7 +39,6 @@
 }
 
 .confirmation-box {
-  background-color: #f8f9fa;
   padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -102,7 +101,7 @@
 }
 
 .avatar-wrapper:hover .profile-avatar {
-    border-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 .avatar-edit-overlay {
@@ -131,13 +130,13 @@
 }
 
 .upload-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
 }
 
 .file-name-display {
-    font-size: 14px;
-    color: var(--text-secondary);
+  font-size: 14px;
+  color: var(--text-secondary);
 }

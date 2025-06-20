@@ -90,7 +90,7 @@ async function fetchAndDisplayNotifications() {
       notificacoes.forEach((n) => {
         const item = document.createElement("div");
         item.className = "notification-item";
-        item.innerHTML = `<i class="bi bi-exclamation-triangle-fill icon"></i> <div>${n.mensagem}</div>`;
+        item.innerHTML = `<i class="bi bi-exclamation-triangle-fill icon"></i> <div>${n.mensagem}</div> <button class="close-notification" onclick="marcarComoLida(${n.id}, event)">&times;</button>`;
         listElement.appendChild(item);
       });
     } else {
@@ -101,4 +101,32 @@ async function fetchAndDisplayNotifications() {
   } catch (error) {
     console.error("Erro:", error);
   }
+}
+
+async function marcarComoLida(id, event) {
+    event.stopPropagation();
+    try {
+        const response = await fetch(`/api/notificacoes/${id}/lida`, { method: 'POST' });
+        if(response.ok) {
+            fetchAndDisplayNotifications();
+        } else {
+            console.error('Falha ao marcar notificação como lida.');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function marcarTodasComoLidas(event) {
+    event.preventDefault();
+    try {
+        const response = await fetch('/api/notificacoes/marcar-todas-lidas', { method: 'POST' });
+        if(response.ok) {
+            fetchAndDisplayNotifications();
+        } else {
+            console.error('Falha ao marcar todas as notificações como lidas.');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+    }
 }

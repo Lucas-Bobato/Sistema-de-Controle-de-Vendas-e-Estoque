@@ -624,6 +624,18 @@ body[data-theme="dark"] .link-voltar {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+}
+
+.close-notification {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-secondary);
 }
 
 .notification-item:last-child {

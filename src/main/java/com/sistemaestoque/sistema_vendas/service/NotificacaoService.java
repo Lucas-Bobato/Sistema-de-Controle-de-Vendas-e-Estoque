@@ -5,6 +5,7 @@ import com.sistemaestoque.sistema_vendas.model.Usuario;
 import com.sistemaestoque.sistema_vendas.repository.NotificacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,5 +28,18 @@ public class NotificacaoService {
 
     public List<Notificacao> getNotificacoesNaoLidas(Long usuarioId) {
         return notificacaoRepository.findByUsuarioIdAndLidaIsFalseOrderByDataCriacaoDesc(usuarioId);
+    }
+
+    @Transactional
+    public void marcarComoLida(Long notificacaoId) {
+        notificacaoRepository.findById(notificacaoId).ifPresent(notificacao -> {
+            notificacao.setLida(true);
+            notificacaoRepository.save(notificacao);
+        });
+    }
+
+    @Transactional
+    public void marcarTodasComoLidas(Long usuarioId) {
+        notificacaoRepository.marcarTodasComoLidas(usuarioId);
     }
 }

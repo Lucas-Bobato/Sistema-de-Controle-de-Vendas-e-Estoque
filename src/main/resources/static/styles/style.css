@@ -646,3 +646,47 @@ body[data-theme="dark"] .link-voltar {
   font-size: 20px;
   color: yellow;
 }
+
+.confirm-button {
+  background-color: green;
+  color: #ffffff;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+}
+
+.confirm-button:hover {
+  background-color: darkgreen;
+  transition: 0.3 ease;
+}
+
+.cancel-button {
+  background-color: red;
+  color: #ffffff;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+}
+
+.cancel-button:hover {
+  background-color: darkred;
+  transition: 0.3 ease;
+}

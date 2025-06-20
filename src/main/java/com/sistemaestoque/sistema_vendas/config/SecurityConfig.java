@@ -16,8 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // PERMITE ACESSO PÚBLICO ÀS PASTAS DE RECURSOS ESTÁTICOS
-                .requestMatchers("/styles/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/styles/**", "/js/**", "/images/**", "/vendor/**").permitAll()
                 .requestMatchers("/usuarios/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

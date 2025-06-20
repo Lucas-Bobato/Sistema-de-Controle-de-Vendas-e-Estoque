@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Data;
 
 @Entity
 @Data
@@ -29,7 +30,8 @@ public class Usuario implements UserDetails {
 
     private boolean ativo = true;
 
-    // Métodos da interface UserDetails para o Spring Security
+    private String fotoPerfil;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

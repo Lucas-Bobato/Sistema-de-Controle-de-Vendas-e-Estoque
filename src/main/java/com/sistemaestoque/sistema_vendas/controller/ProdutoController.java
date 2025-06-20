@@ -21,14 +21,24 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    // MÉTODO ADICIONADO PARA CORRIGIR O ERRO 404
     @GetMapping("/estoque")
-    public String paginaEstoque(Model model) {
+    public String paginaEstoque(Model model, @RequestParam(required = false) String termo) {
         model.addAttribute("totalItens", produtoService.getTotalItensEmEstoque());
         model.addAttribute("estoqueCritico", produtoService.getContagemEstoqueCritico());
         model.addAttribute("semEstoque", produtoService.getContagemSemEstoque());
         model.addAttribute("produtosCriticos", produtoService.listarProdutosComEstoqueCritico());
-        model.addAttribute("todosProdutos", produtoService.listarTodos(Sort.by("id")));
+
+        List<Produto> todosProdutos;
+        Sort sort = Sort.by("id");
+        if (termo != null && !termo.isEmpty()) {
+            todosProdutos = produtoService.buscar(termo, sort);
+        } else {
+            todosProdutos = produtoService.listarTodos(sort);
+        }
+        
+        model.addAttribute("todosProdutos", todosProdutos);
+        model.addAttribute("termo", termo);
+    
         return "Estoque";
     }
 
@@ -67,7 +77,6 @@ public class ProdutoController {
         return "Produtos";
     }
     
-    // ...outros métodos (novo, editar, salvar, etc. permanecem os mesmos)...
     @GetMapping("/novo")
     public String novoProdutoForm(Model model) {
         model.addAttribute("produto", new Produto());

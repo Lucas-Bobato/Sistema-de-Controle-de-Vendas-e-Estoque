@@ -457,14 +457,12 @@ body[data-theme="dark"] .pagination-button:hover {
   border-color: var(--primary-color);
 }
 
-body[data-theme="dark"] .search-input {
-  background-color: #0d1117;
-  color: var(--text-primary);
-  border-color: var(--border-color);
-}
-
-body[data-theme="dark"] .search-input:focus {
-  border-color: var(--primary-color);
+body[data-theme="dark"] .search-input:focus,
+body[data-theme="dark"] .form-group input:focus,
+body[data-theme="dark"] .form-group select:focus,
+body[data-theme="dark"] .product-adder select:focus,
+body[data-theme="dark"] .product-adder input:focus {
+    border-color: var(--primary-color);
 }
 
 body[data-theme="dark"] .search-icon {
@@ -485,4 +483,67 @@ body[data-theme='dark'] .new-order-button:hover,
 body[data-theme='dark'] .filter-button:hover {
     background-color: var(--primary-color);
     color: var(--sidebar-bg);
+}
+
+body[data-theme='dark'] .action-button.button-secondary {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+body[data-theme='dark'] .action-button.button-secondary:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body[data-theme="dark"] input[type="date"] {
+    color-scheme: dark;
+}
+
+body[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+body[data-theme="dark"] .search-input,
+body[data-theme="dark"] .form-group input,
+body[data-theme="dark"] .form-group select,
+body[data-theme="dark"] .product-adder select,
+body[data-theme="dark"] .product-adder input {
+    background-color: #0d1117;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    color-scheme: dark;
+}
+
+body[data-theme="dark"] .search-input:focus,
+body[data-theme="dark"] .form-group input:focus,
+body[data-theme="dark"] .form-group select:focus,
+body[data-theme="dark"] .product-adder select:focus,
+body[data-theme="dark"] .product-adder input:focus {
+    border-color: var(--primary-color);
+}
+
+body[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: var(--text-secondary);
+}
+
+body[data-theme="dark"] .search-icon {
+  color: var(--text-secondary);
+}
+
+.link-voltar {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.link-voltar:hover {
+  text-decoration: underline;
+}
+
+body[data-theme="dark"] .link-voltar {
+  color: var(--primary-color);
 }

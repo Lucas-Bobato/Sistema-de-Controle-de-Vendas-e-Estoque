@@ -80,14 +80,16 @@
         </section>
 
         <section class="tools-section">
-          <div class="search-input-container">
+          <form th:action="@{/produtos/estoque}" method="get" class="search-input-container">
             <div class="search-icon"><i class="bi bi-search"></i></div>
             <input
               type="text"
+              name="termo"
               class="search-input"
               placeholder="Buscar produto no estoque..."
+              th:value="${termo}"
             />
-          </div>
+          </form>
         </section>
 
         <section class="table-container">

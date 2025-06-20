@@ -55,15 +55,9 @@
         </section>
 
         <section class="content-section" th:if="${tipoRelatorio != null}">
-          <a
-            th:href="@{/relatorios}"
-            style="
-              text-decoration: none;
-              margin-bottom: 20px;
-              display: inline-block;
-            "
-            >&larr; Voltar para seleção</a
-          >
+          <a th:href="@{/relatorios}" class="link-voltar">
+            &larr; Voltar para seleção
+        </a>
           <h2 th:text="'Relatório: ' + ${tipoRelatorio}">
             Título do Relatório
           </h2>
@@ -127,7 +121,6 @@
             style="
               text-align: center;
               padding: 20px;
-              background-color: #f8f9fa;
               border-radius: 8px;
             "
           >

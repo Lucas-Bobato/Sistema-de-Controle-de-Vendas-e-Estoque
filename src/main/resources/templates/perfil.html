@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Meu Perfil</title>
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/form.css">
-    <link rel="stylesheet" th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/form.css" />
+    <link rel="stylesheet" href="/styles/config.css">
+    <link
+      rel="stylesheet"
+      th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}"
+    />
 </head>
 <body>
     <div class="dashboard-layout">
@@ -17,34 +21,23 @@
             </header>
             <section class="content-section">
                 <h3>Editar Informações Pessoais</h3>
-                <form th:action="@{/perfil/salvar}" th:object="${usuario}" method="post">
-                    <input type="hidden" th:field="*{id}" />
-                    <input type="hidden" th:field="*{role}" />
-                    <input type="hidden" th:field="*{ativo}" />
-
-                    <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
-                        <div class="form-group">
-                            <label for="nome">Nome Completo:</label>
-                            <input type="text" id="nome" th:field="*{nome}" class="search-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-mail (Login):</label>
-                            <input type="email" id="email" th:field="*{email}" class="search-input" required>
-                        </div>
-                    </div>
-
-                    <hr style="margin: 25px 0;">
-                    <h3>Alterar Senha</h3>
-
-                    <div class="form-group">
-                        <label for="senha">Nova Senha:</label>
-                        <input type="password" id="senha" name="senha" class="search-input" placeholder="Deixe em branco para não alterar">
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="action-button">Salvar Alterações</button>
-                    </div>
-                </form>
+                <form th:action="@{/perfil/salvar}" th:object="${usuario}" method="post" enctype="multipart/form-data">
+                  <input type="hidden" th:field="*{id}" />
+                  <input type="hidden" th:field="*{role}" />
+                  <input type="hidden" th:field="*{ativo}" />
+              
+                  <div class="form-group" style="margin-bottom: 25px;">
+                      <label>Foto de Perfil:</label>
+                      <div style="display: flex; align-items: center; gap: 20px;">
+                          <img th:src="${usuario.fotoPerfil != null ? '/images/perfil/' + usuario.fotoPerfil : '/images/default-avatar.png'}"
+                              alt="Foto de Perfil" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+                          <input type="file" name="foto" class="search-input" style="flex-grow: 1;">
+                      </div>
+                  </div>
+                  <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                      </div>
+              
+                  </form>
             </section>
         </main>
     </div>

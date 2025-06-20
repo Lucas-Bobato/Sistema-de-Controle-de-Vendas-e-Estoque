@@ -79,13 +79,13 @@
 }
 
 .slider:before {
-  content: "\F5A6";
+  content: "\f5a1";
   color: #f9d71c;
   opacity: 1;
 }
 
 .slider:after {
-  content: "\F4B8";
+  content: "\f494";
   color: #483d8b;
   opacity: 0;
 }

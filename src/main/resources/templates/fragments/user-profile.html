@@ -22,10 +22,10 @@
   
     <a th:href="@{/perfil}" class="user-avatar-link">
         <div class="user-avatar">
-            <img th:if="${#authentication.principal.fotoPerfil != null && !#authentication.principal.fotoPerfil.isEmpty()}"
-                th:src="@{'/images/perfil/' + ${#authentication.principal.fotoPerfil}}"
-                alt="Foto de Perfil"
-                class="profile-avatar-image"/>
+          <img th:if="${#authentication.principal.fotoPerfil != null && !#authentication.principal.fotoPerfil.isEmpty()}"
+     th:src="@{/usuarios/{id}/foto(id=${#authentication.principal.id}, v=${#dates.createNow().getTime()})}"
+     alt="Foto de Perfil"
+     class="profile-avatar-image"/>
             
             <div th:if="${#authentication.principal.fotoPerfil == null || #authentication.principal.fotoPerfil.isEmpty()}" class="profile-avatar-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">

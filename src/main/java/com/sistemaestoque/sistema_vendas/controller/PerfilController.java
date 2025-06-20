@@ -53,22 +53,26 @@ public class PerfilController {
             return "redirect:/login";
         }
     
+        String oldEmail = principal.getUsername();
+        boolean emailChanged = !oldEmail.equals(usuarioDoForm.getEmail());
+        boolean passwordChanged = novaSenha != null && !novaSenha.isEmpty();
+    
         try {
-            Usuario usuarioParaAtualizar = usuarioService.buscarPorEmail(principal.getUsername());
+            Usuario usuarioParaAtualizar = usuarioService.buscarPorEmail(oldEmail);
     
             if (foto != null && !foto.isEmpty()) {
                 String uploadDir = "src/main/resources/static/images/perfil/";
-                Path uploadPath = Paths.get(uploadDir);
-
                 File diretorio = new File(uploadDir);
-                File[] arquivosAntigos = diretorio.listFiles((dir, name) ->
-                    name.startsWith("usuario_" + usuarioParaAtualizar.getId() + "."));
-                if (arquivosAntigos != null) {
-                    for (File arquivo : arquivosAntigos) {
-                        arquivo.delete();
+                if (diretorio.exists()) {
+                    File[] arquivosAntigos = diretorio.listFiles((dir, name) ->
+                        name.startsWith("usuario_" + usuarioParaAtualizar.getId() + "."));
+                    if (arquivosAntigos != null) {
+                        for (File arquivo : arquivosAntigos) {
+                            arquivo.delete();
+                        }
                     }
                 }
-
+                
                 String originalFileName = foto.getOriginalFilename();
                 if (originalFileName != null && !originalFileName.trim().isEmpty()) {
                     String cleanedFileName = StringUtils.cleanPath(originalFileName);
@@ -79,6 +83,7 @@ public class PerfilController {
                     String newFileName = "usuario_" + usuarioParaAtualizar.getId() + fileExtension;
                     usuarioParaAtualizar.setFotoPerfil(newFileName);
     
+                    Path uploadPath = Paths.get(uploadDir);
                     if (!Files.exists(uploadPath)) {
                         Files.createDirectories(uploadPath);
                     }
@@ -90,24 +95,28 @@ public class PerfilController {
                 }
             }
     
-            usuarioService.atualizarPerfil(usuarioParaAtualizar, usuarioDoForm.getNome(), usuarioDoForm.getEmail(), novaSenha); 
+            usuarioService.atualizarPerfil(usuarioParaAtualizar, usuarioDoForm.getNome(), usuarioDoForm.getEmail(), novaSenha);
             
-            UserDetails userDetailsAtualizado = usuarioService.buscarPorEmail(usuarioParaAtualizar.getEmail());
-
-            Authentication novaAutenticacao = new UsernamePasswordAuthenticationToken(
-                userDetailsAtualizado,
-                null,
-                userDetailsAtualizado.getAuthorities()
-            );
-            SecurityContextHolder.getContext().setAuthentication(novaAutenticacao);
-
-            redirectAttributes.addFlashAttribute("successMessage", "Perfil atualizado com sucesso!");
+            if (emailChanged || passwordChanged) {
+                redirectAttributes.addFlashAttribute("successMessage", "Dados atualizados com sucesso! Por favor, faça login novamente.");
+                return "redirect:/logout";
+            } else {
+                UserDetails userDetailsAtualizado = usuarioService.buscarPorEmail(usuarioParaAtualizar.getEmail());
+                Authentication novaAutenticacao = new UsernamePasswordAuthenticationToken(
+                    userDetailsAtualizado,
+                    null,
+                    userDetailsAtualizado.getAuthorities()
+                );
+                SecurityContextHolder.getContext().setAuthentication(novaAutenticacao);
+                redirectAttributes.addFlashAttribute("successMessage", "Perfil atualizado com sucesso!");
+            }
     
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ocorreu um erro ao salvar a foto de perfil: " + e.getMessage());
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ocorreu um erro ao salvar o perfil: " + e.getMessage());
         }
+        
         return "redirect:/perfil";
     }
 }

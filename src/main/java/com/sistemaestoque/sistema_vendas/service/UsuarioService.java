@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -28,22 +27,9 @@ public class UsuarioService {
     }
 
     public void salvar(Usuario usuario) {
-        Optional<Usuario> existente = usuarioRepository.findByEmail(usuario.getEmail());
-        if (existente.isPresent() && !existente.get().getId().equals(usuario.getId())) {
-            throw new RuntimeException("O e-mail informado já está em uso.");
-        }
-
-        if (usuario.getId() == null || (usuario.getSenha() != null && !usuario.getSenha().isEmpty())) {
-            usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        } else {
-            Usuario usuarioExistente = usuarioRepository.findById(usuario.getId()).orElse(null);
-            if (usuarioExistente != null) {
-                usuario.setSenha(usuarioExistente.getSenha());
-            }
-        }
-        
-        usuarioRepository.save(usuario);
-    }
+      // A lógica de verificação de e-mail e senha é tratada no Controller.
+      usuarioRepository.save(usuario);
+  }
 
     public void deletar(Long id) {
         if (!usuarioRepository.existsById(id)) {
@@ -65,5 +51,9 @@ public class UsuarioService {
     }
     
     usuarioRepository.save(usuario);
-}
+
+  }
+    public Optional<Usuario> buscarPorEmailOptional(String email) {
+    return usuarioRepository.findByEmail(email);
+  }
 }

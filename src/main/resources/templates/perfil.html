@@ -21,26 +21,61 @@
             </header>
             <section class="content-section">
                 <h3>Editar Informações Pessoais</h3>
+
+                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
                 <form th:action="@{/perfil/salvar}" th:object="${usuario}" method="post" enctype="multipart/form-data">
                   <input type="hidden" th:field="*{id}" />
                   <input type="hidden" th:field="*{role}" />
                   <input type="hidden" th:field="*{ativo}" />
-              
+
                   <div class="form-group" style="margin-bottom: 25px;">
                       <label>Foto de Perfil:</label>
-                      <div style="display: flex; align-items: center; gap: 20px;">
-                          <img th:src="${usuario.fotoPerfil != null ? '/images/perfil/' + usuario.fotoPerfil : '/images/default-avatar.png'}"
-                              alt="Foto de Perfil" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
-                          <input type="file" name="foto" class="search-input" style="flex-grow: 1;">
+                      <div class="profile-upload-container">
+                        <div class="avatar-wrapper">
+                          <div id="avatar-preview-container">
+                              <img id="avatar-preview" th:if="${usuario.fotoPerfil != null && !usuario.fotoPerfil.isEmpty()}" 
+                                  th:src="@{'/images/perfil/' + ${usuario.fotoPerfil}}"
+                                  class="profile-avatar">
+                              <div id="avatar-preview-icon" th:if="${usuario.fotoPerfil == null || usuario.fotoPerfil.isEmpty()}" class="profile-avatar-icon-large">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                  </svg>
+                              </div>
+                          </div>
+                          <div class="avatar-edit-overlay">
+                              <i class="bi bi-camera"></i>
+                          </div>
+                          <input type="file" name="foto" id="foto-input" class="hidden-file-input" accept="image/*">
                       </div>
                   </div>
                   <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                      <div class="form-group">
+                          <label for="nome">Nome:</label>
+                          <input type="text" id="nome" th:field="*{nome}" class="search-input" required />
                       </div>
-              
-                  </form>
+                      <div class="form-group">
+                          <label for="email">Email:</label>
+                          <input type="email" id="email" th:field="*{email}" class="search-input" required />
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="senha">Nova Senha:</label>
+                      <input type="password" id="senha" name="senha" class="search-input" placeholder="Deixe em branco para não alterar" />
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="action-button">Salvar Alterações</button>
+                  </div>
+                </form>
             </section>
         </main>
     </div>
     <script src="/js/config.js"></script>
-</body>
+    <script src="/js/perfil.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>

@@ -56,15 +56,14 @@ public class UsuarioService {
       return usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
   }
   
-  public void atualizarPerfil(Long id, String nome, String email, String novaSenha) {
-      Usuario usuario = buscarPorId(id);
-      usuario.setNome(nome);
-      usuario.setEmail(email);
-  
-      if (novaSenha != null && !novaSenha.isEmpty()) {
-          usuario.setSenha(passwordEncoder.encode(novaSenha));
-      }
-      
-      usuarioRepository.save(usuario);
-  }
+  public void atualizarPerfil(Usuario usuario, String nome, String email, String novaSenha) {
+    usuario.setNome(nome);
+    usuario.setEmail(email);
+
+    if (novaSenha != null && !novaSenha.isEmpty()) {
+        usuario.setSenha(passwordEncoder.encode(novaSenha));
+    }
+    
+    usuarioRepository.save(usuario);
+}
 }

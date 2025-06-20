@@ -10,9 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -46,56 +52,61 @@ public class UsuarioController {
     }
 
     @PostMapping("/salvar")
-    public String salvarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+    public String salvarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario,
+                                BindingResult result,
+                                @RequestParam("foto") MultipartFile foto,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
         if (result.hasErrors()) {
             model.addAttribute("roles", UsuarioRole.values());
             return "formUsuario";
         }
-
+    
         try {
+            String senhaPlana = usuario.getSenha();
+            if (usuario.getId() == null) {
+                usuario.setSenha("placeholder");
+            }
+    
             usuarioService.salvar(usuario);
+    
+            if(senhaPlana != null && !senhaPlana.isEmpty()){
+                usuario.setSenha(senhaPlana);
+                usuarioService.salvar(usuario);
+            }
+    
+            if (foto != null && !foto.isEmpty()) {
+                String originalFileName = foto.getOriginalFilename();
+                if (originalFileName != null && !originalFileName.trim().isEmpty()) {
+                    String cleanedFileName = StringUtils.cleanPath(originalFileName);
+                    String fileExtension = Optional.of(cleanedFileName)
+                                                  .filter(f -> f.contains("."))
+                                                  .map(f -> f.substring(f.lastIndexOf(".")))
+                                                  .orElse("");
+                    
+                    String newFileName = "usuario_" + usuario.getId() + fileExtension;
+                    usuario.setFotoPerfil(newFileName);
+
+                    String uploadDir = "src/main/resources/static/images/perfil/";
+                    Path uploadPath = Paths.get(uploadDir);
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
+                    }
+                    try (InputStream inputStream = foto.getInputStream()) {
+                        Path filePath = uploadPath.resolve(newFileName);
+                        Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    usuarioService.salvar(usuario);
+                }
+            }
             redirectAttributes.addFlashAttribute("successMessage", "Usuário salvo com sucesso!");
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/usuarios/novo";
+            model.addAttribute("roles", UsuarioRole.values());
+            model.addAttribute("usuario", usuario);
+            return "formUsuario";
         }
         
         return "redirect:/usuarios";
     }
-
-    @GetMapping("/perfil")
-    public String perfilUsuario(Model model, @AuthenticationPrincipal UserDetails principal) {
-        if (principal == null) {
-
-            return "redirect:/login";
-        }
-
-        String email = principal.getUsername();
-        Usuario usuario = usuarioService.buscarPorEmail(email);
-        model.addAttribute("usuario", usuario);
-        return "perfil";
-    }
-    
-    @PostMapping("/perfil/salvar")
-    public String salvarPerfil(@ModelAttribute Usuario usuarioDoForm,
-                               @RequestParam(name = "senha", required = false) String novaSenha,
-                               RedirectAttributes redirectAttributes,
-                               @AuthenticationPrincipal UserDetails principal) {
-        
-        if (principal == null) {
-            return "redirect:/login";
-        }
-    
-        try {
-            Usuario usuarioLogado = usuarioService.buscarPorEmail(principal.getUsername());
-            
-            usuarioService.atualizarPerfil(usuarioLogado.getId(), usuarioDoForm.getNome(), usuarioDoForm.getEmail(), novaSenha);
-            
-            redirectAttributes.addFlashAttribute("successMessage", "Perfil atualizado com sucesso!");
-        } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        }
-        return "redirect:/perfil";
-    }
 }
-

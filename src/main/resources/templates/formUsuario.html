@@ -33,8 +33,26 @@
             th:action="@{/usuarios/salvar}"
             th:object="${usuario}"
             method="post"
+            enctype="multipart/form-data"
           >
             <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group" style="margin-bottom: 25px;">
+              <label>Foto de Perfil (Opcional):</label>
+              <div class="profile-upload-container">
+                <div class="avatar-wrapper">
+                  <img id="avatar-preview" th:src="${usuario.fotoPerfil != null ? '/images/perfil/' + usuario.fotoPerfil : '/images/default-avatar.png'}" alt="Foto de Perfil" class="profile-avatar">
+                  <div class="avatar-edit-overlay">
+                    <i class="bi bi-camera"></i>
+                  </div>
+                  <input type="file" name="foto" id="foto-input" class="hidden-file-input" accept="image/*">
+                </div>
+                <div class="upload-info">
+                  <label for="foto-input" class="action-button button-secondary" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-primary);">Escolher Foto</label>
+                  <span id="file-name" class="file-name-display">Nenhum arquivo selecionado.</span>
+                </div>
+              </div>
+            </div>
 
             <div class="form-grid" style="grid-template-columns: 1fr 1fr">
               <div class="form-group">
@@ -105,5 +123,6 @@
       </main>
     </div>
     <script src="/js/config.js"></script>
+    <script src="/js/perfil.js"></script>
   </body>
 </html>

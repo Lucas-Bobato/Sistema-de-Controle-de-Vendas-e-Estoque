@@ -48,6 +48,26 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+  const sidebar = document.querySelector(".sidebar");
+
+  if (mobileMenuToggle && sidebar) {
+    mobileMenuToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("visible");
+    });
+
+    document.addEventListener("click", function (event) {
+      if (
+        sidebar.classList.contains("visible") &&
+        !sidebar.contains(event.target) &&
+        !mobileMenuToggle.contains(event.target)
+      ) {
+        sidebar.classList.remove("visible");
+      }
+    });
+  }
+
   const notificationBell = document.getElementById("notification-bell");
   const notificationDropdown = document.getElementById("notification-dropdown");
 

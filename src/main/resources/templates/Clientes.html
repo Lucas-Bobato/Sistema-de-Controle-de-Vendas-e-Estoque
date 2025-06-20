@@ -2,12 +2,14 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciar Clientes</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/responsive.css" />
     <link rel="stylesheet" href="/styles/config.css" />
     <link
       rel="stylesheet"
@@ -19,6 +21,9 @@
       <div th:replace="~{fragments/sidebar :: sidebar-layout}"></div>
       <main class="main-content">
         <header class="main-header">
+          <button class="mobile-menu-toggle" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
           <h1>Gerenciar Clientes</h1>
           <div th:replace="~{fragments/user-profile :: header-profile}"></div>
         </header>
@@ -104,5 +109,6 @@
       </main>
     </div>
     <script src="/js/config.js"></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>

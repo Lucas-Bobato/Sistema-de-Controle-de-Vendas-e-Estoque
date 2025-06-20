@@ -9,6 +9,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/responsive.css" />
     <link rel="stylesheet" href="/styles/form.css" />
     <link rel="stylesheet" href="/styles/config.css" />
     <link
@@ -22,6 +23,9 @@
 
       <main class="main-content">
         <header class="main-header">
+          <button class="mobile-menu-toggle" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
           <h1>Central de Relatórios</h1>
           <div th:replace="~{fragments/user-profile :: header-profile}"></div>
         </header>

@@ -3,7 +3,6 @@
 }
 
 @media (max-width: 768px) {
-
   .sidebar {
     position: fixed;
     left: -260px;
@@ -39,7 +38,7 @@
   .dashboard-layout {
     flex-direction: column;
   }
-  
+
   .form-grid {
     grid-template-columns: 1fr !important;
   }

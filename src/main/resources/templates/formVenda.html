@@ -167,7 +167,7 @@
                       class="action-icon delete"
                       onclick="removerLinha(this)"
                     >
-                      ❌
+                      <i class="bi bi-x-circle"></i>
                     </button>
                   </td>
                 </tr>
@@ -179,9 +179,7 @@
             </div>
             <div class="form-actions">
               <button type="submit" class="confirm-button">Salvar</button>
-              <a th:href="@{/vendas}" class="cancel-button"
-                >Cancelar</a
-              >
+              <a th:href="@{/vendas}" class="cancel-button">Cancelar</a>
             </div>
           </form>
         </section>

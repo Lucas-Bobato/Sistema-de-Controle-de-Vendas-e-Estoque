@@ -628,14 +628,14 @@ body[data-theme="dark"] .link-voltar {
 }
 
 .close-notification {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--text-secondary);
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-secondary);
 }
 
 .notification-item:last-child {
@@ -689,4 +689,23 @@ body[data-theme="dark"] .link-voltar {
 .cancel-button:hover {
   background-color: darkred;
   transition: 0.3 ease;
+}
+
+.action-icon.delete {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon.delete .bi-x-circle {
+  font-size: 20px;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.action-icon.delete:hover .bi-x-circle {
+  color: var(--danger-color);
 }

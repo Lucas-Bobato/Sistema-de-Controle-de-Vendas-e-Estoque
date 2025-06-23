@@ -124,29 +124,33 @@ async function fetchAndDisplayNotifications() {
 }
 
 async function marcarComoLida(id, event) {
-    event.stopPropagation();
-    try {
-        const response = await fetch(`/api/notificacoes/${id}/lida`, { method: 'POST' });
-        if(response.ok) {
-            fetchAndDisplayNotifications();
-        } else {
-            console.error('Falha ao marcar notificação como lida.');
-        }
-    } catch (error) {
-        console.error('Erro:', error);
+  event.stopPropagation();
+  try {
+    const response = await fetch(`/api/notificacoes/${id}/lida`, {
+      method: "POST",
+    });
+    if (response.ok) {
+      fetchAndDisplayNotifications();
+    } else {
+      console.error("Falha ao marcar notificação como lida.");
     }
+  } catch (error) {
+    console.error("Erro:", error);
+  }
 }
 
 async function marcarTodasComoLidas(event) {
-    event.preventDefault();
-    try {
-        const response = await fetch('/api/notificacoes/marcar-todas-lidas', { method: 'POST' });
-        if(response.ok) {
-            fetchAndDisplayNotifications();
-        } else {
-            console.error('Falha ao marcar todas as notificações como lidas.');
-        }
-    } catch (error) {
-        console.error('Erro:', error);
+  event.preventDefault();
+  try {
+    const response = await fetch("/api/notificacoes/marcar-todas-lidas", {
+      method: "POST",
+    });
+    if (response.ok) {
+      fetchAndDisplayNotifications();
+    } else {
+      console.error("Falha ao marcar todas as notificações como lidas.");
     }
+  } catch (error) {
+    console.error("Erro:", error);
+  }
 }

@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${quantidade}</td>
             <td>R$ ${produtoPreco.toFixed(2).replace(".", ",")}</td>
             <td>R$ ${subtotal.toFixed(2).replace(".", ",")}</td>
-            <td><button type="button" class="action-icon delete" onclick="removerLinha(this)">❌</button></td>
+            <td><button type="button" class="action-icon delete" onclick="removerLinha(this)"><i class="bi bi-x-circle"></i></button></td>
         `;
 
     atualizarTotal();

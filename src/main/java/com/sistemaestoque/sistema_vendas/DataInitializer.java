@@ -35,20 +35,20 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
 public void run(String... args) throws Exception {
-    // Verifica se o usuário admin já existe antes de criar
-    if (usuarioRepository.findByEmail("admin@empresa.com").isEmpty()) {
-        System.out.println(">>> Criando usuário ADMIN inicial...");
-        Usuario admin = new Usuario();
-        admin.setNome("Administrador");
-        admin.setEmail("admin@empresa.com");
-        admin.setSenha(passwordEncoder.encode("admin123")); // Escolha uma senha forte aqui!
-        admin.setRole(UsuarioRole.ADMIN);
-        admin.setAtivo(true);
-        usuarioRepository.save(admin);
-        System.out.println(">>> Usuário ADMIN criado com sucesso!");
-    } else {
-        System.out.println(">>> Usuário ADMIN já existe. Nenhum usuário foi criado.");
-    }
+    // // Verifica se o usuário admin já existe antes de criar
+    // if (usuarioRepository.findByEmail("admin@empresa.com").isEmpty()) {
+    //     System.out.println(">>> Criando usuário ADMIN inicial...");
+    //     Usuario admin = new Usuario();
+    //     admin.setNome("Administrador");
+    //     admin.setEmail("admin@empresa.com");
+    //     admin.setSenha(passwordEncoder.encode("admin123")); // Escolha uma senha forte aqui!
+    //     admin.setRole(UsuarioRole.ADMIN);
+    //     admin.setAtivo(true);
+    //     usuarioRepository.save(admin);
+    //     System.out.println(">>> Usuário ADMIN criado com sucesso!");
+    // } else {
+    //     System.out.println(">>> Usuário ADMIN já existe. Nenhum usuário foi criado.");
+    // }
 }
 
     private void criarVendaAleatoria(LocalDate data, Cliente cliente, Usuario vendedor, List<Produto> produtos) {

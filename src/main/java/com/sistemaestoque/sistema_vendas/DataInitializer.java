@@ -35,7 +35,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+        /*
         System.out.println(">>> Limpando dados antigos do banco de dados...");
         
         itemVendaRepository.deleteAllInBatch();
@@ -72,6 +72,7 @@ public class DataInitializer implements CommandLineRunner {
             }
         }
         System.out.println(">>> Inicialização de dados finalizada com sucesso.");
+        */
     }
 
     private void criarVendaAleatoria(LocalDate data, Cliente cliente, Usuario vendedor, List<Produto> produtos) {

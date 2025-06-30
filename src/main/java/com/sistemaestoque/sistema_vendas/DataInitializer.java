@@ -34,46 +34,22 @@ public class DataInitializer implements CommandLineRunner {
     private NotificacaoRepository notificacaoRepository;
 
     @Override
-    public void run(String... args) throws Exception {
-        /*
-        System.out.println(">>> Limpando dados antigos do banco de dados...");
-        
-        itemVendaRepository.deleteAllInBatch();
-        vendaRepository.deleteAllInBatch();
-        notificacaoRepository.deleteAllInBatch();
-        produtoRepository.deleteAllInBatch();
-        clienteRepository.deleteAllInBatch();
-        usuarioRepository.deleteAllInBatch();
-        
-        System.out.println(">>> Dados antigos removidos com sucesso.");
-
-        System.out.println(">>> Criando um novo conjunto de dados base...");
-        Usuario admin = criarUsuario("Administrador", "admin@empresa.com", "admin123", UsuarioRole.ADMIN);
-        Usuario vendedor = criarUsuario("Vendedor Teste", "vendedor@empresa.com", "vendedor123", UsuarioRole.VENDEDOR);
-        Cliente clienteTech = criarCliente("Tech Solutions Ltda", "12.345.678/0001-99");
-        Cliente clienteInova = criarCliente("Inova Corp S.A.", "98.765.432/0001-11");
-        
-        Produto p1 = criarProduto("Camisa de Algodão", "Vestuário", new BigDecimal("44.90"), new BigDecimal("25.00"), 50, 10);
-        Produto p2 = criarProduto("Mochila Executiva", "Acessórios", new BigDecimal("149.90"), new BigDecimal("80.00"), 30, 5);
-        Produto p3 = criarProduto("Fone Bluetooth Pro", "Eletrônicos", new BigDecimal("249.50"), new BigDecimal("150.00"), 20, 5);
-        Produto p4 = criarProduto("Tênis Esportivo", "Calçados", new BigDecimal("199.85"), new BigDecimal("110.00"), 5, 8);
-        List<Produto> todosProdutos = List.of(p1, p2, p3, p4);
-        System.out.println(">>> Dados base criados com sucesso.");
-
-        System.out.println(">>> Gerando vendas aleatórias para os últimos 7 dias...");
-        LocalDate dataAtual = LocalDate.now();
-        for (int i = 0; i < 7; i++) {
-            LocalDate diaDaVenda = dataAtual.minusDays(i);
-            int numeroDeVendasNoDia = ThreadLocalRandom.current().nextInt(1, 4);
-            for(int j = 0; j < numeroDeVendasNoDia; j++) {
-                Cliente clienteDaVez = (j % 2 == 0) ? clienteTech : clienteInova;
-                Usuario vendedorDaVez = (j % 2 == 0) ? admin : vendedor;
-                criarVendaAleatoria(diaDaVenda, clienteDaVez, vendedorDaVez, todosProdutos);
-            }
-        }
-        System.out.println(">>> Inicialização de dados finalizada com sucesso.");
-        */
+public void run(String... args) throws Exception {
+    // Verifica se o usuário admin já existe antes de criar
+    if (usuarioRepository.findByEmail("admin@empresa.com").isEmpty()) {
+        System.out.println(">>> Criando usuário ADMIN inicial...");
+        Usuario admin = new Usuario();
+        admin.setNome("Administrador");
+        admin.setEmail("admin@empresa.com");
+        admin.setSenha(passwordEncoder.encode("admin123")); // Escolha uma senha forte aqui!
+        admin.setRole(UsuarioRole.ADMIN);
+        admin.setAtivo(true);
+        usuarioRepository.save(admin);
+        System.out.println(">>> Usuário ADMIN criado com sucesso!");
+    } else {
+        System.out.println(">>> Usuário ADMIN já existe. Nenhum usuário foi criado.");
     }
+}
 
     private void criarVendaAleatoria(LocalDate data, Cliente cliente, Usuario vendedor, List<Produto> produtos) {
         int numeroDeTiposDeProduto = ThreadLocalRandom.current().nextInt(1, 4);
